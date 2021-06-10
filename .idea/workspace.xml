@@ -3,14 +3,44 @@
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/base_project/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/base_project/asgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/base_project/provaciaoesk.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/base_project/settings.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/base_project/urls.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/base_project/wsgi.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/manage.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/admin.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/apps.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/models.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/tests.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2travel/views.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1tlNIgMGh2smSAYE9OnfVUz3dmx" />
   <component name="ProjectViewState">
@@ -20,8 +50,14 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="ToolWindowGit.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\maret\Desktop\Scola\III_Anno\II° Semestre\Tecnlogie Web\exam_project\base_project" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -31,7 +67,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1623339637828</updated>
-      <workItem from="1623339639580" duration="1322000" />
+      <workItem from="1623339639580" duration="6584000" />
     </task>
     <servers />
   </component>
@@ -43,7 +79,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="dev" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
