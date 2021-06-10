@@ -1,4 +1,3 @@
-from cups import modelSort
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -6,24 +5,24 @@ from django.contrib.auth.models import User
 from django.db.models.functions import datetime
 
 
-class UserProfile(models.model):
+class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
 
-class Image(models.model):
+class Image(models.Model):
     path = models.FilePathField()
 
-class Service(models.model):
+class Service(models.Model):
     name = models.CharField(max_length=32)
     description = models.TextField()
     icon = models.ForeignKey(Image, related_name='icon', on_delete=models.CASCADE)
 
-class RoomType(models.model):
+class RoomType(models.Model):
     name = models.CharField(max_length=32)
 
-class StructureProfile(models.model):
+class StructureProfile(models.Model):
     user = models.OneToOneField(User, related_name='structure_profile', on_delete=models.CASCADE)
     structure_name = models.CharField(max_length=60)
     city = models.CharField(max_length=32)
@@ -33,7 +32,7 @@ class StructureProfile(models.model):
     services = models.ManyToManyField(Service)
 
 
-class Rooms(models.model):
+class Rooms(models.Model):
     structure = models.ForeignKey(StructureProfile, related_name='room_structure', on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     description = models.TextField()
@@ -44,11 +43,11 @@ class Rooms(models.model):
     price_per_night = models.FloatField()
     room_type = models.ForeignKey(RoomType, related_name='room_type', on_delete=models.CASCADE)
 
-class InterestedUser(models.model):
+class InterestedUser(models.Model):
     room = models.ForeignKey(Rooms, related_name='interested_room', on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, related_name='interested_user', on_delete=models.CASCADE)
 
-class Reservation(models.model):
+class Reservation(models.Model):
     structure = models.ForeignKey(StructureProfile, related_name='reservation_structure', on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, related_name="reservation_user", on_delete=models.CASCADE)
     start_date = models.DateTimeField()
@@ -56,10 +55,10 @@ class Reservation(models.model):
     guests_number = models.IntegerField()
 
 
-class Review(models.model):
+class Review(models.Model):
     writer = models.ForeignKey(UserProfile, related_name='writer', on_delete=models.CASCADE)
     rating = models.IntegerField(max_length=1)
-    date = models.DateTimeField(default=datetime.now)
+    date = models.DateTimeField(default=datetime.Now())
     content = models.TextField()
     structure = models.OneToOneField(StructureProfile, related_name='review_structure', on_delete=models.CASCADE)
 
