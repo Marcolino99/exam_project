@@ -1,4 +1,4 @@
 from django.contrib import admin
+from book2travel.models import UserProfile
 
-# Register your models here.
-admin.si
+admin.site.register(UserProfile)
