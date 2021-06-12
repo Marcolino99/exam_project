@@ -2,17 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/book2fest/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/base_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/apps.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/migrations/__init__.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/models.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/tests.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/urls.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2travel/views.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,7 +56,7 @@
       <option name="presentableId" value="Default" />
       <updated>1623339637828</updated>
       <workItem from="1623339639580" duration="7500000" />
-      <workItem from="1623489174716" duration="343000" />
+      <workItem from="1623489174716" duration="665000" />
     </task>
     <servers />
   </component>
