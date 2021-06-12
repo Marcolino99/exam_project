@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'book2fest.app.Book2FestConfig'
+    'book2fest.apps.Book2FestConfig'
 ]
 
 MIDDLEWARE = [
