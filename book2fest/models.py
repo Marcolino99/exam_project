@@ -7,10 +7,17 @@ from django.db.models.functions import datetime
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
-    organizer = models.BooleanField(default=False)
+
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
+class OrganizerProfile(models.Model):
+    user = models.OneToOneField(User, related_name='organizer_user_profile', on_delete=models.CASCADE)
+    company = models.CharField(max_length=32)
+    short_bio = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
 
 class Image(models.Model):
     path = models.FilePathField()

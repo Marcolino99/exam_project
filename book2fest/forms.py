@@ -1,7 +1,8 @@
 from django import forms
-from book2fest.models import UserProfile
+from book2fest.models import UserProfile, OrganizerProfile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+
 
 class UserProfileForm(forms.ModelForm):
     first_name = forms.CharField(max_length=255)
@@ -17,7 +18,25 @@ class UserProfileForm(forms.ModelForm):
 
     class Meta:
         model = UserProfile
-        fields = ['first_name', 'last_name', 'email', 'organizer']
+        fields = ['first_name', 'last_name', 'email']
+
+
+class OrganizerProfileForm(forms.ModelForm):
+    first_name = forms.CharField(max_length=255)
+    last_name = forms.CharField(max_length=255)
+    email = forms.EmailField()
+
+
+    helper = FormHelper()
+    helper.form_id = 'organizer_profile_crispy_form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('save', 'Save'))
+    helper.inputs[0].field_classes = 'btn btn-success'
+
+    class Meta:
+        model = OrganizerProfile
+        fields = ['first_name', 'last_name', 'email', 'company', 'short_bio']
+
 
 
 def form_validation_error(form):

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Choose Profile Type{% endblock %}
+
+
+{% block content %}
+<div class="container h-100 d-flex justify-content-center">
+    <div class="jumbotron my-auto">
+        <a href="{% url 'book2fest:user-profile' %}"><button type="button" class="btn btn-outline-secondary">Casual User</button></a>
+        <a href="{% url 'book2fest:organizer-profile' %}"><button type="button" class="btn btn-outline-secondary">Organizer User</button></a>
+    </div>
+</div>
+
+
+{% endblock%}
