@@ -13,9 +13,70 @@ from book2fest.models import EventProfile, Artist, UserProfile, OrganizerProfile
 
 _logger = logging.getLogger(__name__)
 
-class ChooseProfileView(LoginRequiredMixin, TemplateView):
-    template_name = "book2fest/choose_profile.html"
+class CompleteRegistrationView(LoginRequiredMixin, TemplateView):
+    template_name = 'book2fest/choose_profile.html'
 
+
+class UserCreate(LoginRequiredMixin, View):
+    user_profile = None
+    model = UserProfile
+    template_name = 'book2fest/choose_profile.html'
+    permission_denied_message = "You must authenticate first!"
+
+
+    def post(self, request):
+
+        form = UserProfileForm(request.POST, request.FILES, instance=self.user_profile)
+
+        if form.is_valid():
+
+            self.user_profile = UserProfile(user=request.user)
+            self.user_profile.save()
+
+            self.user_profile.user.first_name = form.cleaned_data.get('first_name')
+            self.user_profile.user.last_name = form.cleaned_data.get('last_name')
+            self.user_profile.user.email = form.cleaned_data.get('email')
+            self.user_profile.user.save()
+
+            messages.success(request, 'Profile saved successfully')
+
+        else:
+            messages.error(request, form_validation_error(form))
+        return redirect('book2fest:user-profile')
+
+    def handle_no_permission(self):
+        messages.error(self.request, self.permission_denied_message)
+        return super(UserCreate, self).handle_no_permission()
+
+
+class OrganizerCreate(LoginRequiredMixin, View):
+    organizer = None
+    model = OrganizerProfile
+    template_name = 'book2fest/choose_profile.html'
+    permission_denied_message = "You must authenticate first!"
+
+
+    def post(self, request):
+
+        form = OrganizerProfileForm(request.POST, request.FILES, instance=self.organizer)
+
+        if form.is_valid():
+
+            self.organizer = OrganizerProfile(user=request.user, short_bio=form.cleaned_data.get('short_bio'), company=form.cleaned_data.get('company'))
+            self.organizer.save()
+            self.organizer.user.first_name = form.cleaned_data.get('first_name')
+            self.organizer.user.last_name = form.cleaned_data.get('last_name')
+            self.organizer.user.email = form.cleaned_data.get('email')
+            self.organizer.user.save()
+
+            messages.success(request, 'Profile saved successfully')
+        else:
+            messages.error(request, form_validation_error(form))
+        return redirect('book2fest:organizer-profile')
+
+    def handle_no_permission(self):
+        messages.error(self.request, self.permission_denied_message)
+        return super(UserCreate, self).handle_no_permission()
 
 
 class OrganizerProfileView(LoginRequiredMixin, OrganizerRequiredMixin, View):
@@ -41,7 +102,6 @@ class OrganizerProfileView(LoginRequiredMixin, OrganizerRequiredMixin, View):
         else:
             messages.error(request, form_validation_error(form))
         return redirect('book2fest:organizer-profile')
-
 
 
 class UserProfileView(LoginRequiredMixin, UserRequiredMixin, View):
