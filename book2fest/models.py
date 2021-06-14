@@ -26,15 +26,23 @@ class Image(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=32)
 
+    def __str__(self):
+        return f'{self.name}'
 
 class Genre(models.Model):
     name = models.CharField(max_length=32)
     category = models.ForeignKey(Category, related_name='genre_category', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.name}'
+
 
 class Artist(models.Model):
     full_name = models.CharField(max_length=32)
     genre = models.ForeignKey(Genre, related_name='artist_genre', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Delivery(models.Model):
@@ -42,11 +50,16 @@ class Delivery(models.Model):
     overprice = models.FloatField()
     delivery_time = models.DurationField()   #TODO forse meglio mettere un datetime field boh
 
+    def __str__(self):
+        return f'{self.name}'
 
 class Service(models.Model):
     name = models.CharField(max_length=32)
     description = models.TextField()
     icon = models.ForeignKey(Image, related_name='icon', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.name}+{self.description}'
 
 
 class EventProfile(models.Model):
@@ -64,6 +77,9 @@ class EventProfile(models.Model):
 
 class SeatType(models.Model):
     name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return f'{self.name}'
 
 
 class Seat(models.Model):
