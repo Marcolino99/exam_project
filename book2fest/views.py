@@ -4,12 +4,11 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import View, TemplateView, DetailView, CreateView
-from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import View, TemplateView, CreateView, DetailView
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, form_validation_error
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
-from book2fest.models import EventProfile, Artist, UserProfile, OrganizerProfile
+from book2fest.models import Artist, UserProfile, OrganizerProfile
 
 _logger = logging.getLogger(__name__)
 
@@ -132,7 +131,14 @@ class ArtistCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     form_class = ArtistForm
     template_name = "book2fest/artist/create.html"
     permission_denied_message = "You must authenticate first!"
+    success_url = reverse_lazy("homepage")
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
         return super(ArtistCreate, self).handle_no_permission()
+
+class ArtistDetail(DetailView):
+    model = Artist
+    template_name = "book2fest/artist/detail.html"
+
+
