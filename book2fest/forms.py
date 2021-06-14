@@ -1,5 +1,5 @@
 from django import forms
-from book2fest.models import UserProfile, OrganizerProfile
+from book2fest.models import Artist, OrganizerProfile, UserProfile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -36,6 +36,20 @@ class OrganizerProfileForm(forms.ModelForm):
     class Meta:
         model = OrganizerProfile
         fields = ['first_name', 'last_name', 'email', 'company', 'short_bio']
+
+
+class ArtistForm(forms.ModelForm):
+    helper = FormHelper()
+    helper.form_id = 'artist_crispy_form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+    helper.inputs[0].field_classes = 'btn btn-success'
+
+    class Meta:
+        model = Artist
+        fields = ['full_name', 'genre']
+
+
 
 
 

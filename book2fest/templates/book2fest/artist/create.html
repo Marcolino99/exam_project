@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Artist: Create{% endblock %}
+
+{% block content %}
+    <h1>Adding Artist</h1>
+{#    <form method="post">{% csrf_token %}#}
+{#        {{ form|crispy }}#}
+{#        <input type="submit" value="Confirm">#}
+{#    </form>#}
+    {% crispy form %}
+{% endblock %}

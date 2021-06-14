@@ -16,4 +16,4 @@ class Homepage(TemplateView):
 class UserCreationView(CreateView):
     form_class = UserCreationForm
     template_name = 'registration/user_create.html'
-    success_url = reverse_lazy('book2fest')
+    success_url = reverse_lazy('homepage') #TODO trovare modo di fare redirect alla choose-profile
