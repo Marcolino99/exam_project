@@ -19,8 +19,7 @@ class OrganizerProfile(models.Model):
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
 
-class Image(models.Model):
-    path = models.FilePathField()
+
 
 
 class Category(models.Model):
@@ -40,9 +39,10 @@ class Genre(models.Model):
 class Artist(models.Model):
     full_name = models.CharField(max_length=32)
     genre = models.ForeignKey(Genre, related_name='artist_genre', on_delete=models.CASCADE)
+    path = models.FilePathField(path='static/images/artist', default='static/images/default.png')
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.full_name}'
 
 
 class Delivery(models.Model):
@@ -56,10 +56,10 @@ class Delivery(models.Model):
 class Service(models.Model):
     name = models.CharField(max_length=32)
     description = models.TextField()
-    icon = models.ForeignKey(Image, related_name='icon', on_delete=models.CASCADE)
+    path = models.FilePathField(path='static/images/icon', default='static/images/default.png')
 
     def __str__(self):
-        return f'{self.name}+{self.description}'
+        return f'{self.name} - {self.description}'
 
 
 class EventProfile(models.Model):
