@@ -63,7 +63,7 @@ class Service(models.Model):
 
 
 class EventProfile(models.Model):
-    user = models.OneToOneField(User, related_name='event_user', on_delete=models.CASCADE)
+    user = models.OneToOneField(OrganizerProfile, related_name='event_user', on_delete=models.CASCADE)
     event_name = models.CharField(max_length=60)
     artist_list = models.ManyToManyField(Artist)
     city = models.CharField(max_length=32)
@@ -73,6 +73,9 @@ class EventProfile(models.Model):
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
     services = models.ManyToManyField(Service)      # An event has many services, a service can be offered by many events (m to n)
+
+    def __str__(self):
+        return f'{self.event_name} - {self.event_start.year}'
 
 
 class SeatType(models.Model):
