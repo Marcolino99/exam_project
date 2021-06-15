@@ -1,5 +1,5 @@
 from django import forms
-from book2fest.models import Artist, OrganizerProfile, UserProfile, Genre
+from book2fest.models import Artist, OrganizerProfile, UserProfile, Genre, Service, EventProfile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -51,6 +51,34 @@ class ArtistForm(forms.ModelForm):
     class Meta:
         model = Artist
         fields = ['full_name', 'genre']
+
+
+class EventProfileForm(forms.ModelForm):
+    services = forms.ModelMultipleChoiceField(queryset=Service.objects.all(), required=False)
+    artist_list = forms.ModelMultipleChoiceField(queryset=Artist.objects.all(), required=True)
+    event_start = forms.DateTimeField(widget=forms.SelectDateWidget)
+    event_end = forms.DateTimeField(widget=forms.SelectDateWidget)
+
+
+    helper = FormHelper()
+    helper.form_id = 'event_crispy_form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+    helper.inputs[0].field_classes = 'btn btn-success'
+
+    def clean(self):
+        cleaned_data = super(EventProfileForm, self).clean()
+
+        start_date = cleaned_data.get('event_start')
+        end_date = cleaned_data.get('event_end')
+        if start_date > end_date:
+            raise forms.ValidationError("Please insert correct start and end dates")
+
+
+    class Meta:
+        model = EventProfile
+        fields = ['event_name', 'event_start', 'event_end', 'city', 'country', 'address', 'max_capacity', 'services', 'artist_list']
+
 
 
 
