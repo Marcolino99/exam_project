@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}Event: {{ object.full_name}}{% endblock %}
+
+{% block content %}
+
+     <h5 class="card-title">{{ object.event_name}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted"> {{object.address}} {{object.city}}, {{object.country}}</h6>
+    <div class="card" style="width: 18rem;">
+      <div class="card-header">
+        Services
+      </div>
+        <ul class="list-group list-group-flush">
+        {%  for service in object.services.all %}
+            <li class="list-group-item">
+
+                <div class="container">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <img src="{% static service.path %}" width="25" height="25" class="rounded float-start">
+                        </div>
+                        <div class="col-sm-9">
+                          <div class="row">
+                            <div class="col-8 col-sm-8">
+                              <p class="card-text">{{ service.name }}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </li>
+        {% endfor %}
+
+        </ul>
+    </div>
+    <a href="#" class="card-link">Another link</a>
+
+{% endblock %}

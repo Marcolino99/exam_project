@@ -158,4 +158,8 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         messages.error(self.request, self.permission_denied_message)
         return super(EventCreate, self).handle_no_permission()
 
+class EventDetail(DetailView):
+    model = EventProfile
+    template_name = "book2fest/event/detail.html"
+
 
