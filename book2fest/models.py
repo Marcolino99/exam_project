@@ -53,17 +53,18 @@ class Delivery(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+from base_project.settings import STATICFILES_DIRS
 class Service(models.Model):
     name = models.CharField(max_length=32)
     description = models.TextField()
-    path = models.FilePathField(path='static/images/icon', default='static/images/default.png')
+    path = models.FilePathField(path=f'static/images/icon', default=f'static/images/default.png', )
 
     def __str__(self):
         return f'{self.name} - {self.description}'
 
 
 class EventProfile(models.Model):
-    user = models.OneToOneField(OrganizerProfile, related_name='event_user', on_delete=models.CASCADE)
+    user = models.ForeignKey(OrganizerProfile, related_name='event_user', on_delete=models.CASCADE)
     event_name = models.CharField(max_length=60)
     artist_list = models.ManyToManyField(Artist)
     city = models.CharField(max_length=32)
