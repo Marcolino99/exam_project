@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block title %}{{ object.event_name }}{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+    <br><br><br>
+    <div class="container-fluid heading">
+        <div class="row">
+            <div class="col">
+                <h2>{{ object.event_name }}</h2>
+                <h5><i class="bi bi-geo-fill">{{ object.address }} - {{ object.city }}, {{ object.country }}</i></h5>
+                <div>
+                    <p class="text-{% if object.is_past %}danger{% else %}primary{% endif %}"><i class="bi bi-calendar-date "></i> {{ object.event_start }} - {{ object.event_end }}</p>
+                </div>
+                <h5>
+                    <i>
+                        With:
+                    {% for artist in object.artist_list.all|slice:":5" %}
+                        {% if artist != object.artist_list.all.first %}, {% endif %}{{ artist.full_name }}
+                    {% endfor %}
+                    {% if object.artist_list.count > 5 %}...{% endif %}
+                    </i>
+                </h5>
+                <p>{{ object.brief_description }}</p>
+                {% crispy form %}
+            </div>
+            <div class="col-sm-6">
+                <div id="eventPictures" class="carousel slide carousel-fade w-100" data-ride="carousel">
+                    <div class="carousel-inner">
+                        {% for img in object.pictures.all %}
+                            <div class="carousel-item{% if img == object.pictures.all|first %} active{% endif %}">
+                                <img src="{{ MEDIA_URL }}{{ img.pic.path }}" class="d-block w-100" alt="{{ img.name }}" style="height:30rem;">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ img.name }}</h5>
+                                    <p>{{ img.description }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#eventPictures" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#eventPictures" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <div class="border border-secondary rounded bg-warning align-bottom">
+                            <p class="services">Services:</p>
+                            <ul class="serviceslist">
+                                {% for service in object.services.all %}
+                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="{{ service.description }}"> <img src="{{ MEDIA_URL }}{{ service.icon.path }}" alt="{{ service.name }}">{{ service.name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+{% endblock %}
