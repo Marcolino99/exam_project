@@ -1,5 +1,5 @@
 from django import forms
-from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile
+from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile, Ticket
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -60,6 +60,7 @@ class EventProfileForm(forms.ModelForm):
     event_end = forms.DateTimeField(widget=forms.SelectDateWidget)
 
 
+
     helper = FormHelper()
     helper.form_id = 'event_crispy_form'
     helper.form_method = 'POST'
@@ -82,7 +83,7 @@ class EventProfileForm(forms.ModelForm):
 
     class Meta:
         model = EventProfile
-        fields = ['event_name', 'event_start', 'event_end', 'city', 'country', 'address', 'max_capacity', 'services', 'artist_list']
+        fields = ['event_name', 'event_start', 'brief_description', 'description', 'event_end', 'city', 'country', 'address', 'max_capacity', 'services', 'artist_list']
 
 
 class SeatForm(forms.ModelForm):
@@ -98,6 +99,18 @@ class SeatForm(forms.ModelForm):
     class Meta:
         model = Seat
         fields = ['seat_type', 'row', 'number', 'price', 'quantity']
+
+
+class TicketForm(forms.ModelForm):
+
+    helper = FormHelper()
+    helper.form_id = 'ticket-form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+
+    class Meta:
+        model = Ticket
+        fields = ('seat', 'delivery')
 
 def form_validation_error(form):
     msg = ""

@@ -5,9 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView, CreateView, DetailView, ListView
+from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
-    SeatForm
+    SeatForm, TicketForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
 from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType
 
@@ -160,9 +161,14 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         return super(EventCreate, self).handle_no_permission()
 
 
-class EventDetail(DetailView):
+class EventDetail(FormMixin, DetailView):
     model = EventProfile
-    template_name = "book2fest/event/detail.html"
+    form_class = TicketForm
+    template_name = 'book2fest/event.html'
+    success_url = '/home'
+
+    def form_valid(self, form):
+        form.save()
 
 
 class EventList(ListView):

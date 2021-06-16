@@ -9,9 +9,18 @@ from django.utils.datetime_safe import date
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, related_name='user_profile', on_delete=models.CASCADE)
-    organizer = models.BooleanField(default=False)
+
     def __str__(self):
-        return f'{self.user.username}'
+        return f'{self.user.first_name} {self.user.last_name}'
+
+class OrganizerProfile(models.Model):
+    user = models.OneToOneField(User, related_name='organizer_user_profile', on_delete=models.CASCADE)
+    company = models.CharField(max_length=32)
+    short_bio = models.CharField(max_length=300)
+
+    def __str__(self):
+        return f'{self.user.first_name} {self.user.last_name}'
+
 
 
 class Image(models.Model):
@@ -27,13 +36,16 @@ class Category(models.Model):
 class Genre(models.Model):  #TODO: Perchè è associato a category?
     name = models.CharField(max_length=32)
     category = models.ForeignKey(Category, related_name='genre_category', on_delete=models.CASCADE)
+
     def __str__(self):
         return self.name
 
 
 class Artist(models.Model):
     full_name = models.CharField(max_length=32)
+    image = models.ImageField(upload_to='images/')
     genre = models.ForeignKey(Genre, related_name='artist_genre', on_delete=models.CASCADE)
+
     def __str__(self):
         return self.full_name
 
@@ -43,8 +55,13 @@ class Delivery(models.Model):
     overprice = models.FloatField()
     delivery_time = models.DurationField()   #TODO forse meglio mettere un datetime field boh
 
+    def __str__(self):
+        return f'{self.name}'
+
+
 class ServiceImage(models.Model):
     path = models.FileField(upload_to="services", validators=[FileExtensionValidator(['svg'])])
+
     def __str__(self):
         return f'{self.path.name.split("/")[-1]}'
 
@@ -53,6 +70,8 @@ class Service(models.Model):
     description = models.TextField()
     icon = models.OneToOneField(ServiceImage, related_name='icon', on_delete=models.CASCADE)
 
+    def __str__(self):
+        return f'{self.name} - {self.description}'
 
 class EventProfile(models.Model):
     user = models.OneToOneField(User, related_name='event_user', on_delete=models.CASCADE)
@@ -73,7 +92,7 @@ class EventProfile(models.Model):
         return date.today() > self.event_end
 
     def __str__(self):
-        return self.event_name
+        return f'{self.event_name} - {self.event_start.year}'
 
 
 class Picture(models.Model):

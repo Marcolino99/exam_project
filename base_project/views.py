@@ -7,8 +7,6 @@ from django.views.generic import TemplateView, CreateView
 
 _logger = logging.getLogger(__name__)
 
-
-
 class Homepage(TemplateView):
     template_name = 'home.html'
 
