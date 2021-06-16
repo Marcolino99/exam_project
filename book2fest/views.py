@@ -2,14 +2,30 @@
 import logging
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from django.views.generic import View
+from django.views.generic import View, DetailView
+from django.views.generic.edit import FormMixin
 
-from book2fest.forms import UserProfileForm, form_validation_error
-from book2fest.models import UserProfile
+from .forms import UserProfileForm, form_validation_error, TicketForm
+from .models import UserProfile, EventProfile
 
 _logger = logging.getLogger(__name__)
 
+class EventDetailView(FormMixin, DetailView):
+    model = EventProfile
+    form_class = TicketForm
+    template_name = 'book2fest/event.html'
+    success_url = '/home'
+
+    """
+    def __init__(self, user, *args, **kwargs):
+        super(EventDetailView, self).__init__(*args, **kwargs)
+        self.form_class.fields['user'].queryset = User.objects.filter(pk=user.id)
+    """
+
+    def form_valid(self, form):
+        form.save()
 
 
 class UserProfileView(LoginRequiredMixin, View):

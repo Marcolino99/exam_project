@@ -1,5 +1,5 @@
 from django import forms
-from book2fest.models import UserProfile
+from book2fest.models import UserProfile, Ticket
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -27,3 +27,14 @@ def form_validation_error(form):
             msg += "%s: %s \\n" % (field.label if hasattr(field, 'label') else 'Error', error)
     return msg
 
+
+class TicketForm(forms.ModelForm):
+
+    helper = FormHelper()
+    helper.form_id = 'ticket-form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+
+    class Meta:
+        model = Ticket
+        fields = ('seat', 'delivery')
