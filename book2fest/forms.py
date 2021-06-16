@@ -1,5 +1,5 @@
 from django import forms
-from book2fest.models import Artist, OrganizerProfile, UserProfile, Genre, Service, EventProfile
+from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -71,8 +71,13 @@ class EventProfileForm(forms.ModelForm):
 
         start_date = cleaned_data.get('event_start')
         end_date = cleaned_data.get('event_end')
+        max_capacity = cleaned_data.get('max_capacity')
+
         if start_date > end_date:
             raise forms.ValidationError("Please insert correct start and end dates")
+
+        if max_capacity <= 0:
+            raise forms.ValidationError("Please insert a valid max capacity")
 
 
     class Meta:
@@ -80,7 +85,19 @@ class EventProfileForm(forms.ModelForm):
         fields = ['event_name', 'event_start', 'event_end', 'city', 'country', 'address', 'max_capacity', 'services', 'artist_list']
 
 
+class SeatForm(forms.ModelForm):
+    seat_type = forms.ModelChoiceField(queryset=SeatType.objects.all(), required=True)
+    quantity = forms.IntegerField(required=True)
 
+    helper = FormHelper()
+    helper.form_id = 'seat_crispy_form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+    helper.inputs[0].field_classes = 'btn btn-success'
+
+    class Meta:
+        model = Seat
+        fields = ['seat_type', 'row', 'number', 'price', 'quantity']
 
 def form_validation_error(form):
     msg = ""

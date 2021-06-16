@@ -88,7 +88,6 @@ class SeatType(models.Model):
 
 class Seat(models.Model):
     event = models.ForeignKey(EventProfile, related_name='seat_event', on_delete=models.CASCADE)
-    name = models.CharField(max_length=32)
     row = models.CharField(max_length=1, blank=True)
     number = models.CharField(max_length=4, blank=True)
     price = models.FloatField()

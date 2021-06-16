@@ -4,11 +4,12 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import View, TemplateView, CreateView, DetailView
+from django.views.generic import View, TemplateView, CreateView, DetailView, ListView
 
-from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error
+from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
+    SeatForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
-from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile
+from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType
 
 _logger = logging.getLogger(__name__)
 
@@ -158,8 +159,29 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         messages.error(self.request, self.permission_denied_message)
         return super(EventCreate, self).handle_no_permission()
 
+
 class EventDetail(DetailView):
     model = EventProfile
     template_name = "book2fest/event/detail.html"
 
 
+class EventList(ListView):
+    model = EventProfile
+    template_name = "book2fest/event/list.html"
+
+
+class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
+    # form_class = SeatForm
+    # template_name = "book2fest/seat/create.html"
+    # permission_denied_message = "You must authenticate first!"
+    # success_url = reverse_lazy("book2fest:organizer-profile")
+    event_profile = None
+
+    def get(self, request, **kwargs):
+        event_id = kwargs.get('pk')
+        self.event_profile = EventProfile.objects.get(pk=event_id)
+        seat_types = SeatType.objects.all()
+
+
+        context = {'event': self.event_profile, 'seat_types': seat_types}
+        return render(request, 'book2fest/seat/create.html', context)

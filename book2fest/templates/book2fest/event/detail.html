@@ -2,7 +2,7 @@
 {% load static %}
 
 
-{% block title %}Event: {{ object.full_name}}{% endblock %}
+{% block title %}Event: {{ object.event_name }}{% endblock %}
 
 {% block content %}
 
@@ -15,7 +15,6 @@
         <ul class="list-group list-group-flush">
         {%  for service in object.services.all %}
             <li class="list-group-item">
-
                 <div class="container">
                       <div class="row">
                         <div class="col-sm-3">
@@ -35,6 +34,29 @@
 
         </ul>
     </div>
-    <a href="#" class="card-link">Another link</a>
+
+    <div class="card" style="width: 18rem;">
+          <div class="card-header">
+            Artists
+          </div>
+            <ul class="list-group list-group-flush">
+            {%  for artist in object.artist_list.all %}
+                <li class="list-group-item">
+
+                    <div class="container">
+                            <div class="col-sm-9">
+                              <div class="row">
+                                <div class="col-8 col-sm-8">
+                                    <a href="{% url 'book2fest:artist-detail' artist.pk%}" ><p class="card-text">{{ artist.full_name }}</p></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                    </li>
+            {% endfor %}
+
+            </ul>
+        </div>
 
 {% endblock %}
