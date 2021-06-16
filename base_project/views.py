@@ -2,7 +2,7 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, resolve
 from django.views.generic import TemplateView, CreateView
 
 _logger = logging.getLogger(__name__)
@@ -16,4 +16,4 @@ class Homepage(TemplateView):
 class UserCreationView(CreateView):
     form_class = UserCreationForm
     template_name = 'registration/user_create.html'
-    success_url = reverse_lazy('homepage')
+    success_url = reverse_lazy('book2fest:complete-reg')

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Seat: Create{% endblock %}
+
+
+
+{% block content %}
+    <h1>Manage seats of {{event.event_name}}</h1>
+    <main class="content">
+
+        <form action="{% url 'book2fest:manage-seat' event.pk %}" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-12 col-xl-8">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">Seat type</span>
+                                  </div>
+                                  <select class="form-select" id="selectSeatType" aria-label="Default select example">
+                                            {% for type in seat_types %}
+                                                <option selected> {{type.name}}</option>
+                                             {% endfor %}
+                                  </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">Quantity of seats</span>
+                                  </div>
+                                  <input type="text" id="textInput" value="" >
+                                <input type="range" class="form-control" min="0" max="{{event.max_capacity}}" id="customRange1" onchange="updateTextInput(this.value);" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <div class="input-group mb-3">
+                                  <div class="input-group-prepend">
+                                    <span class="input-group-text">Price</span>
+                                  </div>
+                                  <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                                    <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+
+                            </div>
+                        </div>
+
+            </div>
+        </form>
+
+    </main>
+{% endblock %}
+
