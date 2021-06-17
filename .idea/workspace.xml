@@ -1,37 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
+    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="commit media">
+      <change afterPath="$PROJECT_DIR$/book2fest/migrations/0002_auto_20210617_1254.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/red.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/red_5AjULw0.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/red_Ci7IU72.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/red_RqAKUGU.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/images/red_f2WeKKU.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red-1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_33jFhHy.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_Gqca9HS.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_b3pmcof.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_mfyXYtd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_xVylRUw.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_xj6TQe5.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/green.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/red.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/yellow.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/exam_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/exam_project.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_project/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0002_userprofile_organizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0003_auto_20210613_1420.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0004_alter_ticket_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0005_alter_ticket_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0006_auto_20210615_1013.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0007_auto_20210615_1021.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0008_auto_20210615_1047.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0009_auto_20210615_1330.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0010_auto_20210615_1350.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0011_auto_20210615_1401.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0012_auto_20210615_1403.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0013_auto_20210615_1404.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0014_auto_20210615_1413.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0015_auto_20210615_1416.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0016_auto_20210615_1417.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/services/cursor.svg" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -43,6 +50,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -54,12 +66,15 @@
     </file-type-list>
   </component>
   <component name="ProjectId" id="1tlNIgMGh2smSAYE9OnfVUz3dmx" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="sqlite" />
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
@@ -67,14 +82,41 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="ToolWindowGit.ShowToolbar" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/db.sqlite3" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/base_project/settings.py" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.django.DjangoModulesConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\maret\Desktop\Scola\III_Anno\II° Semestre\Tecnlogie Web\exam_project\book2fest\templates\book2fest\user" />
       <recent name="C:\Users\maret\Desktop\Scola\III_Anno\II° Semestre\Tecnlogie Web\exam_project\base_project" />
     </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Unnamed" type="Python.DjangoServer" factoryName="Django server" nameIsGenerated="true">
+      <module name="exam_project" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="base_project.settings" />
+      </envs>
+      <option name="SDK_HOME" value="$USER_HOME$/.local/share/virtualenvs/exam_project-MYhZ7PkL/bin/python" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <option name="port" value="8000" />
+      <option name="host" value="" />
+      <option name="additionalOptions" value="" />
+      <option name="browserUrl" value="" />
+      <option name="runTestServer" value="false" />
+      <option name="runNoReload" value="false" />
+      <option name="useCustomRunCommand" value="false" />
+      <option name="customRunCommand" value="" />
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -88,6 +130,7 @@
       <workItem from="1623489174716" duration="6917000" />
       <workItem from="1623749248511" duration="17022000" />
       <workItem from="1623852128881" duration="10190000" />
+      <workItem from="1623924026674" duration="8836000" />
     </task>
     <servers />
   </component>
@@ -105,7 +148,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="dev" />
+                        <option value="prova" />
                       </list>
                     </value>
                   </entry>
@@ -117,5 +160,8 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
 </project>

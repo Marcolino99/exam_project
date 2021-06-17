@@ -29,6 +29,10 @@ class Image(models.Model):
 
 class Category(models.Model):
     name = models.CharField(max_length=32)
+
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name_plural = 'Categories'
 
@@ -57,6 +61,9 @@ class Delivery(models.Model):
 
     def __str__(self):
         return f'{self.name}'
+
+    class Meta:
+        verbose_name_plural = 'Deliveries'
 
 
 class ServiceImage(models.Model):
@@ -95,11 +102,18 @@ class EventProfile(models.Model):
         return f'{self.event_name} - {self.event_start.year}'
 
 
+class Pic(models.Model):
+    path = models.ImageField(upload_to='pictures/')
+
+
 class Picture(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
-    pic = models.OneToOneField(Image, related_name='img', on_delete=models.CASCADE)
+    pic = models.OneToOneField(Pic, related_name='img', on_delete=models.CASCADE)
     event = models.ForeignKey(EventProfile, related_name='pictures', on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.name
 
 
 class SeatType(models.Model):
