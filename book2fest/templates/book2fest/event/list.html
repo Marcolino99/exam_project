@@ -8,16 +8,21 @@
     <th>City</th>
     <th>Date</th>
     <th>Available</th>
+    {% if organizer %}
+    <th>Manage Seats</th>
+    {% endif%}
 {% endblock %}
 
 {% block tbody %}
     {% for event in object_list  %}
         <tr>
-            <td>{{ event.event_name }}</td>
+            <td><a href="{% url 'book2fest:event-detail' event.pk %}">{{ event.event_name }}</a></td>
             <td>{{ event.city }}</td>
             <td>{{ event.event_start }}</td>
-            <td><a href="{% url 'book2fest:event-detail' event.pk %}">detail</a>
-            </td>
+            <td>0</td>
+            {% if organizer %}
+            <td><a href="{% url 'book2fest:manage-seat' event.pk %}">Manage seats</a></td>
+            {% endif%}
         </tr>
     {% endfor %}
 {% endblock %}

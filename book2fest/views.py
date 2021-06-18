@@ -213,12 +213,19 @@ class EventDetail(FormMixin, DetailView):
             return redirect('homepage') #TODO Redirect to ticket detail page or something
 
 
-
-
 class EventList(ListView):
     model = EventProfile
     template_name = "book2fest/event/list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(EventList, self).get_context_data(**kwargs)
+        try:
+            context['organizer'] = OrganizerProfile.objects.get(user=self.request.user)
+
+        except ObjectDoesNotExist:
+            context['organizer'] = None
+
+        return context
 
 class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
     # form_class = SeatForm
