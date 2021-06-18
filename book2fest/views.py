@@ -10,9 +10,9 @@ from django.views.generic import View, TemplateView, CreateView, DetailView, Lis
 from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
-    SeatForm, TicketForm
+    TicketForm, SeatForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
-from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType, Ticket
+from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat
 
 _logger = logging.getLogger(__name__)
 
@@ -234,10 +234,14 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
     # permission_denied_message = "You must authenticate first!"
     # success_url = reverse_lazy("book2fest:organizer-profile")
     event_profile = None
+    event_id = None
+
+    def dispatch(self, request, *args, **kwargs):
+        self.event_id = kwargs.get('pk')
+        self.event_profile = EventProfile.objects.get(pk=self.event_id)
+        return super(ManageSeat, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, **kwargs):
-        event_id = kwargs.get('pk')
-        self.event_profile = EventProfile.objects.get(pk=event_id)
 
         if self.profile == self.event_profile.user:
             seat_types = SeatType.objects.all()
@@ -246,3 +250,25 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
         else:
             #User trying to manage seats not of one of his events
             return redirect('homepage') #TODO redirect to another page maybe
+
+    def post(self, request, **kwargs):
+
+        form = SeatForm(request.POST, request.FILES)
+        if form.is_valid():
+            total = form.cleaned_data.get('quantity')
+            price = form.cleaned_data.get('price')
+            row = form.cleaned_data.get('row')
+            seat_type = form.cleaned_data.get('seat_type')
+
+            for number in range(total):
+                seat = Seat(price=price, row=row, number=number, seat_type=seat_type, available=True, event=self.event_profile)
+                seat.save()
+
+            messages.success(request, f"Added {total} seats successfully")
+
+
+
+        else:
+            messages.error(request, form_validation_error(form))
+
+        return redirect('book2fest:event-detail', pk=kwargs.get('pk'))

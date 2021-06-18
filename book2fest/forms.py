@@ -88,7 +88,7 @@ class EventProfileForm(forms.ModelForm):
 
 class SeatForm(forms.ModelForm):
     seat_type = forms.ModelChoiceField(queryset=SeatType.objects.all(), required=True)
-    quantity = forms.IntegerField(required=True)
+    quantity = forms.IntegerField(required=True, min_value=1)
 
     helper = FormHelper()
     helper.form_id = 'seat_crispy_form'
@@ -96,9 +96,11 @@ class SeatForm(forms.ModelForm):
     helper.add_input(Submit('submit', 'Submit'))
     helper.inputs[0].field_classes = 'btn btn-success'
 
+
+
     class Meta:
         model = Seat
-        fields = ['seat_type', 'row', 'number', 'price', 'quantity']
+        fields = ['seat_type', 'row', 'price', 'quantity']
 
 
 class TicketForm(forms.ModelForm):
@@ -124,5 +126,6 @@ def form_validation_error(form):
     for field in form:
         for error in field.errors:
             msg += "%s: %s \\n" % (field.label if hasattr(field, 'label') else 'Error', error)
+    print(msg)
     return msg
 
