@@ -123,7 +123,7 @@ class Seat(models.Model):
 
 
 class Ticket(models.Model):
-    seat = models.ForeignKey(Seat, related_name='ticket_seat', on_delete=models.CASCADE)
+    seat = models.OneToOneField(Seat, related_name='ticket_seat', on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, related_name="ticket_user", on_delete=models.CASCADE)
     delivery = models.ForeignKey(Delivery, related_name='ticket_delivery', on_delete=models.CASCADE)
 
