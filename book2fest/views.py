@@ -171,7 +171,17 @@ class EventDetail(FormMixin, DetailView):
     profile = None
     ticket = None
 
-    def post(self, request, **kwargs):
+    def get(self, request, **kwargs):
+        form = TicketForm(event_pk=kwargs.pop('pk')) # filter form with event_pk
+
+        self.object = self.get_object()
+        context = self.get_context_data(object=self.object)
+
+        context['form'] = form
+        return self.render_to_response(context)
+
+
+def post(self, request, **kwargs):
         #check if user is anonymous
         if isinstance(request.user, AnonymousUser):
             return redirect('login')
