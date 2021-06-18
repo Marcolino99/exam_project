@@ -227,6 +227,7 @@ class EventList(ListView):
 
         return context
 
+
 class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
     # form_class = SeatForm
     # template_name = "book2fest/seat/create.html"
@@ -237,8 +238,11 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
     def get(self, request, **kwargs):
         event_id = kwargs.get('pk')
         self.event_profile = EventProfile.objects.get(pk=event_id)
-        seat_types = SeatType.objects.all()
 
-
-        context = {'event': self.event_profile, 'seat_types': seat_types}
-        return render(request, 'book2fest/seat/create.html', context)
+        if self.profile == self.event_profile.user:
+            seat_types = SeatType.objects.all()
+            context = {'event': self.event_profile, 'seat_types': seat_types}
+            return render(request, 'book2fest/seat/create.html', context)
+        else:
+            #User trying to manage seats not of one of his events
+            return redirect('homepage') #TODO redirect to another page maybe
