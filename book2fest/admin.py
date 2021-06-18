@@ -1,6 +1,6 @@
 from django.contrib import admin
 from book2fest.models import Artist, OrganizerProfile, UserProfile, Genre, Category, EventProfile, Service, SeatType, \
-    ServiceImage, Seat
+    ServiceImage, Seat, Delivery, Ticket
 
 # Register your models here.
 admin.site.register(UserProfile)
@@ -13,3 +13,5 @@ admin.site.register(Service)
 admin.site.register(SeatType)
 admin.site.register(Seat)
 admin.site.register(ServiceImage)
+admin.site.register(Delivery)
+admin.site.register(Ticket)

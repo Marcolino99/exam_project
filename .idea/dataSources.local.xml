@@ -8,8 +8,6 @@
     </data-source>
     <data-source name="db.sqlite3" uuid="1ec77e5a-495e-48ba-85fd-f5de30892809">
       <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="SQLITE" exact-version="0" />
-      <secret-storage>master_key</secret-storage>
-      <auth-provider>no-auth</auth-provider>
       <schema-mapping />
     </data-source>
   </component>

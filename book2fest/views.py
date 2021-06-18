@@ -2,6 +2,8 @@
 import logging
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import AnonymousUser
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView, CreateView, DetailView, ListView
@@ -10,7 +12,7 @@ from django.views.generic.edit import FormMixin
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
     SeatForm, TicketForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
-from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType
+from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType, Ticket
 
 _logger = logging.getLogger(__name__)
 
@@ -166,12 +168,37 @@ class EventDetail(FormMixin, DetailView):
     form_class = TicketForm
     template_name = 'book2fest/event.html'
     success_url = '/home'
+    profile = None
+    ticket = None
 
-    def form_valid(self, form):
-        print(form.instance.user)
-        if self.request.user is None:
+    def post(self, request, **kwargs):
+        #check if user is anonymous
+        if isinstance(request.user, AnonymousUser):
             return redirect('login')
-        form.save()
+
+        self.ticket = Ticket()
+        form = TicketForm(request.POST, request.FILES, instance=self.ticket)
+
+
+        try:
+            if form.is_valid():
+                #Get user profile and create ticket
+
+                self.profile = UserProfile.objects.get(user=request.user)      # retrieve logged user
+                self.ticket.user = self.profile
+                self.ticket.delivery = form.cleaned_data.get('delivery')
+                self.ticket.seat = form.cleaned_data.get('seat')
+
+                # save ticket
+                self.ticket.save()
+                messages.success(request, 'Ticket booked successfully')
+
+        except ObjectDoesNotExist:  # if exception catched user is an organizer
+            return redirect("book2fest:organizer-profile")
+
+        return redirect('homepage') #TODO Redirect to ticket detail page or something
+
+
 
 
 class EventList(ListView):
