@@ -168,6 +168,9 @@ class EventDetail(FormMixin, DetailView):
     success_url = '/home'
 
     def form_valid(self, form):
+        print(form.instance.user)
+        if self.request.user is None:
+            return redirect('login')
         form.save()
 
 

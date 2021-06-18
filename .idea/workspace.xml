@@ -3,30 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_project/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0002_userprofile_organizer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0003_auto_20210613_1420.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0004_alter_ticket_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0005_alter_ticket_user.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0006_auto_20210615_1013.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0007_auto_20210615_1021.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0008_auto_20210615_1047.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0009_auto_20210615_1330.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0010_auto_20210615_1350.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0011_auto_20210615_1401.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0012_auto_20210615_1403.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0013_auto_20210615_1404.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0014_auto_20210615_1413.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0015_auto_20210615_1416.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0016_auto_20210615_1417.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +69,8 @@
       <workItem from="1623339639580" duration="7500000" />
       <workItem from="1623489174716" duration="6917000" />
       <workItem from="1623749248511" duration="17022000" />
-      <workItem from="1623852128881" duration="10190000" />
+      <workItem from="1623852128881" duration="11597000" />
+      <workItem from="1624020186446" duration="438000" />
     </task>
     <servers />
   </component>
