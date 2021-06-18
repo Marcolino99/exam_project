@@ -110,10 +110,9 @@ class TicketForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         event_pk = kwargs.pop('event_pk', None)   # pop pk event
-        print(f'\n\n\n {event_pk}')
         super(TicketForm, self).__init__(*args, **kwargs)
         if event_pk:
-            self.fields['seat'].queryset = Seat.objects.all().filter(event = event_pk)  #filter choice field with event_pk seat only
+            self.fields['seat'].queryset = Seat.objects.all().filter(event = event_pk, available=True)  #filter choice field with event_pk seat only
 
 
     class Meta:

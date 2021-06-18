@@ -181,32 +181,36 @@ class EventDetail(FormMixin, DetailView):
         return self.render_to_response(context)
 
 
-def post(self, request, **kwargs):
-        #check if user is anonymous
-        if isinstance(request.user, AnonymousUser):
-            return redirect('login')
+    def post(self, request, **kwargs):
+            #check if user is anonymous
+            if isinstance(request.user, AnonymousUser):
+                return redirect('login')
 
-        self.ticket = Ticket()
-        form = TicketForm(request.POST, request.FILES, instance=self.ticket)
+            self.ticket = Ticket()
+            form = TicketForm(request.POST, request.FILES, instance=self.ticket)
 
 
-        try:
-            if form.is_valid():
-                #Get user profile and create ticket
+            try:
+                if form.is_valid():
+                    #Get user profile and create ticket
 
-                self.profile = UserProfile.objects.get(user=request.user)      # retrieve logged user
-                self.ticket.user = self.profile
-                self.ticket.delivery = form.cleaned_data.get('delivery')
-                self.ticket.seat = form.cleaned_data.get('seat')
+                    self.profile = UserProfile.objects.get(user=request.user)      # retrieve logged user
+                    self.ticket.user = self.profile
+                    self.ticket.delivery = form.cleaned_data.get('delivery')
+                    self.ticket.seat = form.cleaned_data.get('seat')
 
-                # save ticket
-                self.ticket.save()
-                messages.success(request, 'Ticket booked successfully')
+                    # save ticket
+                    self.ticket.save()
 
-        except ObjectDoesNotExist:  # if exception catched user is an organizer
-            return redirect("book2fest:organizer-profile")
+                    self.ticket.seat.available = False
+                    print(self.ticket.seat)
+                    self.ticket.seat.save()
+                    messages.success(request, 'Ticket booked successfully')
 
-        return redirect('homepage') #TODO Redirect to ticket detail page or something
+            except ObjectDoesNotExist:  # if exception catched user is an organizer
+                return redirect("book2fest:organizer-profile")
+
+            return redirect('homepage') #TODO Redirect to ticket detail page or something
 
 
 
