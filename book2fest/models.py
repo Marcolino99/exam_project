@@ -74,7 +74,7 @@ class Service(models.Model):
         return f'{self.name} - {self.description}'
 
 class EventProfile(models.Model):
-    user = models.OneToOneField(OrganizerProfile, related_name='event_user', on_delete=models.CASCADE)
+    user = models.ForeignKey(OrganizerProfile, related_name='event_user', on_delete=models.CASCADE)
     event_name = models.CharField(max_length=60)
     brief_description = models.TextField()
     description = models.TextField()
