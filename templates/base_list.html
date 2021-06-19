@@ -2,22 +2,31 @@
 {% block title %}List: {% block list_title %}{% endblock %}{% endblock %}
 
 {% block content %}
-    <h1>List: {% block content_title %}{% endblock %}</h1>
-    <table class="table">
-        <thead>
-        <tr>
-            {% block thead %}
+    <div class="card" >
+        <div class="card-header">
+            <h1>{% block content_title %}{% endblock %}</h1>
+
+        </div>
+        <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                {% block thead %}
+
+                {% endblock %}
+            </tr>
+            </thead>
+            <tbody>
+            {% block tbody %}
 
             {% endblock %}
-        </tr>
-        </thead>
-        <tbody>
-        {% block tbody %}
+            </tbody>
+        </table>
+        {% block table_after %}
 
         {% endblock %}
-        </tbody>
-    </table>
-    {% block table_after %}
 
-    {% endblock %}
+        </div>
+
+    </div>
 {% endblock %}
