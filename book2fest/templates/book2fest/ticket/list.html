@@ -8,6 +8,7 @@
     <th>City</th>
     <th>Date</th>
     <th>Price</th>
+    <th>Manage</th>
 {% endblock %}
 
 {% block tbody %}
@@ -17,6 +18,7 @@
             <td>{{ ticket.seat.event.city }}</td>
             <td>{{ ticket.seat.event.event_start }}</td>
             <td>{{ ticket.seat.price}} &euro; + {{ ticket.delivery.overprice}} &euro;</td>
+            <td><a href="{% url 'book2fest:ticket-manage' ticket.pk %}">Manage ticket</a></td>
         </tr>
     {% endfor %}
 {% endblock %}

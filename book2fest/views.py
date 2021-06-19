@@ -229,16 +229,19 @@ class EventList(ListView):
 
 
 class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
-    # form_class = SeatForm
-    # template_name = "book2fest/seat/create.html"
-    # permission_denied_message = "You must authenticate first!"
-    # success_url = reverse_lazy("book2fest:organizer-profile")
     event_profile = None
     event_id = None
 
     def dispatch(self, request, *args, **kwargs):
         self.event_id = kwargs.get('pk')
-        self.event_profile = EventProfile.objects.get(pk=self.event_id)
+
+        try:
+            self.event_profile = EventProfile.objects.get(pk=self.event_id)
+
+        except ObjectDoesNotExist:
+            # trying to manage seat of an event that does not exist
+            return redirect('homepage')  # TODO redirect to another page maybe
+
         return super(ManageSeat, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, **kwargs):
@@ -281,3 +284,27 @@ class UserTicketList(LoginRequiredMixin, UserRequiredMixin, ListView):
     def get_queryset(self):
         return Ticket.objects.all().filter(user=self.profile)
 
+
+class ManageTicket(LoginRequiredMixin, UserRequiredMixin, View):
+    ticket = None
+    form = None
+
+    def dispatch(self, request, *args, **kwargs):
+        ticket_pk = kwargs.get('pk')
+        try:
+            self.ticket = Ticket.objects.get(pk=ticket_pk)
+
+        except ObjectDoesNotExist:
+            # trying to access to a ticket that does not exist
+            return redirect('homepage') #TODO redirect to another page maybe
+
+        return super(ManageTicket, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, **kwargs):
+        if self.ticket.user == self.profile:
+
+            context = {'ticket': self.ticket}
+            return render(request, "book2fest/ticket/manage.html", context)
+        else:
+            # user trying to manage not one of his tickets
+            return redirect('homepage')  # TODO redirect to another page maybe

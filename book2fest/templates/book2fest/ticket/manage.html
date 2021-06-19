@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+
+{% block title %}Ticket for {{ ticket.seat.event.event_name}}{% endblock %}
+
+{% block content %}
+
+    <ul class="list-group list-group-flush">
+        <li class="list-group-item"><label>Event:</label> {{ticket.seat.event.event_name}}</li>
+        <li class="list-group-item"><label>Seat:</label> {{ticket.seat}}</li>
+        <li class="list-group-item"><label>Date:</label> {{ticket.seat.event.event_start}}</li>
+        <li class="list-group-item"><label>Total Price:</label> {{ticket.seat.price}}&euro; + {{ticket.delivery.overprice}}&euro; </li>
+        <li class="list-group-item"><label>Delivery Time:</label> {{ticket.delivery.delivery_time.days}} days</li>
+    </ul>
+{% endblock %}
