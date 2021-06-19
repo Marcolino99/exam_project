@@ -272,3 +272,12 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
             messages.error(request, form_validation_error(form))
 
         return redirect('book2fest:event-detail', pk=kwargs.get('pk'))
+
+
+class UserTicketList(LoginRequiredMixin, UserRequiredMixin, ListView):
+    model = Ticket
+    template_name = "book2fest/ticket/list.html"
+
+    def get_queryset(self):
+        return Ticket.objects.all().filter(user=self.profile)
+

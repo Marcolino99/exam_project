@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col-12 col-xl-4">
                     <div class="row">
-                        <div class="col-12 mb-4">
+                        <div class="col-6 mb-4">
                             <div class="card border-light text-center p-0">
                                 <div class="card-body pb-5">
                                     <h4 class="h3">{{ profile.user.username }}</h4>
@@ -23,9 +23,13 @@
                                     <h6 class="font-weight-normal">
                                         {{ profile.short_bio }}
                                     </h6>
+
+                                    <a href="{% url 'book2fest:ticket-list' %}"><button type="button" class="btn btn-light">Manage your Tickets</button></a>
+
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="col-12 col-xl-8">

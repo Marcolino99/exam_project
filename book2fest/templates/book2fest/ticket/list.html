@@ -1,0 +1,22 @@
+{% extends 'base_list.html' %}
+
+{% block list_title %}Your Tickets{% endblock %}
+{% block content_title %}Your Tickets{% endblock %}
+
+{% block thead %}
+    <th>Event Name</th>
+    <th>City</th>
+    <th>Date</th>
+    <th>Price</th>
+{% endblock %}
+
+{% block tbody %}
+    {% for ticket in object_list  %}
+        <tr>
+            <td><a href="{% url 'book2fest:event-detail' ticket.seat.event.pk %}">{{ ticket.seat.event.event_name }}</a></td>
+            <td>{{ ticket.seat.event.city }}</td>
+            <td>{{ ticket.seat.event.event_start }}</td>
+            <td>{{ ticket.seat.price}} &euro; + {{ ticket.delivery.overprice}} &euro;</td>
+        </tr>
+    {% endfor %}
+{% endblock %}

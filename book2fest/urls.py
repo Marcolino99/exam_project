@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from .views import UserProfileView, OrganizerProfileView, CompleteRegistrationView, ArtistCreate, UserCreate, \
-    OrganizerCreate, ArtistDetail, EventCreate, EventDetail, EventList, ManageSeat
+    OrganizerCreate, ArtistDetail, EventCreate, EventDetail, EventList, ManageSeat, UserTicketList
 
 app_name = "book2fest"
 
@@ -16,5 +16,6 @@ urlpatterns=[
     path('event/list', EventList.as_view(), name='event-list'),
     path('artist/create', ArtistCreate.as_view(), name='artist-create'),
     path('artist/<int:pk>/detail', ArtistDetail.as_view(), name='artist-detail'),
-    path('event/<int:pk>/manage-seat', ManageSeat.as_view(), name='manage-seat' )
+    path('event/<int:pk>/manage-seat', ManageSeat.as_view(), name='manage-seat' ),
+    path('ticket/list', UserTicketList.as_view(), name='ticket-list' )
 ]
