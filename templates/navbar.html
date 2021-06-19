@@ -19,8 +19,21 @@
                     </li>
                 </ul>
                 <form class="d-flex w-25" style="position:absolute; margin:auto; left:0; right:0;">
-                    <input class="form-control me-2" type="search" placeholder="Search event" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <div class="d-flex">
+                        <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
+                    </div>
+                    <div class="d-flex">
+                        <select class="form-select" name="search-filter" aria-label="Default select example">
+                          <option value="event_name" selected>Event Name</option>
+                          <option value="artist">Artist</option>
+                          <option value="genre">Genre</option>
+                          <option value="category">Category</option>
+                        </select>
+                    </div>
+                    <div class="d-flex">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </div>
+
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">

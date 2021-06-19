@@ -12,7 +12,8 @@ from django.views.generic.edit import FormMixin
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
     TicketForm, SeatForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
-from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat
+from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat, Category, \
+    Genre
 
 _logger = logging.getLogger(__name__)
 
@@ -217,10 +218,44 @@ class EventList(ListView):
     model = EventProfile
     template_name = "book2fest/event/list.html"
 
+    def get_queryset(self):
+        result = super(EventList, self).get_queryset()
+        query = self.request.GET.get('search', None)
+        filter = self.request.GET.get('search-filter', None)
+
+        if query:
+            if filter == "category":
+                categories = Category.objects.all().filter(name__contains=query)
+                genres = Genre.objects.all().filter(category__in=categories)
+                artists = Artist.objects.all().filter(genre__in=genres)
+                result = EventProfile.objects.all().filter(artist_list__in=artists).distinct()
+
+            if filter == "genre":
+                genres = Genre.objects.all().filter(name__contains=query)
+                artists = Artist.objects.all().filter(genre__in=genres)
+                result = EventProfile.objects.all().filter(artist_list__in=artists).distinct()
+
+            if filter == "artist":
+                artists = Artist.objects.all().filter(full_name__contains=query)
+                result = EventProfile.objects.all().filter(artist_list__in=artists).distinct()
+
+            if filter == "event_name":
+                result = EventProfile.objects.all().filter(event_name__contains=query)
+
+        return result
+
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(EventList, self).get_context_data(**kwargs)
         try:
-            context['organizer'] = OrganizerProfile.objects.get(user=self.request.user)
+            # count seats available for events
+            for event in self.object_list:
+                seat_not_available = Seat.objects.all().filter(event=event.pk, available=False).count()
+                event.available  = Seat.objects.all().filter(event=event.pk).count() - seat_not_available
+
+            # if user is organizer -> show manage seat column in table
+            if not isinstance(self.request.user, AnonymousUser):
+                context['organizer'] = OrganizerProfile.objects.get(user=self.request.user)
 
         except ObjectDoesNotExist:
             context['organizer'] = None
@@ -308,3 +343,6 @@ class ManageTicket(LoginRequiredMixin, UserRequiredMixin, View):
         else:
             # user trying to manage not one of his tickets
             return redirect('homepage')  # TODO redirect to another page maybe
+
+
+    #TODO post method
