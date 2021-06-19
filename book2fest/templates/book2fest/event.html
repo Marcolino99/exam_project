@@ -6,9 +6,9 @@
 {% block content %}
     {% include 'navbar.html' %}
     <br><br><br>
-    <div class="container-fluid heading">
+    <div class="container-fluid heading border-bottom border-dark">
         <div class="row">
-            <div class="col">
+            <div class="col-lg-6">
                 <h2>{{ object.event_name }}</h2>
                 <h5><i class="bi bi-geo-fill">{{ object.address }} - {{ object.city }}, {{ object.country }}</i></h5>
                 <div>
@@ -17,17 +17,19 @@
                 <h5>
                     <i>
                         With:
-                    {% for artist in object.artist_list.all|slice:":5" %}
-                        {% if artist != object.artist_list.all.first %}, {% endif %}{{ artist.full_name }}
-                    {% endfor %}
-                    {% if object.artist_list.count > 5 %}...{% endif %}
+                        {% for artist in object.artist_list.all|slice:":5" %}
+                            {% if artist != object.artist_list.all.first %}, {% endif %}{{ artist.full_name }}
+                        {% endfor %}
+                        {% if object.artist_list.count > 5 %}...{% endif %}
                     </i>
                 </h5>
-                <p class="h-50">{{ object.brief_description }}</p>
+                <p>{{ object.brief_description }}</p>
+                <p>{{  object.max_capacity|subtract:object.seat_event.count }} tickets available, book yours now:</p>  <!--TODO: aiuto -->
+                <p>{{ object.seat_event.seat_type.price }}</p>
 
                 {% crispy form %}
             </div>
-            <div class="col-sm-6">
+            <div class="col-lg-6">
                 <div id="eventPictures" class="carousel slide carousel-fade w-100" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for img in object.pictures.all %}
@@ -50,24 +52,67 @@
                     </a>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col">
-                        <div class="border border-secondary rounded bg-warning align-bottom">
-                            <p class="services">Services:</p>
-                            <ul class="serviceslist">
-                                {% for service in object.services.all %}
-                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="{{ service.description }}"> <img src="{{ MEDIA_URL }}{{ service.icon.path }}" alt="{{ service.name }}">{{ service.name }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
+    <div class="container mt-3">
+        <h1>The event:</h1>
+        <p class="mt-4">{{ object.description }}</p>
+        <h2 class="mb-4">Artists:</h2>
+        <div class="">
+            {% for artist in object.artist_list.all %}
+                <p>
+                    <i class="mt-2" data-bs-toggle="tooltip" data-html="true" data-bs-placement="top" title="<img src='{{ MEDIA_URL }}{{ artist.image }}' alt='{{ artist.image }}' height='100rem'>">{{ artist.full_name }}: {{ artist.genre }} ({{ artist.genre.category }})</i>
+                </p>
+            {% endfor %}
+        </div>
+        <div class="">
+            <h2 class="mb-4">Location:</h2>
+            <div class="row">
+                <div class="col-xl-4">
+                    <img src="{{ MEDIA_URL }}images/static_map.png" alt="static_map" height="250rem">
+                    <!-- Servono api di google -->
+                </div>
+                <div class="col-xl-8">
+                    <h4>Address:</h4>
+                    <p>{{ object.address }}, {{ object.city }}, ({{ object.province }}), {{ object.cap }}</p>
+                    <h4>How to reach us:</h4>
+                    <p>{{ object.how_to_reach }}</p>
                 </div>
             </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <h2>Services:</h2>
+                <div class="border border-secondary rounded bg-warning align-bottom mt-4">
+                    <p class="services">We offer the following on-site services:</p>
+                    <ul class="serviceslist">
+                        {% for service in object.services.all %}
+                            <img src="{{ MEDIA_URL }}{{ service.icon.path }}" alt="{{ service.name }}"> <li data-bs-toggle="tooltip" data-bs-placement="top" title="{{ service.description }}">{{ service.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <h2>Book:</h2>
+            <table>
+                <!-- TODO: le righe ok, fai le colonne -->
+                {% for seat in righe %} <!-- probabilmente serve un altro for per ogni riga prodotta dal group-by -->
+                    <tr>
+                    {% if seat.available %}
+                        <i class="bi bi-person-fill bg-success" onclick="setInputSeat({{ seat }})"></i>
+                    {% else %}
+                        <i class="bi bi-person-fill bg-danger" onclick="setInputSeat({{ seat }})"></i>
+                    {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
 
         </div>
     </div>
+
+
 
 
 {% endblock %}
@@ -78,5 +123,9 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+
+        function setInputSeat(seat){
+            document.getElementById("form-id").value = 'seat #'+seat.column+' on row #'+seat.row;
+        }
     </script>
 {% endblock %}

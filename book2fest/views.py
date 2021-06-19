@@ -161,11 +161,21 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         return super(EventCreate, self).handle_no_permission()
 
 
+
+
 class EventDetail(FormMixin, DetailView):
     model = EventProfile
     form_class = TicketForm
     template_name = 'book2fest/event.html'
     success_url = '/home'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        occupied_seats = Seat.objects.filter(available=True)  # o EventProfile.event_seats.available=True???
+        righe = (Seat.objects.values('row').order_by('number'))
+        context.update({'righe': righe})
+        context.update({'occupied_seats': occupied_seats})
+        return context
 
     def form_valid(self, form):
         form.save()

@@ -3,7 +3,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
+from django.db.models import IntegerField, When, Count, Case, Sum
 from django.db.models.functions import datetime
+from django.template.defaulttags import register
 from django.utils.datetime_safe import date
 
 
@@ -37,7 +39,7 @@ class Category(models.Model):
         verbose_name_plural = 'Categories'
 
 
-class Genre(models.Model):  #TODO: Perchè è associato a category?
+class Genre(models.Model):
     name = models.CharField(max_length=32)
     category = models.ForeignKey(Category, related_name='genre_category', on_delete=models.CASCADE)
 
@@ -87,8 +89,11 @@ class EventProfile(models.Model):
     description = models.TextField()
     artist_list = models.ManyToManyField(Artist)
     city = models.CharField(max_length=32)
+    province = models.CharField(max_length=2)
+    cap = models.CharField(max_length=5)
     country = models.CharField(max_length=32)
     address = models.CharField(max_length=32)
+    how_to_reach = models.CharField(max_length=300)
     max_capacity = models.IntegerField()
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
@@ -97,6 +102,10 @@ class EventProfile(models.Model):
     @property
     def is_past(self):
         return date.today() > self.event_end
+
+    @register.filter(name='subtract')
+    def subtract(value, arg):
+        return value - arg
 
     def __str__(self):
         return f'{self.event_name} - {self.event_start.year}'
@@ -123,7 +132,7 @@ class SeatType(models.Model):
         return self.name
 
 
-class Seat(models.Model):
+class Seat(models.Model):   #TODO: i seats servono per tutti gli eventi?
     event = models.ForeignKey(EventProfile, related_name='seat_event', on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     row = models.CharField(max_length=1, blank=True)
@@ -134,6 +143,15 @@ class Seat(models.Model):
 
     def __str__(self):
         return f'{self.seat_type.name} #{self.number} on row {self.row}'
+
+    @property
+    def is_available(self): #TODO: ???
+        return Seat.objects.annotate(
+            available_seats = Sum(Case(
+                When(Seat.available==True, then=1),
+                output_field=IntegerField(),
+            ))
+        )
 
 
 class Ticket(models.Model):

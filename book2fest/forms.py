@@ -98,7 +98,7 @@ class SeatForm(forms.ModelForm):
 
     class Meta:
         model = Seat
-        fields = ['seat_type', 'row', 'number', 'price', 'quantity']
+        fields = ['seat_type', 'row', 'number', 'quantity']
 
 
 class TicketForm(forms.ModelForm):
@@ -112,7 +112,7 @@ class TicketForm(forms.ModelForm):
             Field('seat', title="Seat", css_class="ml-2 mr-3"),
             Field('delivery', title="Delivery", css_class="ml-2 mr-3"),
             Submit('submit', 'Book', css_class='bg-success'),
-            css_class="justify-content-left"
+            css_class="d-flex justify-content-left "
         )
     )
 

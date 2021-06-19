@@ -1,36 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="commit media">
-      <change afterPath="$PROJECT_DIR$/book2fest/migrations/0002_auto_20210617_1254.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/red.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/red_5AjULw0.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/red_Ci7IU72.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/red_RqAKUGU.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/images/red_f2WeKKU.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red-1.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red_33jFhHy.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red_Gqca9HS.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red_b3pmcof.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red_mfyXYtd.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red_xVylRUw.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/images/red_xj6TQe5.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/pictures/green.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/pictures/red.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/media/pictures/yellow.jpg" afterDir="false" />
+    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="Added Media to urls, fixed uploads in models, modifying crispy form layout">
+      <change afterPath="$PROJECT_DIR$/book2fest/migrations/0001_initial.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/book2fest/migrations/0002_auto_20210619_1459.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/book2fest/migrations/0003_eventprofile_how_to_reach.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_Bkpvx5E.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_R5wWga3.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_aQ1AfBa.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_ayAuaqF.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_d5Jrkdr.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_kBQNExd.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_pYji1b7.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_t8jfHgL.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/red_vTYT4Fn.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/images/static_map.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/green_Fx2fVlQ.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/green_Q1ul5wa.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/red_bmIIzOL.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/red_teDN2yB.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/yellow_tcHPKDT.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/yellow_xFYbiIy.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/services/wifi_QGaMrv8.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/services/wifi_yKN4jjG.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/exam_project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/exam_project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_project/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/base_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0002_auto_20210617_1254.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/services/cursor.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -88,6 +92,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/media/images" />
       <recent name="C:\Users\maret\Desktop\Scola\III_Anno\II° Semestre\Tecnlogie Web\exam_project\book2fest\templates\book2fest\user" />
       <recent name="C:\Users\maret\Desktop\Scola\III_Anno\II° Semestre\Tecnlogie Web\exam_project\base_project" />
     </key>
@@ -130,8 +135,17 @@
       <workItem from="1623489174716" duration="6917000" />
       <workItem from="1623749248511" duration="17022000" />
       <workItem from="1623852128881" duration="10190000" />
-      <workItem from="1623924026674" duration="8836000" />
+      <workItem from="1623924026674" duration="17828000" />
+      <workItem from="1624097546332" duration="15070000" />
     </task>
+    <task id="LOCAL-00001" summary="Added Media to urls, fixed uploads in models, modifying crispy form layout">
+      <created>1623946680510</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1623946680510</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -163,5 +177,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="Added Media to urls, fixed uploads in models, modifying crispy form layout" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Media to urls, fixed uploads in models, modifying crispy form layout" />
   </component>
 </project>
