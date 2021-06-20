@@ -102,19 +102,24 @@ class SeatForm(forms.ModelForm):
 
 
 class TicketForm(forms.ModelForm):
-
     helper = FormHelper()
     helper.form_id = 'ticket-form'
     helper.form_class = 'form-inline'
     helper.form_method = 'POST'
     helper.layout = Layout(
         Div(
-            Field('seat', title="Seat", css_class="ml-2 mr-3"),
+            Field('seat', title="Seat", css_class="ml-2 mr-3 seat"),
             Field('delivery', title="Delivery", css_class="ml-2 mr-3"),
             Submit('submit', 'Book', css_class='bg-success'),
             css_class="d-flex justify-content-left "
         )
     )
+
+    def __init__(self, *args, **kwargs):
+        eventid = kwargs.pop('request')
+        super(TicketForm, self).__init__(*args, **kwargs)
+        self.fields['seat'].queryset = Seat.objects.filter(event_id=eventid).filter(available=True).order_by('row','number')
+        #self.fields['seat'].disabled = True
 
     class Meta:
         model = Ticket

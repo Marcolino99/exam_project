@@ -142,7 +142,7 @@ class Seat(models.Model):   #TODO: i seats servono per tutti gli eventi?
     seat_type = models.ForeignKey(SeatType, related_name='seat_type', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.seat_type.name} #{self.number} on row {self.row}'
+        return f'{self.event}: {self.seat_type.name} #{self.number} on row {self.row}'
 
     @property
     def is_available(self): #TODO: ???

@@ -33,3 +33,18 @@
   padding-right: 1rem;
   padding-bottom: 1rem;
 }
+
+.sitpicker{
+  list-style-type: none!important;
+  padding-inline-start: 0;
+}
+
+.sitred{
+  color:red;
+  cursor: pointer;
+}
+
+.sitgreen{
+  color:green;
+  cursor: pointer;
+}

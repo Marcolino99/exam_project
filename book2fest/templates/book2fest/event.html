@@ -2,7 +2,11 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% block title %}{{ object.event_name }}{% endblock %}
+{% block head %}
+    <script>
 
+    </script>
+{% endblock %}
 {% block content %}
     {% include 'navbar.html' %}
     <br><br><br>
@@ -24,10 +28,10 @@
                     </i>
                 </h5>
                 <p>{{ object.brief_description }}</p>
-                <p>{{  object.max_capacity|subtract:object.seat_event.count }} tickets available, book yours now:</p>  <!--TODO: aiuto -->
-                <p>{{ object.seat_event.seat_type.price }}</p>
-
-                {% crispy form %}
+                <div class="mt-5">
+                    <p>{{  object.max_capacity|subtract:occupied_seats.count }} tickets available, book yours now:</p>
+                    {% crispy form %}
+                </div>
             </div>
             <div class="col-lg-6">
                 <div id="eventPictures" class="carousel slide carousel-fade w-100" data-ride="carousel">
@@ -66,7 +70,7 @@
                 </p>
             {% endfor %}
         </div>
-        <div class="">
+        <div>
             <h2 class="mb-4">Location:</h2>
             <div class="row">
                 <div class="col-xl-4">
@@ -95,25 +99,28 @@
             </div>
         </div>
         <div class="row mt-3">
-            <h2>Book:</h2>
-            <table>
-                <!-- TODO: le righe ok, fai le colonne -->
-                {% for seat in righe %} <!-- probabilmente serve un altro for per ogni riga prodotta dal group-by -->
-                    <tr>
-                    {% if seat.available %}
-                        <i class="bi bi-person-fill bg-success" onclick="setInputSeat({{ seat }})"></i>
-                    {% else %}
-                        <i class="bi bi-person-fill bg-danger" onclick="setInputSeat({{ seat }})"></i>
-                    {% endif %}
-                    </tr>
-                {% endfor %}
-            </table>
-
+            <div class="col-12">
+                <h2>Book:</h2>
+                <div class="text-center">
+                    <ol class="sitpicker">
+                        {% for r in righe %}
+                            <li><ol>
+                                {% for seat in r %}
+                                    <li style="display:inline;">
+                                        {% if seat.available %}
+                                            <i class="bi bi-person-fill sitgreen" onclick="setInputSeat({{ seat.seat_type }}, {{ seat.row }}, {{ seat.number }})" title="Book now"></i>
+                                        {% else %}
+                                            <i class="bi bi-person-fill sitred" title="Booked"></i>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ol></li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
         </div>
     </div>
-
-
-
 
 {% endblock %}
 
@@ -123,9 +130,15 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+        function setInputSeat(type, row, number){
+            var x = document.getElementById("id_seat").getElementsByTagName("option");
+            alert(x)
+            var name = "{{ object }}: "+type+" #"+number+" on row "+row;
+            alert(name);
 
-        function setInputSeat(seat){
-            document.getElementById("form-id").value = 'seat #'+seat.column+' on row #'+seat.row;
+
+            document.getElementById("id_seat").value = 1;
         }
+
     </script>
 {% endblock %}
