@@ -10,7 +10,7 @@ from django.views.generic.edit import FormMixin
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
     SeatForm, TicketForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
-from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType
+from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, Seat, SeatType, Ticket
 
 _logger = logging.getLogger(__name__)
 
@@ -161,19 +161,35 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         return super(EventCreate, self).handle_no_permission()
 
 
-
-
 class EventDetail(FormMixin, DetailView):
     model = EventProfile
     form_class = TicketForm
     template_name = 'book2fest/event.html'
     success_url = '/home'
 
+    def get_form_kwargs(self):
+        s = str(self.request)
+        req = s[s[:s.rfind('/')].rfind('/')+1:s.rfind('/')]
+        kwargs = super(EventDetail, self).get_form_kwargs()
+        kwargs['request'] =req
+        return kwargs
+
     def get_context_data(self, **kwargs):
         context = super(EventDetail, self).get_context_data(**kwargs)
-        occupied_seats = Seat.objects.filter(available=True)  # o EventProfile.event_seats.available=True???
-        righe = (Seat.objects.values('row').order_by('number'))
-        context.update({'righe': righe})
+        occupied_seats = Seat.objects.filter(event=self.object).filter(available=False)
+        righe = (Seat.objects.filter(event=self.object).values('name','number','price','row','available','seat_type').order_by('row','number'))
+
+        d = {}
+        for x in righe:
+            if x['row'] in d.keys():
+                d[x['row']].append(x)
+            else:
+                d[x['row']] = [x]
+        l = []
+        for x in d:
+            l.append(d[x])
+
+        context.update({'righe': l})
         context.update({'occupied_seats': occupied_seats})
         return context
 
