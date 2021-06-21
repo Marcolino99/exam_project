@@ -4,8 +4,25 @@
 {% block content %}
     <div class="card" >
         <div class="card-header">
-            <h1>{% block content_title %}{% endblock %}</h1>
-
+            <div class="d-flex">
+                <h1>{% block content_title %}{% endblock %}</h1>
+                <form class="d-flex w-25" style="position:absolute; margin:auto; left:0; right:0;">
+                        <div class="d-flex">
+                            <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
+                        </div>
+                        <div class="d-flex">
+                            <select class="form-select" name="search-filter" aria-label="Default select example">
+                              <option value="event_name" selected>Event Name</option>
+                              <option value="artist">Artist</option>
+                              <option value="genre">Genre</option>
+                              <option value="category">Category</option>
+                            </select>
+                        </div>
+                        <div class="d-flex">
+                            <button class="btn btn-outline-success" type="submit">Search</button>
+                        </div>
+                 </form>
+            </div>
         </div>
         <div class="card-body">
         <table class="table">
