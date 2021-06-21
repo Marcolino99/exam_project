@@ -108,7 +108,7 @@
                                 {% for seat in r %}
                                     <li style="display:inline;">
                                         {% if seat.available %}
-                                            <i class="bi bi-person-fill sitgreen" onclick="setInputSeat({{ seat.seat_type }}, {{ seat.row }}, {{ seat.number }})" title="Book now"></i>
+                                            <i class="bi bi-person-fill sitgreen" onclick="setInputSeat({{ seat.row }}, {{ seat.number }})" title="Book now"></i>
                                         {% else %}
                                             <i class="bi bi-person-fill sitred" title="Booked"></i>
                                         {% endif %}
@@ -130,14 +130,15 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
-        function setInputSeat(type, row, number){
-            var x = document.getElementById("id_seat").getElementsByTagName("option");
-            alert(x)
-            var name = "{{ object }}: "+type+" #"+number+" on row "+row;
-            alert(name);
+        function setInputSeat(row, number){
+            let options = document.getElementById("id_seat").getElementsByTagName("option");
+            let name = "#"+number+" on row "+row;
+            for(let i=0; i<options.length; i++){
+                if (options[i].text.includes(name)) {
+                    document.getElementById("id_seat").value = options[i].value;
+                }
+            }
 
-
-            document.getElementById("id_seat").value = 1;
         }
 
     </script>

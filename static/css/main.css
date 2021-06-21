@@ -48,3 +48,18 @@
   color:green;
   cursor: pointer;
 }
+
+.footer{
+  background-color: #d9dbda;
+  letter-spacing: 0.1rem;
+}
+
+.footer-list{
+  list-style-type: none;
+  padding-inline-start: 0;
+  text-align:center;
+}
+
+.footer a{
+  color: black;
+}
