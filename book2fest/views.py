@@ -311,6 +311,35 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
 
         return redirect('book2fest:event-detail', pk=kwargs.get('pk'))
 
+from notifications.signals import notify
+
+class EventCancel(ManageSeat):
+
+    def get(self, request, **kwargs):
+
+        if self.profile == self.event_profile.user:
+            # self.event_profile.cancelled = True
+            # self.event_profile.save()
+
+
+            #retrieve all users that bought ticket for this event
+            seats = Seat.objects.all().filter(event=self.event_profile)
+
+            corr = Ticket.objects.filter(seat__in=seats).values_list('user')
+            profiles = []
+
+            for d in corr:
+                profiles.append(UserProfile.objects.get(id=d[0]))
+
+            for profile in profiles:
+                 notify.send(profile.user, recipient=profile.user, verb='Event cancelled', description=f"{self.event_profile.event_name} has been cancelled!", target=self.event_profile)
+
+        else:
+            #show error you are not authorized
+            pass
+
+        return redirect("book2fest:manage-seat", pk=self.event_id)
+
 
 class UserTicketList(LoginRequiredMixin, UserRequiredMixin, ListView):
     model = Ticket

@@ -85,7 +85,8 @@ class EventProfile(models.Model):
     max_capacity = models.IntegerField()
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
-    services = models.ManyToManyField(Service)      # An event has many services, a service can be offered by many events (m to n)
+    services = models.ManyToManyField(Service)# An event has many services, a service can be offered by many events (m to n)
+    cancelled = models.BooleanField(default=False)
 
     @property
     def is_past(self):

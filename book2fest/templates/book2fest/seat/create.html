@@ -7,66 +7,123 @@
 
 {% block content %}
     <h1>Manage seats of {{event.event_name}}</h1>
+    {% if event.cancelled %}
+        <h6> Event got cancelled </h6>
+    {% else %}
     <main class="content">
+        <div class="d-flex">
+            <div class="col-6">
+                <form action="{% url 'book2fest:manage-seat' event.pk %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="col-12 col-xl-8">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Seat type</span>
+                                      </div>
+                                      <select class="form-select" name="seat_type" id="seat_type" aria-label="Default select example">
+                                                {% for type in seat_types %}
+                                                    <option value="{{type.pk}}" selected> {{type.name}}</option>
+                                                 {% endfor %}
+                                      </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Quantity of seats</span>
+                                      </div>
+                                      <input type="text" name="quantity" id="quantity" value="" required>
+                                    <input type="range" class="form-control" min="0" max="{{event.max_capacity}}" id="customRange1" onchange="updateTextInput(this.value);" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Price</span>
+                                      </div>
+                                      <input type="text" name="price" id="'price" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                        <div class="input-group-prepend">
+                                        <span class="input-group-text">$</span>
+                                      </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <div class="input-group mb-3">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">Row</span>
+                                      </div>
+                                      <input type="text" name="row" id="row" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <button type="submit" class="btn btn-secondary">Add row of seats</button>
+                            </div>
+                </div>
+            </form>
+            </div>
+            <div class="col-6">
+                <div class="card" style="width: 18rem;">
+                      <div class="card-header">
+                        Services
+                      </div>
+                        <ul class="list-group list-group-flush">
+                        {%  for service in event.services.all %}
+                            <li class="list-group-item">
+                                <div class="container">
+                                      <div class="row">
+                                        <div class="col-sm-9">
+                                          <div class="row">
+                                            <div class="col-8 col-sm-8">
+                                              <p class="card-text">{{ service.name }}</p>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </li>
+                        {% endfor %}
 
-        <form action="{% url 'book2fest:manage-seat' event.pk %}" method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="col-12 col-xl-8">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text">Seat type</span>
-                                  </div>
-                                  <select class="form-select" name="seat_type" id="seat_type" aria-label="Default select example">
-                                            {% for type in seat_types %}
-                                                <option value="{{type.pk}}" selected> {{type.name}}</option>
-                                             {% endfor %}
-                                  </select>
-                                </div>
-                            </div>
+                        </ul>
+                    </div>
+                <div class="card" style="width: 18rem;">
+                          <div class="card-header">
+                            Artists
+                          </div>
+                            <ul class="list-group list-group-flush">
+                            {%  for artist in event.artist_list.all %}
+                                <li class="list-group-item">
+
+                                    <div class="container">
+                                            <div class="col-sm-9">
+                                              <div class="row">
+                                                <div class="col-8 col-sm-8">
+                                                    <a href="{% url 'book2fest:artist-detail' artist.pk%}" ><p class="card-text">{{ artist.full_name }}</p></a>
+                                                </div>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                    </li>
+                            {% endfor %}
+
+                            </ul>
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text">Quantity of seats</span>
-                                  </div>
-                                  <input type="text" name="quantity" id="quantity" value="" required>
-                                <input type="range" class="form-control" min="0" max="{{event.max_capacity}}" id="customRange1" onchange="updateTextInput(this.value);" >
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text">Price</span>
-                                  </div>
-                                  <input type="text" name="price" id="'price" class="form-control" aria-label="Amount (to the nearest dollar)" required>
-                                    <div class="input-group-prepend">
-                                    <span class="input-group-text">$</span>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <div class="input-group mb-3">
-                                  <div class="input-group-prepend">
-                                    <span class="input-group-text">Row</span>
-                                  </div>
-                                  <input type="text" name="row" id="row" class="form-control" aria-label="Amount (to the nearest dollar)" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-secondary">Add row of seats</button>
-                        </div>
+                <div class="mt-3">
+                    <a href="{% url 'book2fest:event-cancel'  event.pk %}"><button type="submit" class="btn btn-danger">Cancel Event</button></a>
+                </div>
 
             </div>
-        </form>
-
+        </div>
     </main>
+    {% endif %}
 {% endblock %}
 

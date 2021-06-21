@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'crispy_forms',
-    'book2fest.apps.Book2FestConfig'
+    'book2fest.apps.Book2FestConfig',
+    "notifications"
 ]
 
 MIDDLEWARE = [
