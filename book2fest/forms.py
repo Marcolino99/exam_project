@@ -116,9 +116,12 @@ class TicketForm(forms.ModelForm):
     )
 
     def __init__(self, *args, **kwargs):
-        eventid = kwargs.pop('request')
+        event_pk = kwargs.pop('event_pk', None)  # pop pk event
         super(TicketForm, self).__init__(*args, **kwargs)
-        self.fields['seat'].queryset = Seat.objects.filter(event_id=eventid).filter(available=True).order_by('row','number')
+        if event_pk:
+            self.fields['seat'].queryset = Seat.objects.filter(event_id=event_pk).filter(available=True).order_by('row','number')
+
+
         #self.fields['seat'].disabled = True
 
     class Meta:

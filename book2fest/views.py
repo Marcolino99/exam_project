@@ -172,7 +172,39 @@ class EventDetail(FormMixin, DetailView):
     profile = None
     ticket = None
 
+    # def get_form_kwargs(self):
+    #     s = str(self.request)
+    #     req = s[s[:s.rfind('/')].rfind('/')+1:s.rfind('/')]
+    #     kwargs = super(EventDetail, self).get_form_kwargs()
+    #     print(req)
+    #     kwargs['request'] =req
+    #     print(kwargs)
+    #     return kwargs
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDetail, self).get_context_data(**kwargs)
+        occupied_seats = Seat.objects.filter(event=self.object).filter(available=False)
+        righe = (Seat.objects.filter(event=self.object).values('name','number','price','row','available','seat_type').order_by('row','number'))
+
+        d = {}
+        for x in righe:
+            if x['row'] in d.keys():
+                d[x['row']].append(x)
+            else:
+                d[x['row']] = [x]
+        l = []
+        for x in d:
+            l.append(d[x])
+
+        context.update({'righe': l})
+        context.update({'occupied_seats': occupied_seats})
+        return context
+
+    def form_valid(self, form):
+        form.save()
+
     def get(self, request, **kwargs):
+        # kwargs = self.get_form_kwargs()
         form = TicketForm(event_pk=kwargs.pop('pk')) # filter form with event_pk
 
         self.object = self.get_object()
