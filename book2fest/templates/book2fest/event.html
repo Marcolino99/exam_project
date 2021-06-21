@@ -2,31 +2,38 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% block title %}{{ object.event_name }}{% endblock %}
+{% block head %}
+    <script>
 
+    </script>
+{% endblock %}
 {% block content %}
 
     <br><br><br>
-    <div class="container-fluid heading">
+    <div class="container-fluid heading border-bottom border-dark">
         <div class="row">
-            <div class="col">
+            <div class="col-lg-6">
                 <h2>{{ object.event_name }}</h2>
                 <h5><i class="bi bi-geo-fill">{{ object.address }} - {{ object.city }}, {{ object.country }}</i></h5>
                 <div>
-                    <p class="text-{% if object.is_past %}danger{% else %}primary{% endif %}"><i class="bi bi-calendar-date "></i> {{ object.event_start }} - {{ object.event_end }}</p>
+                    <p class="text-{% if object.is_past %}danger{% else %}success{% endif %}"><i class="bi bi-calendar-date "></i> {{ object.event_start }} - {{ object.event_end }}</p>
                 </div>
                 <h5>
                     <i>
                         With:
-                    {% for artist in object.artist_list.all|slice:":5" %}
-                        {% if artist != object.artist_list.all.first %}, {% endif %}{{ artist.full_name }}
-                    {% endfor %}
-                    {% if object.artist_list.count > 5 %}...{% endif %}
+                        {% for artist in object.artist_list.all|slice:":5" %}
+                            {% if artist != object.artist_list.all.first %}, {% endif %}{{ artist.full_name }}
+                        {% endfor %}
+                        {% if object.artist_list.count > 5 %}...{% endif %}
                     </i>
                 </h5>
                 <p>{{ object.brief_description }}</p>
-                {% crispy form %}
+                <div class="mt-5">
+                    <p>{{  object.max_capacity|subtract:occupied_seats.count }} tickets available, book yours now:</p>
+                    {% crispy form %}
+                </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-lg-6">
                 <div id="eventPictures" class="carousel slide carousel-fade w-100" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for img in object.pictures.all %}
@@ -49,25 +56,71 @@
                     </a>
                 </div>
             </div>
-
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col">
-                        <div class="border border-secondary rounded bg-warning align-bottom">
-                            <p class="services">Services:</p>
-                            <ul class="serviceslist">
-                                {% for service in object.services.all %}
-                                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="{{ service.description }}"> <img src="{{ MEDIA_URL }}{{ service.icon.path }}" alt="{{ service.name }}">{{ service.name }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
+    <div class="container mt-3">
+        <h1>The event:</h1>
+        <p class="mt-4">{{ object.description }}</p>
+        <h2 class="mb-4">Artists:</h2>
+        <div class="">
+            {% for artist in object.artist_list.all %}
+                <p>
+                    <i class="mt-2" data-bs-toggle="tooltip" data-html="true" data-bs-placement="top" title="<img src='{{ MEDIA_URL }}{{ artist.image }}' alt='{{ artist.image }}' height='100rem'>">{{ artist.full_name }}: {{ artist.genre }} ({{ artist.genre.category }})</i>
+                </p>
+            {% endfor %}
+        </div>
+        <div>
+            <h2 class="mb-4">Location:</h2>
+            <div class="row">
+                <div class="col-xl-4">
+                    <img src="{{ MEDIA_URL }}images/static_map.png" alt="static_map" height="250rem">
+                    <!-- Servono api di google -->
+                </div>
+                <div class="col-xl-8">
+                    <h4>Address:</h4>
+                    <p>{{ object.address }}, {{ object.city }}, ({{ object.province }}), {{ object.cap }}</p>
+                    <h4>How to reach us:</h4>
+                    <p>{{ object.how_to_reach }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col">
+                <h2>Services:</h2>
+                <div class="border border-secondary rounded bg-warning align-bottom mt-4">
+                    <p class="services">We offer the following on-site services:</p>
+                    <ul class="serviceslist">
+                        {% for service in object.services.all %}
+                            <img src="{{ MEDIA_URL }}{{ service.icon.path }}" alt="{{ service.name }}"> <li data-bs-toggle="tooltip" data-bs-placement="top" title="{{ service.description }}">{{ service.name }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <h2>Book:</h2>
+                <div class="text-center">
+                    <ol class="sitpicker">
+                        {% for r in righe %}
+                            <li><ol>
+                                {% for seat in r %}
+                                    <li style="display:inline;">
+                                        {% if seat.available %}
+                                            <i class="bi bi-person-fill sitgreen" onclick="setInputSeat({{ seat.row }}, {{ seat.number }})" title="Book now"></i>
+                                        {% else %}
+                                            <i class="bi bi-person-fill sitred" title="Booked"></i>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ol></li>
+                        {% endfor %}
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
@@ -77,5 +130,16 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+        function setInputSeat(row, number){
+            let options = document.getElementById("id_seat").getElementsByTagName("option");
+            let name = "#"+number+" on row "+row;
+            for(let i=0; i<options.length; i++){
+                if (options[i].text.includes(name)) {
+                    document.getElementById("id_seat").value = options[i].value;
+                }
+            }
+
+        }
+
     </script>
 {% endblock %}

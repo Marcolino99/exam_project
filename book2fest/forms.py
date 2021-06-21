@@ -1,7 +1,7 @@
 from django import forms
 from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile, Ticket
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, Layout, Div, HTML, Field, MultiField, Fieldset
 
 
 class UserProfileForm(forms.ModelForm):
@@ -88,7 +88,7 @@ class EventProfileForm(forms.ModelForm):
 
 class SeatForm(forms.ModelForm):
     seat_type = forms.ModelChoiceField(queryset=SeatType.objects.all(), required=True)
-    quantity = forms.IntegerField(required=True, min_value=1)
+    quantity = forms.IntegerField(required=True)
 
     helper = FormHelper()
     helper.form_id = 'seat_crispy_form'
@@ -96,26 +96,30 @@ class SeatForm(forms.ModelForm):
     helper.add_input(Submit('submit', 'Submit'))
     helper.inputs[0].field_classes = 'btn btn-success'
 
-
-
     class Meta:
         model = Seat
-        fields = ['seat_type', 'row', 'price', 'quantity']
+        fields = ['seat_type', 'row', 'number', 'quantity']
 
 
 class TicketForm(forms.ModelForm):
-
     helper = FormHelper()
     helper.form_id = 'ticket-form'
+    helper.form_class = 'form-inline'
     helper.form_method = 'POST'
-    helper.add_input(Submit('submit', 'Submit'))
+    helper.layout = Layout(
+        Div(
+            Field('seat', title="Seat", css_class="ml-2 mr-3 seat"),
+            Field('delivery', title="Delivery", css_class="ml-2 mr-3"),
+            Submit('submit', 'Book', css_class='bg-success'),
+            css_class="d-flex justify-content-left "
+        )
+    )
 
     def __init__(self, *args, **kwargs):
-        event_pk = kwargs.pop('event_pk', None)   # pop pk event
+        eventid = kwargs.pop('request')
         super(TicketForm, self).__init__(*args, **kwargs)
-        if event_pk:
-            self.fields['seat'].queryset = Seat.objects.all().filter(event = event_pk, available=True)  #filter choice field with event_pk seat only
-
+        self.fields['seat'].queryset = Seat.objects.filter(event_id=eventid).filter(available=True).order_by('row','number')
+        #self.fields['seat'].disabled = True
 
     class Meta:
         model = Ticket
@@ -126,6 +130,5 @@ def form_validation_error(form):
     for field in form:
         for error in field.errors:
             msg += "%s: %s \\n" % (field.label if hasattr(field, 'label') else 'Error', error)
-    print(msg)
     return msg
 

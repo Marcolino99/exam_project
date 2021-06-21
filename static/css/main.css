@@ -37,3 +37,33 @@ body{
   padding-right: 1rem;
   padding-bottom: 1rem;
 }
+
+.sitpicker{
+  list-style-type: none!important;
+  padding-inline-start: 0;
+}
+
+.sitred{
+  color:red;
+  cursor: pointer;
+}
+
+.sitgreen{
+  color:green;
+  cursor: pointer;
+}
+
+.footer{
+  background-color: #d9dbda;
+  letter-spacing: 0.1rem;
+}
+
+.footer-list{
+  list-style-type: none;
+  padding-inline-start: 0;
+  text-align:center;
+}
+
+.footer a{
+  color: black;
+}
