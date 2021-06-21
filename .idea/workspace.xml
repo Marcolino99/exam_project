@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="Aggiunte funzioni in view e form, modificato il layout. TODO: finire footer e finire il JS">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
-    </list>
+    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="Finito template evento" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -27,10 +22,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="prova-copied" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitSEFilterConfiguration">
     <file-type-list>
@@ -109,7 +105,7 @@
       <workItem from="1623924026674" duration="17828000" />
       <workItem from="1624097546332" duration="15400000" />
       <workItem from="1624187572548" duration="16885000" />
-      <workItem from="1624288189841" duration="3412000" />
+      <workItem from="1624288189841" duration="3715000" />
     </task>
     <task id="LOCAL-00001" summary="Added Media to urls, fixed uploads in models, modifying crispy form layout">
       <created>1623946680510</created>
@@ -132,7 +128,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624210543871</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Finito template evento">
+      <created>1624291645938</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1624291645938</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -167,6 +170,7 @@
     <MESSAGE value="Added Media to urls, fixed uploads in models, modifying crispy form layout" />
     <MESSAGE value="Aggiunti alcuni campi all'evento in models.py, finito il layout della pagina degli eventi (manca il seat-picker), aggiunte alcune funzioni alla view relativa a quest'ultima, creato il footer comune a tutte le pagine (da finire)" />
     <MESSAGE value="Aggiunte funzioni in view e form, modificato il layout. TODO: finire footer e finire il JS" />
-    <option name="LAST_COMMIT_MESSAGE" value="Aggiunte funzioni in view e form, modificato il layout. TODO: finire footer e finire il JS" />
+    <MESSAGE value="Finito template evento" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finito template evento" />
   </component>
 </project>
