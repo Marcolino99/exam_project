@@ -1,27 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
+    <list default="true" id="a4ae27e7-fe05-449f-8778-cfc2b87c7fee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/home.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/base_project/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/base_project/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/navbar.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1uGWf9Y2qMzsfZMzZTIbC1gE40y" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1uGdoqCRv0jlYc98NvNb95UbJqy" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -34,6 +56,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="base_project.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -55,13 +78,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="" />
-      <created>1624292510207</created>
+      <changelist id="a4ae27e7-fe05-449f-8778-cfc2b87c7fee" name="Default Changelist" comment="" />
+      <created>1624296037293</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1624292510207</updated>
-      <workItem from="1624292516285" duration="32000" />
-      <workItem from="1624292552645" duration="1290000" />
+      <updated>1624296037293</updated>
+      <workItem from="1624296038532" duration="73000" />
+      <workItem from="1624341671449" duration="30775000" />
     </task>
     <servers />
   </component>
@@ -69,6 +92,27 @@
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="prova" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
 </project>

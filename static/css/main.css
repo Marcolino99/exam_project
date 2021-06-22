@@ -1,5 +1,6 @@
 body{
-  padding-top: 50px;
+  margin-top: 5rem;
+  overflow-x: hidden;
 }
 
 /* Since positioning the image, we need to help out the caption */
@@ -38,22 +39,23 @@ body{
   padding-bottom: 1rem;
 }
 
-.sitpicker{
+.seatpicker{
   list-style-type: none!important;
   padding-inline-start: 0;
 }
 
-.sitred{
+.seatred{
   color:red;
   cursor: pointer;
 }
 
-.sitgreen{
+.seatgreen{
   color:green;
   cursor: pointer;
 }
 
 .footer{
+  padding-top:1rem;
   background-color: #d9dbda;
   letter-spacing: 0.1rem;
 }
@@ -64,6 +66,31 @@ body{
   text-align:center;
 }
 
+
 .footer a{
   color: black;
+}
+
+.footer-name{
+  text-align:center;
+}
+
+.event-available{
+  background-color: #91e376;
+}
+
+.event-unavailable{
+  background-color: #ff6e7a;
+}
+
+.event-unavailable::-webkit-scrollbar {
+  display: none;  /*Chrome, Safari and Opera */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.event-available::-webkit-scrollbar {
+  display: none;  /*Chrome, Safari and Opera */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

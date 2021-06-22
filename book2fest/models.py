@@ -115,6 +115,9 @@ class EventProfile(models.Model):
 class Pic(models.Model):
     path = models.ImageField(upload_to='pictures/')
 
+    def __str__(self):
+        return f'{self.path.name.split("/")[-1]}'
+
 
 class Picture(models.Model):
     name = models.CharField(max_length=20)
@@ -133,7 +136,7 @@ class SeatType(models.Model):
         return self.name
 
 
-class Seat(models.Model):   #TODO: i seats servono per tutti gli eventi?
+class Seat(models.Model):
     event = models.ForeignKey(EventProfile, related_name='seat_event', on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     row = models.CharField(max_length=1, blank=True)
@@ -159,6 +162,9 @@ class Ticket(models.Model):
     seat = models.OneToOneField(Seat, related_name='ticket_seat', on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, related_name="ticket_user", on_delete=models.CASCADE)
     delivery = models.ForeignKey(Delivery, related_name='ticket_delivery', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.user}\'s ticket for {self.seat.event.event_name}'
 
 # class InterestedUser(models.Model):
 #     # room = models.ForeignKey(Seat, related_name='interested_room', on_delete=models.CASCADE)

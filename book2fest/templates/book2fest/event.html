@@ -2,14 +2,7 @@
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 {% block title %}{{ object.event_name }}{% endblock %}
-{% block head %}
-    <script>
-
-    </script>
-{% endblock %}
 {% block content %}
-
-    <br><br><br>
     <div class="container-fluid heading border-bottom border-dark">
         <div class="row">
             <div class="col-lg-6">
@@ -38,7 +31,7 @@
                     <div class="carousel-inner">
                         {% for img in object.pictures.all %}
                             <div class="carousel-item{% if img == object.pictures.all|first %} active{% endif %}">
-                                <img src="{{ MEDIA_URL }}{{ img.pic.path }}" class="d-block w-100" alt="{{ img.name }}" style="height:30rem;">
+                                <img src="{{ MEDIA_URL }}{{ img.pic.path }}" class="img-fluid" alt="{{ img.name }}" style="height:30rem;">
                                 <div class="carousel-caption d-none d-md-block">
                                     <h5>{{ img.name }}</h5>
                                     <p>{{ img.description }}</p>
@@ -74,7 +67,7 @@
             <h2 class="mb-4">Location:</h2>
             <div class="row">
                 <div class="col-xl-4">
-                    <img src="{{ MEDIA_URL }}images/static_map.png" alt="static_map" height="250rem">
+                    <img src="{{ MEDIA_URL }}images/static_map.png" alt="static_map" class="img-fluid">
                     <!-- Servono api di google -->
                 </div>
                 <div class="col-xl-8">
@@ -102,15 +95,15 @@
             <div class="col-12">
                 <h2>Book:</h2>
                 <div class="text-center">
-                    <ol class="sitpicker">
+                    <ol class="seatpicker">
                         {% for r in righe %}
                             <li><ol>
                                 {% for seat in r %}
                                     <li style="display:inline;">
                                         {% if seat.available %}
-                                            <i class="bi bi-person-fill sitgreen" onclick="setInputSeat({{ seat.row }}, {{ seat.number }})" title="Book now"></i>
+                                            <i class="bi bi-person-fill seatgreen" onclick="setInputSeat('{{ seat.row }}'    , {{ seat.number }})" title="Book now"></i>
                                         {% else %}
-                                            <i class="bi bi-person-fill sitred" title="Booked"></i>
+                                            <i class="bi bi-person-fill seatred" title="Booked"></i>
                                         {% endif %}
                                     </li>
                                 {% endfor %}
@@ -136,6 +129,7 @@
             for(let i=0; i<options.length; i++){
                 if (options[i].text.includes(name)) {
                     document.getElementById("id_seat").value = options[i].value;
+                    alert("You selected the seat "+options[i].text.substring(options[i].text.lastIndexOf(":")));
                 }
             }
 

@@ -29,19 +29,19 @@
 
 <div class="container-fluid footer">
     <div class="row justify-content-between">
-        <div class="col-xl d-flex justify-content-center">
+        <div class="col-xl d-flex justify-content-xl-start justify-content-center">
             <ul class="footer-list">
-                <li><a href="http://www.facebook.com" class="sposta link-light">Facebook</a></li>
+                <li><a href="http://www.facebook.com" class="sposta">Facebook</a></li>
                 <li><a href="http://www.instagram.com" class="sposta">Instagram</a></li>
                 <li><a href="http://www.youtube.com" class="sposta">Youtube</a></li>
                 <li><a href="http://www.linkedin.com" class="sposta">Linkedin</a></li>
                 <li><a href="http://www.twitter.com" class="sposta">Twitter</a></li>
             </ul>
         </div>
-        <div class="col-xl d-flex justify-content-center">
-            <p>Book2Fest by Alessandro Cabassa and Marco Maretti</p>
+        <div class="col-xl d-flex justify-content-xl-center justify-content-center">
+            <p class="footer-name">Book2Fest by Alessandro Cabassa and Marco Maretti</p>
         </div>
-        <div class="col-xl d-flex justify-content-center">
+        <div class="col-xl d-flex justify-content-xl-end justify-content-center">
             <p>&copy Copyright Book2Fest 2021</p>
         </div>
     </div>
@@ -59,8 +59,8 @@
 {% register_notify_callbacks callbacks='fill_notification_list,fill_notification_badge'  %}
 <script>
     function updateTextInput(val) {
-          document.getElementById('quantity').value=val;
-        }
+        document.getElementById('quantity').value=val;
+    }
 </script>
 {% block javascript %}{% endblock %}
 </body>

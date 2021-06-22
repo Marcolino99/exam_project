@@ -1,5 +1,7 @@
 
 import logging
+from datetime import date
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import AnonymousUser
@@ -407,3 +409,34 @@ class ManageTicket(LoginRequiredMixin, UserRequiredMixin, View):
 
 
     #TODO post method
+
+
+class HomeView(ListView):
+    model = EventProfile
+    template_name = "book2fest/home.html"
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        available = EventProfile.objects.filter(cancelled=False).filter(event_end__gt=date.today())
+        unavailable = EventProfile.objects.exclude(id__in=available)
+
+        recommended = {}
+        user_tickets = Ticket.objects.filter(user__user_id=self.request.user.id).values()  # ticket di eventi in cui è stato l'utente
+        for i in range(len(user_tickets)):
+            eventid = EventProfile.objects.filter(seat_event=user_tickets[i]['seat_id']).values()  # id evento al quale ha partecipato
+            all_event_tickets = Ticket.objects.filter(seat__event_id=eventid[0]['id']).values()  # tutti i ticket relativi allo stesso evento
+            for j in range(len(all_event_tickets)):
+                users_tickets = Ticket.objects.filter(user=all_event_tickets[j]['user_id']).values()    # insieme di ticket per ogni possessore di ticket in all_event_tickets
+                ticket_group = Ticket.objects.filter(user=users_tickets[0]['user_id']) # insieme di eventi per ogni possessore
+                for ticket in ticket_group:
+                    ev = EventProfile.objects.filter(seat_event__ticket_seat=ticket)
+                    id = ev.values('id')[0]['id']
+                    print(ev)
+                    if id not in recommended.keys() and ev.filter(cancelled=False).filter(event_end__gt=date.today()):
+                        recommended[id] = ev[0]
+
+        context.update({"available":available})
+        context.update({"unavailable":unavailable})
+        context.update({"recommended":recommended.values()})
+        return context

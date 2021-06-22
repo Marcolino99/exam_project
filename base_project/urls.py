@@ -14,18 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
-from base_project.views import UserCreationView, Homepage
+
+import book2fest.views
+from base_project import settings
+from base_project.views import UserCreationView
 import notifications.urls
 
 urlpatterns = [
-    path('', Homepage.as_view(), name='homepage'),
+    path('', book2fest.views.HomeView.as_view(), name='homepage'),
     path('register/', UserCreationView.as_view(), name='user-create'),
     path('admin/', admin.site.urls),
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/' ,auth_views.LogoutView.as_view(), name='logout'),
     path('book2fest/', include('book2fest.urls'), name='book2fest'),
     url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

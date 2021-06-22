@@ -20,29 +20,29 @@
                         <a class="nav-link" href="{% url 'book2fest:user-profile' %}">Profile</a>
                     </li>
                     <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                         <span class="badge bg-danger">{% live_notify_badge %}</span>
-                                    </a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="badge bg-danger">{% live_notify_badge %}</span>
+                        </a>
                         {% if user.notifications.unread %}
                             <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
                                 <div class="card text-right" style="width: 18rem; height: 2rem;">
                                     <a href="{% url 'notifications:mark_all_as_read' %}?next=/" class="card-link">Mark all as read</a>
-                                  </div>
-                              {% for notification in  user.notifications.unread %}
-                                          <div class="card" style="width: 18rem;">
-                                              <div class="card-title">
-                                                <strong class="me-auto">{{notification.verb}}</strong>
-                                              </div>
-                                              <div class="card-body">
-                                                  <p class="card-text">{{notification.description}}</p>
-                                                  {% if notification.target.pk %}
-                                                        <a href="{% url 'book2fest:event-detail' notification.target.pk %}" class="btn btn-primary"> More info </a>
-                                                  {% endif %}
-                                              </div>
-                                              <div class="card-footer text-muted">
-                                                    <small>{{notification.timestamp}}</small>
-                                              </div>
-                                            </div>
+                                </div>
+                                {% for notification in  user.notifications.unread %}
+                                    <div class="card" style="width: 18rem;">
+                                        <div class="card-title">
+                                            <strong class="me-auto">{{notification.verb}}</strong>
+                                        </div>
+                                        <div class="card-body">
+                                            <p class="card-text">{{notification.description}}</p>
+                                            {% if notification.target.pk %}
+                                                <a href="{% url 'book2fest:event-detail' notification.target.pk %}" class="btn btn-primary"> More info </a>
+                                            {% endif %}
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            <small>{{notification.timestamp}}</small>
+                                        </div>
+                                    </div>
                                 {% endfor %}
                             </div>
                         {% endif %}
@@ -51,9 +51,23 @@
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         {% if not user.is_authenticated %}
-                            <a class="nav-link" href="{% url 'login' %}">Log in <i class="bi bi-person-circle"></i></a>
+                            <ul class="navbar-nav me-auto mb-2 mb-md-0 ">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'login' %}">Log in</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="{% url 'user-create' %}">Register</a>
+                                </li>
+                            </ul>
                         {% else %}
-                            <a class="nav-link" href="{% url 'logout' %}">Welcome, {{ user.username }}</a>
+                            <ul class="navbar-nav me-auto mb-2 mb-md-0 ">
+                                <li class="nav-item">
+                            <a class="nav-link" href="{% url 'book2fest:user-profile' %}"><i class="bi bi-person-circle"></i>{{ user.username }}</a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="{% url 'logout' %}">Exit</a>
+                                </li>
+                            </ul>
                         {% endif %}
                     </li>
 
