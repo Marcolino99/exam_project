@@ -1,4 +1,4 @@
-#Book2Fest - Concert/Event Booking Web App
+# Book2Fest - Concert/Event Booking Web App
 
 ## Dependencies
 - python 3.8.1
@@ -6,7 +6,7 @@
 - pillow
 - django-notifications-hq
 
-##Installation
+## Installation
 After downloading and installing all dependencies (we suggest using a virtual environement like [pipenv](https://www.jetbrains.com/help/pycharm/pipenv.html)), just:
 ```
 python manage.py runserver
