@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Artist List{% endblock %}
+
+{% block content %}
+    <div class="d-flex justify-content-center">
+
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+    {% for artist in object_list  %}
+        <div class="col">
+
+         <div class="card" style="width: 18rem;">
+          <img src="..." class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">{{ artist.full_name }}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Genre: {{ artist.genre.name }}</li>
+                <li class="list-group-item">Category: {{ artist.genre.category.name }}</li>
+              </ul>
+            <a href="{% url 'book2fest:event-list' %}?search={{ artist.full_name }}&search-filter=event_name" class="btn btn-primary">See his events</a>
+          </div>
+        </div>
+        </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

@@ -145,9 +145,14 @@ class ArtistCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         return super(ArtistCreate, self).handle_no_permission()
 
 
-class ArtistDetail(DetailView):
+# class ArtistDetail(DetailView):
+#     model = Artist
+#     template_name = "book2fest/artist/detail.html"
+
+class ArtistList(ListView):
     model = Artist
-    template_name = "book2fest/artist/detail.html"
+    template_name = "book2fest/artist/list.html"
+
 
 
 class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
