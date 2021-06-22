@@ -7,7 +7,7 @@
     <th>Event Name</th>
     <th>City</th>
     <th>Date</th>
-    <th>Available</th>
+    <th>Seats Available</th>
     <th>Rating</th>
     {% if organizer %}
     <th>Manage Seats</th>
@@ -27,7 +27,7 @@
             {% if event.cancelled %}
                 <td>Cancelled</td>
             {% else %}
-                <td>{{ event.available}}</td>
+                <td>{{ event.seats_available}}</td>
             {% endif %}
             <td>{{event.avg_rating}}</td>
             {% if organizer %}

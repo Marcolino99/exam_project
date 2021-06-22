@@ -2,17 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/ticket/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/ticket/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/ticket/manage.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/ticket/manage.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +63,7 @@
       <updated>1624292510207</updated>
       <workItem from="1624292516285" duration="32000" />
       <workItem from="1624292552645" duration="1290000" />
-      <workItem from="1624356302298" duration="852000" />
+      <workItem from="1624356302298" duration="2042000" />
     </task>
     <servers />
   </component>

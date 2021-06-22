@@ -95,6 +95,8 @@ class EventProfile(models.Model):
     address = models.CharField(max_length=32)
     how_to_reach = models.CharField(max_length=300)
     max_capacity = models.IntegerField()
+    seats_available = models.IntegerField(null=True)
+    avg_rating = models.FloatField(null=True)
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
     services = models.ManyToManyField(Service)# An event has many services, a service can be offered by many events (m to n)

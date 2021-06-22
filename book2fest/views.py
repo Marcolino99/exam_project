@@ -274,24 +274,34 @@ class EventList(ListView):
     def get_ordering(self):
         ordering = self.request.GET.get('order-filter')
         # validate ordering here
+        if ordering == "avg_rating":
+            ordering = "-avg_rating"
+        if ordering == "seats_available":
+            ordering = "-seats_available"
         return ordering
 
 
     def get_context_data(self, *, object_list=None, **kwargs):
 
         context = super(EventList, self).get_context_data(**kwargs)
-        context['order_filters'] = ['event_name', 'event_start', 'avg_rating']
+        context['order_filters'] = ['event_name', 'event_start', 'avg_rating', 'seats_available']
         try:
             # count seats available and average rating for events
             for event in self.object_list:
                 event_seats = Seat.objects.all().filter(event=event.pk)
 
                 seat_not_available = Seat.objects.all().filter(event=event.pk, available=False).count()
-                event.available  = event_seats.count() - seat_not_available
+                event.seats_available  = event_seats.count() - seat_not_available
 
                 event_tickets = Ticket.objects.all().filter(seat__in=event_seats)
                 qs = Review.objects.filter(ticket__in=event_tickets).aggregate(Avg('rating'))
-                event.avg_rating = qs.pop('rating__avg')
+
+                if not qs.get('rating__avg'):
+                    event.avg_rating = 0.0
+                else:
+                    event.avg_rating = qs.get('rating__avg')
+
+                event.save()
 
 
             if not isinstance(self.request.user, AnonymousUser):
@@ -302,6 +312,7 @@ class EventList(ListView):
             context['organizer'] = None
 
         return context
+
 
 class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
     event_profile = None
