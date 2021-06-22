@@ -18,7 +18,7 @@
             <td>{{ ticket.seat.event.city }}</td>
             <td>{{ ticket.seat.event.event_start }}</td>
             <td>{{ ticket.seat.price}} &euro; + {{ ticket.delivery.overprice}} &euro;</td>
-            <td><a href="{% url 'book2fest:ticket-manage' ticket.pk %}">Manage ticket</a></td>
+            <td><a href="{% url 'book2fest:ticket-manage' ticket.pk %}">Rate the Event</a></td>
         </tr>
     {% endfor %}
 {% endblock %}

@@ -160,6 +160,14 @@ class Ticket(models.Model):
     user = models.ForeignKey(UserProfile, related_name="ticket_user", on_delete=models.CASCADE)
     delivery = models.ForeignKey(Delivery, related_name='ticket_delivery', on_delete=models.CASCADE)
 
+class Review(models.Model):
+    rating = models.FloatField(null=True)
+    date = models.DateTimeField(default=datetime.Now())
+    content = models.TextField(null=True)
+    ticket = models.OneToOneField(Ticket, related_name='review_structure', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f'{self.ticket.seat.event.event_name}-{self.rating}'
 # class InterestedUser(models.Model):
 #     # room = models.ForeignKey(Seat, related_name='interested_room', on_delete=models.CASCADE)
 #     user = models.ForeignKey(UserProfile, related_name='interested_user', on_delete=models.CASCADE)
