@@ -1,19 +1,22 @@
 
 import logging
+from datetime import date
+
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import AnonymousUser
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, TemplateView, CreateView, DetailView, ListView
 from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
-    TicketForm, SeatForm
+    TicketForm, SeatForm, ReviewForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
 from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat, Category, \
-    Genre
+    Genre, Review
 
 _logger = logging.getLogger(__name__)
 
@@ -224,6 +227,7 @@ class EventList(ListView):
         filter = self.request.GET.get('search-filter', None)
 
         if query:
+
             if filter == "category":
                 categories = Category.objects.all().filter(name__contains=query)
                 genres = Genre.objects.all().filter(category__in=categories)
@@ -244,17 +248,31 @@ class EventList(ListView):
 
         return result
 
+    def get_ordering(self):
+        ordering = self.request.GET.get('order-filter')
+        # validate ordering here
+        return ordering
+
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(EventList, self).get_context_data(**kwargs)
-        try:
-            # count seats available for events
-            for event in self.object_list:
-                seat_not_available = Seat.objects.all().filter(event=event.pk, available=False).count()
-                event.available  = Seat.objects.all().filter(event=event.pk).count() - seat_not_available
 
-            # if user is organizer -> show manage seat column in table
+        context = super(EventList, self).get_context_data(**kwargs)
+        context['order_filters'] = ['event_name', 'event_start', 'avg_rating']
+        try:
+            # count seats available and average rating for events
+            for event in self.object_list:
+                event_seats = Seat.objects.all().filter(event=event.pk)
+
+                seat_not_available = Seat.objects.all().filter(event=event.pk, available=False).count()
+                event.available  = event_seats.count() - seat_not_available
+
+                event_tickets = Ticket.objects.all().filter(seat__in=event_seats)
+                qs = Review.objects.filter(ticket__in=event_tickets).aggregate(Avg('rating'))
+                event.avg_rating = qs.pop('rating__avg')
+
+
             if not isinstance(self.request.user, AnonymousUser):
+                # if user is organizer -> show manage seat column in table
                 context['organizer'] = OrganizerProfile.objects.get(user=self.request.user)
 
         except ObjectDoesNotExist:
@@ -303,16 +321,13 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
                 seat.save()
 
             messages.success(request, f"Added {total} seats successfully")
-
-
-
         else:
             messages.error(request, form_validation_error(form))
 
         return redirect('book2fest:event-detail', pk=kwargs.get('pk'))
 
-from notifications.signals import notify
 
+from notifications.signals import notify
 class EventCancel(ManageSeat):
 
     def get(self, request, **kwargs):
@@ -336,6 +351,7 @@ class EventCancel(ManageSeat):
 
         else:
             #show error you are not authorized
+            messages.error(request,"You are not authorized!")
             pass
 
         return redirect("book2fest:manage-seat", pk=self.event_id)
@@ -345,18 +361,67 @@ class UserTicketList(LoginRequiredMixin, UserRequiredMixin, ListView):
     model = Ticket
     template_name = "book2fest/ticket/list.html"
 
+    def get_context_data(self, *, object_list=None, **kwargs):
+
+        context = super(UserTicketList, self).get_context_data(**kwargs)
+        context['order_filters'] = ['event_name', 'event_start', 'price']
+        return context
+
     def get_queryset(self):
-        return Ticket.objects.all().filter(user=self.profile)
+        tickets = Ticket.objects.all().filter(user=self.profile)
+        query = self.request.GET.get('search', None)
+        filter = self.request.GET.get('search-filter', None)
+        order = self.request.GET.get('order-filter', None)
+        ordering = "seat__event__event_name"
+
+        if order == "event_name":
+            ordering = "seat__event__event_name"
+
+        if order == "event_start":
+            ordering = "seat__event__event_start"
+
+        if order == "price":
+            ordering = "seat__price"
+
+        tickets = Ticket.objects.all().filter(user=self.profile).order_by(ordering)
+
+        if query:
+
+            if filter == "category":
+                categories = Category.objects.all().filter(name__contains=query)
+                genres = Genre.objects.all().filter(category__in=categories)
+                artists = Artist.objects.all().filter(genre__in=genres)
+                events = EventProfile.objects.all().filter(artist_list__in=artists)
+
+            if filter == "genre":
+                genres = Genre.objects.all().filter(name__contains=query)
+                artists = Artist.objects.all().filter(genre__in=genres)
+                events = EventProfile.objects.all().filter(artist_list__in=artists)
+
+            if filter == "artist":
+                artists = Artist.objects.all().filter(full_name__contains=query)
+                events = EventProfile.objects.all().filter(artist_list__in=artists)
+
+            if filter == "event_name":
+                events = EventProfile.objects.all().filter(event_name__contains=query)
+
+            seats = Seat.objects.all().filter(event__in=events)
+            tickets = Ticket.objects.all().filter(seat__in=seats, user=self.profile).order_by(ordering).distinct()
+
+
+        return tickets
 
 
 class ManageTicket(LoginRequiredMixin, UserRequiredMixin, View):
     ticket = None
+    review = None
     form = None
 
     def dispatch(self, request, *args, **kwargs):
         ticket_pk = kwargs.get('pk')
         try:
             self.ticket = Ticket.objects.get(pk=ticket_pk)
+            self.review, __ = Review.objects.get_or_create(ticket=self.ticket)
 
         except ObjectDoesNotExist:
             # trying to access to a ticket that does not exist
@@ -366,12 +431,31 @@ class ManageTicket(LoginRequiredMixin, UserRequiredMixin, View):
 
     def get(self, request, **kwargs):
         if self.ticket.user == self.profile:
+            self.review = Review.objects.get(ticket=self.ticket)
 
-            context = {'ticket': self.ticket}
+
+
+            context = {'ticket': self.ticket, 'review':self.review}
             return render(request, "book2fest/ticket/manage.html", context)
         else:
             # user trying to manage not one of his tickets
             return redirect('homepage')  # TODO redirect to another page maybe
 
 
-    #TODO post method
+    def post(self, request, **kwargs):
+
+        form = ReviewForm(request.POST, request.FILES, instance=self.review)
+
+        if self.ticket.user == self.profile and form.is_valid():
+
+            self.review.ticket = self.ticket
+            self.review.rating = form.cleaned_data.get('rating')
+            self.review.content = form.cleaned_data.get('content')
+            self.review.date = date.today()
+            self.review.save()
+
+            messages.success(request, 'Ticket review successfully!')
+        else:
+            #user trying to review a ticket tha
+            messages.error(request, form_validation_error(form))
+        return redirect('book2fest:ticket-manage', self.ticket.pk)

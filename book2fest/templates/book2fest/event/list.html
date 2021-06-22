@@ -8,6 +8,7 @@
     <th>City</th>
     <th>Date</th>
     <th>Available</th>
+    <th>Rating</th>
     {% if organizer %}
     <th>Manage Seats</th>
     {% endif%}
@@ -23,7 +24,12 @@
             <td><a href="{% url 'book2fest:event-detail' event.pk %}">{{ event.event_name }}</a></td>
             <td>{{ event.city }}</td>
             <td>{{ event.event_start }}</td>
-            <td>{{ event.available}}</td>
+            {% if event.cancelled %}
+                <td>Cancelled</td>
+            {% else %}
+                <td>{{ event.available}}</td>
+            {% endif %}
+            <td>{{event.avg_rating}}</td>
             {% if organizer %}
             <td><a href="{% url 'book2fest:manage-seat' event.pk %}">Manage seats</a></td>
             {% endif%}

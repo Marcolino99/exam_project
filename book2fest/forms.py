@@ -1,5 +1,6 @@
 from django import forms
-from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile, Ticket
+from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile, \
+    Ticket, Review
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -120,6 +121,19 @@ class TicketForm(forms.ModelForm):
     class Meta:
         model = Ticket
         fields = ('seat', 'delivery')
+
+
+class ReviewForm(forms.ModelForm):
+
+    helper = FormHelper()
+    helper.form_id = 'review-form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+
+
+    class Meta:
+        model = Review
+        fields = ['rating', 'content']
 
 def form_validation_error(form):
     msg = ""
