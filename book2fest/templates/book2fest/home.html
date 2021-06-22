@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Book2Fest{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Wellcome to Book2Fest</h1>
+        </div>
+        <div class="row justify-content-center">
+            <h6><i>The best place to book your social events</i></h6>
+        </div>
+        {% if user.is_authenticated %}
+            <div class="row justify-content-center mt-5 mb-4">
+            <h2>Recommended for you:</h2>
+        </div>
+        {% for event in recommended %}
+            <div class="container border border-secondary mb-5 rounded h-25 event-available overflow-auto">
+                <div class="row justify-content-center">
+                    <p>{{ event.event_name }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p>{{ event.brief_description }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p><i class="bi bi-geo-alt-fill"></i>{{ event.address }}, {{ event.city }} ({{ event.country }})</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p>{{ event.event_end }} - {{ event.event_start }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p><a href="book2fest/event/{{ event.id }}/detail">Go</a></p>
+                </div>
+            </div>
+        {% endfor %}
+        {% endif %}
+        <!-- If user is authenticated stampa i consigliati -->
+        <div class="row justify-content-center mt-5 mb-4">
+            <h2>Available events:</h2>
+        </div>
+        {% for event in available %}
+            <div class="container border border-secondary mb-5 rounded h-25 event-available overflow-auto">
+                <div class="row justify-content-center">
+                    <p>{{ event.event_name }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p>{{ event.brief_description }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p><i class="bi bi-geo-alt-fill"></i>{{ event.address }}, {{ event.city }} ({{ event.country }})</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p>{{ event.event_end }} - {{ event.event_start }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p><a href="book2fest/event/{{ event.id }}/detail">Go</a></p>
+                </div>
+            </div>
+        {% endfor %}
+        <div class="row justify-content-center mt-5 mb-4">
+            <h2>Unavailable events:</h2>
+        </div>
+        {% for event in unavailable %}
+            <div class="container border border-secondary mb-5 rounded h-25 event-unavailable overflow-auto">
+                <div class="row justify-content-center">
+                    <p>{{ event.event_name }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p class="text-center">{{ event.brief_description }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p><i class="bi bi-geo-alt-fill"></i>{{ event.address }}, {{ event.city }} ({{ event.country }})</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p>Ended: {{ event.event_end }}</p>
+                </div>
+                <div class="row justify-content-center">
+                    <p><a href="book2fest/event/{{ event.id }}/detail">Go</a></p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
