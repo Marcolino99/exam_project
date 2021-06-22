@@ -12,7 +12,7 @@ from django.views.generic import View, TemplateView, CreateView, DetailView, Lis
 from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
-    TicketForm, SeatForm, ReviewForm
+    TicketForm, SeatForm, ReviewForm, SeatTypeForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
 from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat, Category, \
     Genre, Review
@@ -145,7 +145,6 @@ class ArtistCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         return super(ArtistCreate, self).handle_no_permission()
 
 
-
 class ArtistList(ListView):
     model = Artist
     template_name = "book2fest/artist/list.html"
@@ -163,6 +162,12 @@ class ArtistList(ListView):
         return context
 
 
+class SeatTypeCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
+    model = SeatType
+    form_class = SeatTypeForm
+    template_name = "book2fest/seat/seat_type.html"
+    success_url = reverse_lazy('book2fest:event-list')
+
 
 class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     model = EventProfile
@@ -179,6 +184,7 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         messages.error(self.request, self.permission_denied_message)
         return super(EventCreate, self).handle_no_permission()
 
+
 class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, UpdateView):
     model = EventProfile
     form_class = EventProfileForm
@@ -191,7 +197,6 @@ class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, UpdateView):
         else:
             messages.error(request, "Something is wrong with your update request. Please check if you are authorized to update this event.")
             return redirect("homepage")
-
 
 
 class EventDetail(FormMixin, DetailView):
@@ -362,7 +367,10 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
 
         if self.profile == self.event_profile.user:
             seat_types = SeatType.objects.all()
-            context = {'event': self.event_profile, 'seat_types': seat_types}
+            event_seats = Seat.objects.all().filter(event=self.event_profile)
+            event_tickets = Ticket.objects.all().filter(seat__in=event_seats).order_by('seat__row','seat__number')
+
+            context = {'event': self.event_profile, 'seat_types': seat_types, 'tickets':event_tickets}
             return render(request, 'book2fest/seat/create.html', context)
         else:
             #User trying to manage seats not of one of his events
@@ -388,8 +396,8 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
 
         return redirect('book2fest:event-detail', pk=kwargs.get('pk'))
 
-from notifications.signals import notify
 
+from notifications.signals import notify
 class EventCancel(ManageSeat):
 
     def get(self, request, **kwargs):

@@ -103,12 +103,21 @@ class SeatForm(forms.ModelForm):
             if quantity <= 0:
                 self.add_error("quantity","Please insert a positive quantity")
 
-
-
-
     class Meta:
         model = Seat
         fields = ['seat_type', 'row', 'number', 'quantity']
+
+class SeatTypeForm(forms.ModelForm):
+
+    helper = FormHelper()
+    helper.form_id = 'seat_type_crispy_form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+    helper.inputs[0].field_classes = 'btn btn-success'
+
+    class Meta:
+        model = SeatType
+        fields = ['name']
 
 
 class TicketForm(forms.ModelForm):
