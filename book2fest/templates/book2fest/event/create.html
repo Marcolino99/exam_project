@@ -7,4 +7,9 @@
     <h1>Create your Event</h1>
     {% crispy form %}
 
+    {{ formset.management_form }}
+    {% for form in formset %}
+        {{ form }}
+    {% endfor %}
+
 {% endblock %}

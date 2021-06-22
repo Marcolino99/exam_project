@@ -3,13 +3,37 @@
 {% block title %}Artist List{% endblock %}
 
 {% block content %}
+    <div class="row">
+        <div class="col-sm-6">
+            <form class="container" style="position:absolute; margin:auto; left:0; right:0;">
+
+            <div class="d-flex">
+                                <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
+                                <select class="form-select" name="search-filter" aria-label="Default select example">
+                                  <option value="name" selected>Artist Name</option>
+                                  <option value="genre">Genre</option>
+                                  <option value="category">Category</option>
+                                </select>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="d-flex">
+
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Order by:</span>
+                </div>
+                <button class="btn btn-outline-success" type="submit">Search&Order</button>
+            </div>
+        </div>
+            </form>
     {% if organizer %}
-    <div class="d-flex justify-content-end">
+    <div class="col-sm-2">
         <div class="content">
             <a href="{% url 'book2fest:artist-create' %}" class="btn btn-primary">Add artist</a>
         </div>
     </div>
     {% endif %}
+                    </div>
     <div class="d-flex justify-content-center">
 
 
@@ -19,7 +43,7 @@
         <div class="col">
 
          <div class="card">
-          <img src="{{ MEDIA_URL }}images/green.jpg" class="card-img-top" alt="...">
+          <img src="{{ MEDIA_URL }}{{ artist.image}}" class="card-img-top" alt="images not found">
           <div class="card-body">
             <h5 class="card-title">{{ artist.full_name }}</h5>
             <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>

@@ -1,5 +1,5 @@
 from django import forms
-from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile, Ticket, Review
+from book2fest.models import Artist, OrganizerProfile, UserProfile, Seat, SeatType, Genre, Service, EventProfile, Ticket, Review, Picture
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit, Layout, Div, HTML, Field, MultiField, Fieldset
 
@@ -50,7 +50,7 @@ class ArtistForm(forms.ModelForm):
 
     class Meta:
         model = Artist
-        fields = ['full_name', 'genre']
+        fields = ['full_name', 'genre', 'image']
 
 
 class EventProfileForm(forms.ModelForm):
@@ -84,6 +84,19 @@ class EventProfileForm(forms.ModelForm):
     class Meta:
         model = EventProfile
         fields = ['event_name', 'event_start', 'brief_description', 'description', 'event_end', 'city', 'country', 'address', 'max_capacity', 'services', 'artist_list']
+
+
+class PictureForm(forms.ModelForm):
+
+    helper = FormHelper()
+    helper.form_id = 'picture_crispy_form'
+    helper.form_method = 'POST'
+    helper.add_input(Submit('submit', 'Submit'))
+    helper.inputs[0].field_classes = 'btn btn-success'
+
+    class Meta:
+        model = Picture
+        fields = ('name', 'description', 'img')
 
 
 class SeatForm(forms.ModelForm):

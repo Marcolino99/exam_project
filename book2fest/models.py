@@ -95,8 +95,8 @@ class EventProfile(models.Model):
     address = models.CharField(max_length=32)
     how_to_reach = models.CharField(max_length=300)
     max_capacity = models.IntegerField()
-    seats_available = models.IntegerField(null=True)
-    avg_rating = models.FloatField(null=True)
+    seats_available = models.IntegerField(default=None, blank=True, null=True)
+    avg_rating = models.FloatField(default=None, blank=True, null=True)
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
     services = models.ManyToManyField(Service)# An event has many services, a service can be offered by many events (m to n)
@@ -114,14 +114,11 @@ class EventProfile(models.Model):
         return f'{self.event_name} - {self.event_start.year}'
 
 
-class Pic(models.Model):
-    path = models.ImageField(upload_to='pictures/')
-
 
 class Picture(models.Model):
     name = models.CharField(max_length=20)
     description = models.CharField(max_length=200)
-    pic = models.OneToOneField(Pic, related_name='img', on_delete=models.CASCADE)
+    img = models.ImageField(upload_to='pictures/')
     event = models.ForeignKey(EventProfile, related_name='pictures', on_delete=models.PROTECT)
 
     def __str__(self):

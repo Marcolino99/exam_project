@@ -10,84 +10,84 @@
     {% if event.cancelled %}
         <h6> Event got cancelled </h6>
     {% else %}
-    <main class="content">
+        <main class="content">
 
-        <div class="row row-cols-12 justify-content-center" style="width: 30rem;">
-            <div class="col-6">
+            <div class="row row-cols-12 justify-content-center" style="width: 30rem;">
+                <div class="col-6">
 
-                <form action="{% url 'book2fest:manage-seat' event.pk %}" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                                <div class="col">
-                                    <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">Seat type</span>
-                                      </div>
-                                      <select class="form-select" name="seat_type" id="seat_type" aria-label="Default select example">
-                                                {% for type in seat_types %}
-                                                    <option value="{{type.pk}}" selected> {{type.name}}</option>
-                                                 {% endfor %}
-                                      </select>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">Quantity of seats</span>
-                                      </div>
-                                      <input type="text" name="quantity"  class="form-control" id="quantity" value="" required>
-                                    </div>
-
-                                    <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">Price</span>
-                                      </div>
-                                      <input type="text" name="price" id="'price" class="form-control" aria-label="Amount (to the nearest dollar)" required>
-                                        <div class="input-group-prepend">
-                                        <span class="input-group-text">$</span>
-                                      </div>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                      <div class="input-group-prepend">
-                                        <span class="input-group-text">Row</span>
-                                      </div>
-                                      <input type="text" name="row" id="row" class="form-control" aria-label="Amount (to the nearest dollar)" required>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                    <button type="submit" class="btn btn-secondary">Add row of seats</button>
-
-                                    </div>
+                    <form action="{% url 'book2fest:manage-seat' event.pk %}" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="col">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Seat type</span>
                                 </div>
-                </form>
-                <div class="col">
-                                <div class="input-group mb-3">
-                                        <a href="{% url 'book2fest:seat-type-create' %}" class="btn btn-secondary">Add new type of seat</a>
-                                </div>
-                </div>
+                                <select class="form-select" name="seat_type" id="seat_type" aria-label="Default select example">
+                                    {% for type in seat_types %}
+                                        <option value="{{type.pk}}" selected> {{type.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
 
-            </div>
-            <div class="col-6" style="height: 30rem; overflow: scroll">
-                <ol class="list-group list-group-numbered" >
-                    <li class="list-group-item d-flex justify-content-between align-items-start active">
-                        <div class="ms-2 me-auto">
-                            <div class="fw-bold"><h5>Tickets sold</h5></div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Quantity of seats</span>
+                                </div>
+                                <input type="text" name="quantity"  class="form-control" id="quantity" value="" required>
+                            </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Price</span>
+                                </div>
+                                <input type="text" name="price" id="'price" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">$</span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">Row</span>
+                                </div>
+                                <input type="text" name="row" id="row" class="form-control" aria-label="Amount (to the nearest dollar)" required>
+                            </div>
+                            <div class="input-group mb-3">
+                                <button type="submit" class="btn btn-secondary">Add row of seats</button>
+
+                            </div>
                         </div>
-                      </li>
-                    {% for ticket in tickets %}
-                      <li class="list-group-item d-flex justify-content-between align-items-start">
-                        <div class="ms-2 me-auto">
-                          <div class="fw-bold"><h6>{{ ticket.user.user.first_name }} {{ ticket.user.user.last_name }}</h6></div>
-                            {{ ticket.seat.seat_type.name }} #{{ ticket.seat.number}} on row {{ ticket.seat.row }}
+                    </form>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <a href="{% url 'book2fest:seat-type-create' %}" class="btn btn-secondary">Add new type of seat</a>
                         </div>
-                      </li>
-                    {% endfor %}
-                </ol>
-            <div class="btn-group">
-                  <a href="{% url 'book2fest:event-update' event.pk %}" class="btn btn-success" aria-current="page">Modify Event</a>
-                  <a href="{% url 'book2fest:event-cancel'  event.pk %}" class="btn btn-danger">Cancel Event </a>
+                    </div>
+
+                </div>
+                <div class="col-6" style="height: 30rem; overflow: scroll">
+                    <ol class="list-group list-group-numbered" >
+                        <li class="list-group-item d-flex justify-content-between align-items-start active">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><h5>Tickets sold</h5></div>
+                            </div>
+                        </li>
+                        {% for ticket in tickets %}
+                            <li class="list-group-item d-flex justify-content-between align-items-start">
+                                <div class="ms-2 me-auto">
+                                    <div class="fw-bold"><h6>{{ ticket.user.user.first_name }} {{ ticket.user.user.last_name }}</h6></div>
+                                    {{ ticket.seat.seat_type.name }} #{{ ticket.seat.number}} on row {{ ticket.seat.row }}
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ol>
+                    <div class="btn-group">
+                        <a href="{% url 'book2fest:event-update' event.pk %}" class="btn btn-success" aria-current="page">Modify Event</a>
+                        <a href="{% url 'book2fest:event-cancel'  event.pk %}" class="btn btn-danger">Cancel Event </a>
+                    </div>
                 </div>
             </div>
             </div>
-        </div>
-    </main>
+        </main>
     {% endif %}
 {% endblock %}
 

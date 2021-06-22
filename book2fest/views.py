@@ -12,10 +12,10 @@ from django.views.generic import View, TemplateView, CreateView, DetailView, Lis
 from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
-    TicketForm, SeatForm, ReviewForm, SeatTypeForm
+    TicketForm, SeatForm, ReviewForm, SeatTypeForm, PictureForm
 from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
 from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat, Category, \
-    Genre, Review
+    Genre, Review, Picture
 
 _logger = logging.getLogger(__name__)
 
@@ -149,6 +149,28 @@ class ArtistList(ListView):
     model = Artist
     template_name = "book2fest/artist/list.html"
 
+    def get_queryset(self):
+        result = super(ArtistList, self).get_queryset()
+        query = self.request.GET.get('search', None)
+        filter = self.request.GET.get('search-filter', None)
+        key = None
+        print(f'query {query}')
+
+        if query:
+            if filter == 'name':
+                key = 'full_name__contains'
+
+            if filter == 'genre':
+                key = 'genre__name__contains'
+
+            if filter == 'category':
+                key = 'genre__category__name__contains'
+
+            kwargs = {key: query}
+            result = Artist.objects.all().filter(**kwargs)
+
+        return result
+
     def get_context_data(self):
         context = super(ArtistList, self).get_context_data()
         try:
@@ -168,6 +190,7 @@ class SeatTypeCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     template_name = "book2fest/seat/seat_type.html"
     success_url = reverse_lazy('book2fest:event-list')
 
+from django.forms import modelformset_factory
 
 class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     model = EventProfile
@@ -183,7 +206,6 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
         return super(EventCreate, self).handle_no_permission()
-
 
 class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, UpdateView):
     model = EventProfile
@@ -284,19 +306,13 @@ class EventList(ListView):
 
         if query:
             if filter == "category":
-                categories = Category.objects.all().filter(name__contains=query)
-                genres = Genre.objects.all().filter(category__in=categories)
-                artists = Artist.objects.all().filter(genre__in=genres)
-                result = EventProfile.objects.all().filter(artist_list__in=artists).distinct()
+                result = EventProfile.objects.all().filter(artist_list__genre__category__name__contains=query).distinct()
 
             if filter == "genre":
-                genres = Genre.objects.all().filter(name__contains=query)
-                artists = Artist.objects.all().filter(genre__in=genres)
-                result = EventProfile.objects.all().filter(artist_list__in=artists).distinct()
+                result = EventProfile.objects.all().filter(artist_list__genre__name__contains=query).distinct()
 
             if filter == "artist":
-                artists = Artist.objects.all().filter(full_name__contains=query)
-                result = EventProfile.objects.all().filter(artist_list__in=artists).distinct()
+                result = EventProfile.objects.all().filter(artist_list__full_name__contains=query).distinct()
 
             if filter == "event_name":
                 result = EventProfile.objects.all().filter(event_name__contains=query)
@@ -523,3 +539,34 @@ class ManageTicket(LoginRequiredMixin, UserRequiredMixin, View):
             # user trying to review a ticket tha
             messages.error(request, form_validation_error(form))
         return redirect('book2fest:ticket-manage', self.ticket.pk)
+
+
+class HomeView(ListView):
+    model = EventProfile
+    template_name = "book2fest/home.html"
+
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        available = EventProfile.objects.filter(cancelled=False).filter(event_end__gt=date.today())
+        unavailable = EventProfile.objects.exclude(id__in=available)
+
+        recommended = {}
+        user_tickets = Ticket.objects.filter(user__user_id=self.request.user.id).values()  # ticket di eventi in cui è stato l'utente
+        for i in range(len(user_tickets)):
+            eventid = EventProfile.objects.filter(seat_event=user_tickets[i]['seat_id']).values()  # id evento al quale ha partecipato
+            all_event_tickets = Ticket.objects.filter(seat__event_id=eventid[0]['id']).values()  # tutti i ticket relativi allo stesso evento
+            for j in range(len(all_event_tickets)):
+                users_tickets = Ticket.objects.filter(user=all_event_tickets[j]['user_id']).values()    # insieme di ticket per ogni possessore di ticket in all_event_tickets
+                ticket_group = Ticket.objects.filter(user=users_tickets[0]['user_id']) # insieme di eventi per ogni possessore
+                for ticket in ticket_group:
+                    ev = EventProfile.objects.filter(seat_event__ticket_seat=ticket)
+                    id = ev.values('id')[0]['id']
+                    print(ev)
+                    if id not in recommended.keys() and ev.filter(cancelled=False).filter(event_end__gt=date.today()):
+                        recommended[id] = ev[0]
+
+        context.update({"available":available})
+        context.update({"unavailable":unavailable})
+        context.update({"recommended":recommended.values()})
+        return context
