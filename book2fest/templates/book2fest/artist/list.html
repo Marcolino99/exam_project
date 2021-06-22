@@ -3,6 +3,13 @@
 {% block title %}Artist List{% endblock %}
 
 {% block content %}
+    {% if organizer %}
+    <div class="d-flex justify-content-end">
+        <div class="content">
+            <a href="{% url 'book2fest:artist-create' %}" class="btn btn-primary">Add artist</a>
+        </div>
+    </div>
+    {% endif %}
     <div class="d-flex justify-content-center">
 
 
@@ -11,7 +18,7 @@
     {% for artist in object_list  %}
         <div class="col">
 
-         <div class="card" style="width: 18rem;">
+         <div class="card">
           <img src="..." class="card-img-top" alt="...">
           <div class="card-body">
             <h5 class="card-title">{{ artist.full_name }}</h5>

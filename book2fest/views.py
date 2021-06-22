@@ -138,20 +138,29 @@ class ArtistCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     form_class = ArtistForm
     template_name = "book2fest/artist/create.html"
     permission_denied_message = "You must authenticate first!"
-    success_url = reverse_lazy("homepage")
+    success_url = reverse_lazy("book2fest:artist-list")
 
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
         return super(ArtistCreate, self).handle_no_permission()
 
 
-# class ArtistDetail(DetailView):
-#     model = Artist
-#     template_name = "book2fest/artist/detail.html"
 
 class ArtistList(ListView):
     model = Artist
     template_name = "book2fest/artist/list.html"
+
+    def get_context_data(self):
+        context = super(ArtistList, self).get_context_data()
+        try:
+            if not isinstance(self.request.user, AnonymousUser):
+                # if user is organizer -> show manage seat column in table
+                context['organizer'] = OrganizerProfile.objects.get(user=self.request.user)
+
+        except ObjectDoesNotExist:
+            context['organizer'] = None
+
+        return context
 
 
 
@@ -361,6 +370,7 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
             messages.success(request, f"Added {total} seats successfully")
         else:
             messages.error(request, form_validation_error(form))
+            return redirect(request.path_info)
 
         return redirect('book2fest:event-detail', pk=kwargs.get('pk'))
 

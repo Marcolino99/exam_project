@@ -96,6 +96,16 @@ class SeatForm(forms.ModelForm):
     helper.add_input(Submit('submit', 'Submit'))
     helper.inputs[0].field_classes = 'btn btn-success'
 
+    def clean(self):
+        cleaned_data = super(SeatForm, self).clean()
+        quantity = cleaned_data.get('quantity')
+        if isinstance(quantity, int) :
+            if quantity <= 0:
+                self.add_error("quantity","Please insert a positive quantity")
+
+
+
+
     class Meta:
         model = Seat
         fields = ['seat_type', 'row', 'number', 'quantity']
