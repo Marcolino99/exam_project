@@ -6,13 +6,13 @@
 
 
 {% block content %}
-    <h1>Manage seats of {{event.event_name}}</h1>
+    <h1>Manage {{event.event_name}}</h1>
     {% if event.cancelled %}
         <h6> Event got cancelled </h6>
     {% else %}
     <main class="content">
 
-        <div class="row row-cols-1" style="width: 30rem;">
+        <div class="row row-cols-1 justify-content-center" style="width: 30rem;">
                 <form action="{% url 'book2fest:manage-seat' event.pk %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                                 <div class="col">
@@ -59,57 +59,12 @@
                                     <button type="submit" class="btn btn-secondary">Add row of seats</button>
                                 </div>
             </form>
-                <div class="card" style="width: 18rem;">
-                      <div class="card-header">
-                        Services
-                      </div>
-                        <ul class="list-group list-group-flush">
-                        {%  for service in event.services.all %}
-                            <li class="list-group-item">
-                                <div class="container">
-                                      <div class="row">
-                                        <div class="col-sm-9">
-                                          <div class="row">
-                                            <div class="col-8 col-sm-8">
-                                              <p class="card-text">{{ service.name }}</p>
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                </li>
-                        {% endfor %}
-
-                        </ul>
-                    </div>
-                <div class="card" style="width: 18rem;">
-                          <div class="card-header">
-                            Artists
-                          </div>
-                            <ul class="list-group list-group-flush">
-                            {%  for artist in event.artist_list.all %}
-                                <li class="list-group-item">
-
-                                    <div class="container">
-                                            <div class="col-sm-9">
-                                              <div class="row">
-                                                <div class="col-8 col-sm-8">
-                                                    <a href="{% url 'book2fest:artist-list' %}" ><p class="card-text">{{ artist.full_name }}</p></a>
-                                                </div>
-                                              </div>
-                                            </div>
-                                          </div>
-
-                                    </li>
-                            {% endfor %}
-
-                            </ul>
-                        </div>
-                <div class="col">
-                    <a href="{% url 'book2fest:event-cancel'  event.pk %}"><button type="submit" class="btn btn-danger">Cancel Event</button></a>
+                <div class="btn-group">
+                  <a href="{% url 'book2fest:event-update' event.pk %}" class="btn btn-success" aria-current="page">Modify Event</a>
+                  <a href="{% url 'book2fest:event-cancel'  event.pk %}" class="btn btn-danger">Cancel Event </a>
                 </div>
-
-                    </div>
+                </div>
+        </div>
     </main>
     {% endif %}
 {% endblock %}

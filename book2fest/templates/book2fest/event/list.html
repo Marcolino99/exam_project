@@ -31,7 +31,7 @@
             {% endif %}
             <td>{{event.avg_rating}}</td>
             {% if organizer %}
-            <td><a href="{% url 'book2fest:manage-seat' event.pk %}">Manage seats</a></td>
+            <td><a href="{% url 'book2fest:manage-seat' event.pk %}">Manage event</a></td>
             {% endif%}
         </tr>
     {% endfor %}

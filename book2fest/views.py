@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Avg
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views.generic import View, TemplateView, CreateView, DetailView, ListView
+from django.views.generic import View, TemplateView, CreateView, DetailView, ListView, UpdateView
 from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
@@ -178,6 +178,20 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
         return super(EventCreate, self).handle_no_permission()
+
+class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, UpdateView):
+    model = EventProfile
+    form_class = EventProfileForm
+    success_url = reverse_lazy('homepage')
+    template_name = "book2fest/event/update.html"
+
+    def get(self, request, **kwargs):
+        if self.get_object().user == self.profile:
+            return super(EventUpdate, self).get(request, **kwargs)
+        else:
+            messages.error(request, "Something is wrong with your update request. Please check if you are authorized to update this event.")
+            return redirect("homepage")
+
 
 
 class EventDetail(FormMixin, DetailView):
