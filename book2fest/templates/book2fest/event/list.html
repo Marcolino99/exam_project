@@ -26,7 +26,6 @@
                 <div class="col-sm-8">
                     <form class="content" style="position:absolute; margin:auto; left:0; right:0;">
                         <div class="row">
-
                             <div class="col-8 col-md-4">
                                 <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
                                 <select class="form-select" name="search-filter" aria-label="Default select example">
@@ -63,7 +62,7 @@
 
 {% block tbody %}
     {% for event in object_list  %}
-        {% if event.available == 0 or event.cancelled %}
+        {% if event.available == 0 or event.cancelled or event.is_past%}
             <tr class="table-danger">
                 {% else %}
             <tr class="table-success">
