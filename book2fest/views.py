@@ -85,6 +85,22 @@ class OrganizerCreate(LoginRequiredMixin, View):
         return super(UserCreate, self).handle_no_permission()
 
 
+class ProfileView(LoginRequiredMixin, View): #redirect view
+
+    def dispatch(self, request, *args, **kwargs):
+
+        if isinstance(request.user, AnonymousUser):
+            return redirect('login')
+
+        if UserProfile.objects.filter(user=request.user).exists():
+            return redirect('book2fest:user-profile')
+
+        if OrganizerProfile.objects.filter(user=request.user).exists():
+            return redirect('book2fest:organizer-profile')
+
+
+
+
 class OrganizerProfileView(LoginRequiredMixin, OrganizerRequiredMixin, View):
     profile = None
 
@@ -114,6 +130,7 @@ class UserProfileView(LoginRequiredMixin, UserRequiredMixin, View):
     profile = None
 
     def get(self, request):
+
         context = {'profile': self.profile}
         return render(request, 'book2fest/user/user_profile.html', context)
 

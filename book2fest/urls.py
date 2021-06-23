@@ -2,12 +2,13 @@ from django.urls import path
 from . import views
 from .views import UserProfileView, OrganizerProfileView, CompleteRegistrationView, ArtistCreate, UserCreate, \
     OrganizerCreate, EventCreate, EventUpdate, EventDetail, EventList, ManageSeat, UserTicketList, ManageTicket, \
-    EventCancel, ArtistList, SeatTypeCreate, EventImagesUpload
+    EventCancel, ArtistList, SeatTypeCreate, EventImagesUpload, ProfileView
 
 app_name = "book2fest"
 
 urlpatterns=[
     path('complete-reg/', CompleteRegistrationView.as_view(), name='complete-reg'),
+    path('profile', ProfileView.as_view(), name='profile' ),
     path('user/create', UserCreate.as_view(), name='user-create'),
     path('user/profile', UserProfileView.as_view(), name='user-profile'),
     path('organizer/profile', OrganizerProfileView.as_view(), name='organizer-profile'),

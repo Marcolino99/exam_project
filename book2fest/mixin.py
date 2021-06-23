@@ -18,6 +18,11 @@ class OrganizerRequiredMixin:
             messages.error(request, "You have no authorization to access this page." )
             return redirect('book2fest:user-profile')
 
+    def get_context_data(self):
+        context = { "organizer" : self.profile}
+
+        return context
+
 
 class UserRequiredMixin:
     """ Mixin that requires a Organize User logged to dispatch, otherwise
@@ -33,6 +38,11 @@ class UserRequiredMixin:
         except ObjectDoesNotExist:
             messages.error(request, "You have no authorization to access this page.")
             return redirect('book2fest:organizer-profile')
+
+    def get_context_data(self):
+        context = { "profile" : self.profile}
+        return context
+
 
 class EventOwnerMixin:
     """ Mixin that redirects with error if event does not exist in the db or if user logged
