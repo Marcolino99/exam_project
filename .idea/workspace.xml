@@ -5,16 +5,30 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/book2fest/migrations/0011_auto_20210622_1629.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/green_7eq2g0p.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/red_7qQ4AHQ.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/media/pictures/yellow_bDSX5HE.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0001_initial.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0002_alter_eventprofile_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0002_auto_20210619_1459.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0003_alter_ticket_seat.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0003_eventprofile_how_to_reach.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0004_alter_eventprofile_user.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0005_eventprofile_cancelled.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0006_notification.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0007_merge_20210621_1629.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0008_auto_20210622_1016.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0009_auto_20210622_1028.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0010_alter_eventprofile_avg_rating.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0011_auto_20210622_1629.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/artist/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/artist/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event/create.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/seat/create.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/seat/create.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/home.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/home.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/static/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/static/css/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/navbar.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/navbar.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,6 +43,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitSEFilterConfiguration">
@@ -59,6 +78,7 @@
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
+        <env name="DJANGO_SETTINGS_MODULE" value="base_project.settings" />
       </envs>
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="" />
@@ -88,6 +108,7 @@
       <workItem from="1624292516285" duration="32000" />
       <workItem from="1624292552645" duration="1290000" />
       <workItem from="1624356302298" duration="21720000" />
+      <workItem from="1624460390364" duration="4892000" />
     </task>
     <servers />
   </component>
@@ -99,7 +120,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="prova" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

@@ -26,7 +26,7 @@ class OrganizerProfile(models.Model):
 
 
 class Image(models.Model):
-    path = models.ImageField(upload_to='images/')   #TODO: modificare dynamic path??
+    path = models.ImageField(upload_to='images/')
 
 
 class Category(models.Model):
@@ -59,7 +59,7 @@ class Artist(models.Model):
 class Delivery(models.Model):
     name = models.CharField(max_length=32)
     overprice = models.FloatField()
-    delivery_time = models.DurationField()   #TODO forse meglio mettere un datetime field boh
+    delivery_time = models.DurationField()
 
     def __str__(self):
         return f'{self.name}'
@@ -99,7 +99,7 @@ class EventProfile(models.Model):
     avg_rating = models.FloatField(default=None, blank=True, null=True)
     event_start = models.DateTimeField()
     event_end = models.DateTimeField()
-    services = models.ManyToManyField(Service)# An event has many services, a service can be offered by many events (m to n)
+    services = models.ManyToManyField(Service)
     cancelled = models.BooleanField(default=False)
 
     @property
@@ -132,7 +132,7 @@ class SeatType(models.Model):
         return self.name
 
 
-class Seat(models.Model):   #TODO: i seats servono per tutti gli eventi?
+class Seat(models.Model):
     event = models.ForeignKey(EventProfile, related_name='seat_event', on_delete=models.CASCADE)
     name = models.CharField(max_length=32)
     row = models.CharField(max_length=1, blank=True)

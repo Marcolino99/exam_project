@@ -11,6 +11,20 @@
                 <div>
                     <p class="text-{% if object.is_past %}danger{% else %}success{% endif %}"><i class="bi bi-calendar-date "></i> {{ object.event_start }} - {{ object.event_end }}</p>
                 </div>
+                <p title="{{ object.avg_rating }}">
+                    {% with ''|center:stars_number as range %}
+                        {% for _ in range %}
+                            <i class="bi bi-star-fill filled-star"></i>
+                        {% endfor %}
+                    {% endwith %}
+                    {% with 5|subtract:stars_number as empty %}
+                        {% with ''|center:empty as range %}
+                            {% for _ in range %}
+                                <i class="bi bi-star"></i>
+                            {% endfor %}
+                        {% endwith %}
+                    {% endwith %}
+                </p>
                 <h5>
                     <i>
                         With:
@@ -27,7 +41,8 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div id="eventPictures" class="carousel slide carousel-fade w-100" data-ride="carousel">
+                {% comment %}
+               <div id="eventPictures" class="carousel slide carousel-fade w-100" data-ride="carousel">
                     <div class="carousel-inner">
                         {% for img in object.pictures.all %}
                             <div class="carousel-item{% if img == object.pictures.all|first %} active{% endif %}">
@@ -48,6 +63,7 @@
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+            {% endcomment %}
             </div>
         </div>
     </div>
@@ -113,6 +129,27 @@
                 </div>
             </div>
         </div>
+        {% if reviews.count > 0 %}
+            <div class="row mt-3">
+                <div class="col">
+                    <p>
+                        <a class="btn btn-primary" data-toggle="collapse" href="#review" role="button" aria-expanded="false" aria-controls="review">
+                            Show reviews
+                        </a>
+                    </p>
+                    <div class="collapse" id="review">
+                        {% for review in reviews %}
+                            <div class="card card-body">
+                                <p><b>{{ review.ticket.user }}</b> said:</p>
+                                <p>{{ review.content }}</p>
+                                <p><b>Rating: </b>{{ review.rating }}</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
@@ -123,6 +160,7 @@
         var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl)
         })
+
         function setInputSeat(row, number){
             let options = document.getElementById("id_seat").getElementsByTagName("option");
             let name = "#"+number+" on row "+row;
