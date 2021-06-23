@@ -13,7 +13,7 @@ from django.views.generic.edit import FormMixin
 
 from book2fest.forms import OrganizerProfileForm, UserProfileForm, ArtistForm, EventProfileForm, form_validation_error, \
     TicketForm, SeatForm, ReviewForm, SeatTypeForm, PictureForm
-from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin
+from book2fest.mixin import OrganizerRequiredMixin, UserRequiredMixin, EventOwnerMixin
 from book2fest.models import Artist, UserProfile, OrganizerProfile, EventProfile, SeatType, Ticket, Seat, Category, \
     Genre, Review, Picture
 
@@ -207,15 +207,19 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
         return super(EventCreate, self).handle_no_permission()
 
 
-class EventImagesUpload(LoginRequiredMixin, OrganizerRequiredMixin, View):
+class EventImagesUpload(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, View):
     event_profile = None
 
     def dispatch(self, request, *args, **kwargs):
+        error_message = "You are trying to upload an image to an event that does not exist!"
         try:
             self.event_profile = EventProfile.objects.get(pk=kwargs.get('pk'))
+            if not self.event_profile.user == self.profile:
+                error_message = "You are trying to upload an image to an event that is not yours!"
+                raise ObjectDoesNotExist()
 
         except ObjectDoesNotExist:
-            messages.error(request,"You are trying to upload an image to an event that does not exist!")
+            messages.error(request,error_message)
             return redirect('homepage')
 
         return super(EventImagesUpload, self).dispatch(request, *args, **kwargs)
@@ -238,7 +242,7 @@ class EventImagesUpload(LoginRequiredMixin, OrganizerRequiredMixin, View):
             return redirect(request.path_info)
 
 
-class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, UpdateView):
+class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, UpdateView):
     model = EventProfile
     form_class = EventProfileForm
     success_url = reverse_lazy('homepage')
@@ -401,24 +405,11 @@ class EventList(ListView):
         return context
 
 
-class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
+class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, View):
     event_profile = None
     event_id = None
 
-    def dispatch(self, request, *args, **kwargs):
-        self.event_id = kwargs.get('pk')
-
-        try:
-            self.event_profile = EventProfile.objects.get(pk=self.event_id)
-
-        except ObjectDoesNotExist:
-            # trying to manage seat of an event that does not exist
-            return redirect('homepage')  # TODO redirect to another page maybe
-
-        return super(ManageSeat, self).dispatch(request, *args, **kwargs)
-
     def get(self, request, **kwargs):
-
         if self.profile == self.event_profile.user:
             seat_types = SeatType.objects.all()
             event_seats = Seat.objects.all().filter(event=self.event_profile)
@@ -431,15 +422,13 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
             return redirect('homepage') #TODO redirect to another page maybe
 
     def post(self, request, **kwargs):
-
         form = SeatForm(request.POST, request.FILES)
+
         if form.is_valid():
             total = form.cleaned_data.get('quantity')
             price = form.cleaned_data.get('price')
             row = form.cleaned_data.get('row')
             seat_type = form.cleaned_data.get('seat_type')
-            print(f'\n\n\n{price}')
-
 
             for number in range(total):
                 seat = Seat(price=price, row=row, number=number, seat_type=seat_type, available=True, event=self.event_profile)
