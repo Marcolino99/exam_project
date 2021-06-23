@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Event: Upload Images{% endblock %}
+
+{% block content %}
+    <h3>Upload different images for {{ event.event_name }}</h3>
+   <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Upload</button>
+    </form>
+{% endblock %}

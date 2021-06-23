@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import UserProfileView, OrganizerProfileView, CompleteRegistrationView, ArtistCreate, UserCreate, \
     OrganizerCreate, EventCreate, EventUpdate, EventDetail, EventList, ManageSeat, UserTicketList, ManageTicket, \
-    EventCancel, ArtistList, SeatTypeCreate
+    EventCancel, ArtistList, SeatTypeCreate, EventImagesUpload
 
 app_name = "book2fest"
 
@@ -21,6 +21,7 @@ urlpatterns=[
     path('event/<int:pk>/manage-seat', ManageSeat.as_view(), name='manage-seat' ),
     path('event/<int:pk>/cancel', EventCancel.as_view(), name='event-cancel'),
     path('event/<int:pk>/update', EventUpdate.as_view(), name='event-update'),
+    path('event/<int:pk>/image-upload', EventImagesUpload.as_view(), name='event-images-upload'),
     path('ticket/list', UserTicketList.as_view(), name='ticket-list' ),
     path('ticket/<int:pk>/manage', ManageTicket.as_view(), name='ticket-manage'),
     path('seat-type/create', SeatTypeCreate.as_view(), name='seat-type-create')

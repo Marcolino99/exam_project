@@ -190,7 +190,6 @@ class SeatTypeCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     template_name = "book2fest/seat/seat_type.html"
     success_url = reverse_lazy('book2fest:event-list')
 
-from django.forms import modelformset_factory
 
 class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     model = EventProfile
@@ -206,6 +205,38 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     def handle_no_permission(self):
         messages.error(self.request, self.permission_denied_message)
         return super(EventCreate, self).handle_no_permission()
+
+
+class EventImagesUpload(LoginRequiredMixin, OrganizerRequiredMixin, View):
+    event_profile = None
+
+    def dispatch(self, request, *args, **kwargs):
+        try:
+            self.event_profile = EventProfile.objects.get(pk=kwargs.get('pk'))
+
+        except ObjectDoesNotExist:
+            messages.error(request,"You are trying to upload an image to an event that does not exist!")
+            return redirect('homepage')
+
+        return super(EventImagesUpload, self).dispatch(request, *args, **kwargs)
+
+    def get(self, request, **kwargs):
+        form = PictureForm()
+        context = {'form':form, 'event':self.event_profile}
+        return render(request, "book2fest/event/images-upload.html", context)
+
+    def post(self, request, **kwargs):
+
+        form = PictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            for img in request.FILES.getlist('img'):
+                Picture.objects.create(event=self.event_profile, img=img, name=form.cleaned_data.get('name'), description=form.cleaned_data.get('description'))
+            messages.success(request, "Uploaded images successfully!")
+            return redirect('book2fest:event-detail', self.event_profile.pk)
+        else:
+            messages.error(request, form_validation_error(form))
+            return redirect(request.path_info)
+
 
 class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, UpdateView):
     model = EventProfile
@@ -254,10 +285,17 @@ class EventDetail(FormMixin, DetailView):
 
     def get(self, request, **kwargs):
         # kwargs = self.get_form_kwargs()
-        form = TicketForm(event_pk=kwargs.pop('pk')) # filter form with event_pk
+        form = TicketForm(event_pk=kwargs.get('pk')) # filter form with event_pk
 
         self.object = self.get_object()
         context = self.get_context_data(object=self.object)
+
+        # Retrieve pictures
+        try:
+            context['pictures'] = Picture.objects.all().filter(event__pk=kwargs.get('pk'))
+
+        except ObjectDoesNotExist:
+            context['pictures'] = None
 
         context['form'] = form
         return self.render_to_response(context)
@@ -400,6 +438,8 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, View):
             price = form.cleaned_data.get('price')
             row = form.cleaned_data.get('row')
             seat_type = form.cleaned_data.get('seat_type')
+            print(f'\n\n\n{price}')
+
 
             for number in range(total):
                 seat = Seat(price=price, row=row, number=number, seat_type=seat_type, available=True, event=self.event_profile)

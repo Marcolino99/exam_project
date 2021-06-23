@@ -87,6 +87,7 @@ class EventProfileForm(forms.ModelForm):
 
 
 class PictureForm(forms.ModelForm):
+    img = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
 
     helper = FormHelper()
     helper.form_id = 'picture_crispy_form'
@@ -118,7 +119,7 @@ class SeatForm(forms.ModelForm):
 
     class Meta:
         model = Seat
-        fields = ['seat_type', 'row', 'number', 'quantity']
+        fields = ['seat_type', 'row', 'price', 'number', 'quantity']
 
 class SeatTypeForm(forms.ModelForm):
 
