@@ -18,7 +18,6 @@ urlpatterns=[
     path('event/list', EventList.as_view(), name='event-list'),
     path('artist/create', ArtistCreate.as_view(), name='artist-create'),
     path('artist/list', ArtistList.as_view(), name='artist-list'),
-    # path('artist/<int:pk>/detail', ArtistDetail.as_view(), name='artist-detail'),
     path('event/<int:pk>/manage-seat', ManageSeat.as_view(), name='manage-seat' ),
     path('event/<int:pk>/cancel', EventCancel.as_view(), name='event-cancel'),
     path('event/<int:pk>/update', EventUpdate.as_view(), name='event-update'),
