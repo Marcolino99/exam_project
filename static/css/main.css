@@ -94,3 +94,80 @@ body{
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
 }
+
+.footer-name{
+  text-align:center;
+}
+
+.event-available{
+  background-color: #91e376;
+}
+
+.event-unavailable{
+  background-color: #ff6e7a;
+}
+
+.event-unavailable::-webkit-scrollbar {
+  display: none;  /*Chrome, Safari and Opera */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.event-available::-webkit-scrollbar {
+  display: none;  /*Chrome, Safari and Opera */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.filled-star{
+  color: #e8dd15;
+}
+
+.event{
+  height: 40%;
+}
+
+.site-title{
+  text-align: center;
+  font-weight: bolder;
+  font-size: 5rem;
+}
+
+.home-subtitle{
+  font-style: oblique;
+  font-size: 1.7rem;
+  text-align: center;
+}
+
+.event {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow: hidden;
+}
+
+.event-title{
+  font-weight: bold;
+  font-size: 1.8rem;
+}
+
+.event-description{
+  font-style: italic;
+  overflow: auto;
+  height: 25%;
+}
+
+@media screen and (max-width: 768px) {
+  .event {
+    height: 25%;
+    overflow: auto;
+  }
+  .site-title{
+    font-size: 2rem;
+  }
+  .home-subtitle{
+    font-size: 1rem;
+  }
+  .event-description{
+    height: auto;
+  }
+}
+

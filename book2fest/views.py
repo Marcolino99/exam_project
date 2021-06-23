@@ -279,8 +279,13 @@ class EventDetail(FormMixin, DetailView):
         for x in d:
             l.append(d[x])
 
+        stars_number = int(self.object.avg_rating)
+        reviews = Review.objects.filter(ticket__seat__event=self.object)
+
         context.update({'righe': l})
         context.update({'occupied_seats': occupied_seats})
+        context.update({'stars_number': stars_number})
+        context.update({'reviews': reviews})
         return context
 
     def form_valid(self, form):
@@ -582,8 +587,8 @@ class HomeView(ListView):
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        available = EventProfile.objects.filter(cancelled=False).filter(event_end__gt=date.today())
-        unavailable = EventProfile.objects.exclude(id__in=available)
+        available = EventProfile.objects.filter(cancelled=False).filter(event_end__gt=date.today()).order_by('avg_rating')
+        unavailable = EventProfile.objects.exclude(id__in=available).order_by('avg_rating')
 
         recommended = {}
         user_tickets = Ticket.objects.filter(user__user_id=self.request.user.id).values()  # ticket di eventi in cui è stato l'utente
@@ -599,7 +604,7 @@ class HomeView(ListView):
                     if id not in recommended.keys() and ev.filter(cancelled=False).filter(event_end__gt=date.today()):
                         recommended[id] = ev[0]
 
-        context.update({"available":available})
-        context.update({"unavailable":unavailable})
-        context.update({"recommended":recommended.values()})
+        context.update({"available":available[:5]})
+        context.update({"unavailable":unavailable[:5]})
+        context.update({"recommended":list(recommended.values())[:5]})
         return context
