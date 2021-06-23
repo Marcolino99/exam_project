@@ -18,10 +18,6 @@ class OrganizerRequiredMixin:
             messages.error(request, "You have no authorization to access this page." )
             return redirect('book2fest:user-profile')
 
-    def get_context_data(self):
-        context = { "organizer" : self.profile}
-
-        return context
 
 
 class UserRequiredMixin:
@@ -38,10 +34,6 @@ class UserRequiredMixin:
         except ObjectDoesNotExist:
             messages.error(request, "You have no authorization to access this page.")
             return redirect('book2fest:organizer-profile')
-
-    def get_context_data(self):
-        context = { "profile" : self.profile}
-        return context
 
 
 class EventOwnerMixin:

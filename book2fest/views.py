@@ -213,7 +213,7 @@ class EventCreate(LoginRequiredMixin, OrganizerRequiredMixin, CreateView):
     form_class = EventProfileForm
     template_name = "book2fest/event/create.html"
     permission_denied_message = "You must authenticate first!"
-    success_url = reverse_lazy("book2fest:organizer-profile")
+    success_url = reverse_lazy("book2fest:event-list")
 
     def form_valid(self, form):
         form.instance.user = self.profile
@@ -228,17 +228,6 @@ class EventImagesUpload(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMi
     event_profile = None
 
     def dispatch(self, request, *args, **kwargs):
-        error_message = "You are trying to upload an image to an event that does not exist!"
-        try:
-            self.event_profile = EventProfile.objects.get(pk=kwargs.get('pk'))
-            if not self.event_profile.user == self.profile:
-                error_message = "You are trying to upload an image to an event that is not yours!"
-                raise ObjectDoesNotExist()
-
-        except ObjectDoesNotExist:
-            messages.error(request,error_message)
-            return redirect('homepage')
-
         return super(EventImagesUpload, self).dispatch(request, *args, **kwargs)
 
     def get(self, request, **kwargs):
@@ -264,13 +253,6 @@ class EventUpdate(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, U
     form_class = EventProfileForm
     success_url = reverse_lazy('homepage')
     template_name = "book2fest/event/update.html"
-
-    def get(self, request, **kwargs):
-        if self.get_object().user == self.profile:
-            return super(EventUpdate, self).get(request, **kwargs)
-        else:
-            messages.error(request, "Something is wrong with your update request. Please check if you are authorized to update this event.")
-            return redirect("homepage")
 
 
 class EventDetail(FormMixin, DetailView):
@@ -323,35 +305,39 @@ class EventDetail(FormMixin, DetailView):
 
 
     def post(self, request, **kwargs):
-            #check if user is anonymous
-            if isinstance(request.user, AnonymousUser):
-                return redirect('login')
+        #check if user is anonymous
+        if isinstance(request.user, AnonymousUser):
+            return redirect('login')
 
-            self.ticket = Ticket()
-            form = TicketForm(request.POST, request.FILES, instance=self.ticket)
+        self.ticket = Ticket()
+        form = TicketForm(request.POST, request.FILES, instance=self.ticket)
 
 
-            try:
-                if form.is_valid():
-                    #Get user profile and create ticket
+        try:
+            if form.is_valid() and not self.get_object().cancelled:
+                #Get user profile and create ticket
 
-                    self.profile = UserProfile.objects.get(user=request.user)      # retrieve logged user
-                    self.ticket.user = self.profile
-                    self.ticket.delivery = form.cleaned_data.get('delivery')
-                    self.ticket.seat = form.cleaned_data.get('seat')
+                self.profile = UserProfile.objects.get(user=request.user)      # retrieve logged user
+                self.ticket.user = self.profile
+                self.ticket.delivery = form.cleaned_data.get('delivery')
+                self.ticket.seat = form.cleaned_data.get('seat')
 
-                    # save ticket
-                    self.ticket.save()
+                # save ticket
+                self.ticket.save()
 
-                    self.ticket.seat.available = False
-                    print(self.ticket.seat)
-                    self.ticket.seat.save()
-                    messages.success(request, 'Ticket booked successfully')
+                self.ticket.seat.available = False
+                print(self.ticket.seat)
+                self.ticket.seat.save()
+                messages.success(request, 'Ticket booked successfully')
+            else:
+                messages.error(request, "Something went wrong with your booking procedure.")
+                return redirect('book2fest:event-list')
 
-            except ObjectDoesNotExist:  # if exception catched user is an organizer
-                return redirect("book2fest:organizer-profile")
+        except ObjectDoesNotExist:  # if exception caught user is an organizer
+            messages.error(request,"Sorry,but you are not allowed to book tickets.")
+            return redirect("book2fest:organizer-profile")
 
-            return redirect('homepage') #TODO Redirect to ticket detail page or something
+        return redirect('book2fest:ticket-manage', self.ticket.pk)
 
 
 class EventList(ListView):
@@ -427,16 +413,12 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, Vi
     event_id = None
 
     def get(self, request, **kwargs):
-        if self.profile == self.event_profile.user:
-            seat_types = SeatType.objects.all()
-            event_seats = Seat.objects.all().filter(event=self.event_profile)
-            event_tickets = Ticket.objects.all().filter(seat__in=event_seats).order_by('seat__row','seat__number')
+        seat_types = SeatType.objects.all()
+        event_seats = Seat.objects.all().filter(event=self.event_profile)
+        event_tickets = Ticket.objects.all().filter(seat__in=event_seats).order_by('seat__row','seat__number')
 
-            context = {'event': self.event_profile, 'seat_types': seat_types, 'tickets':event_tickets}
-            return render(request, 'book2fest/seat/create.html', context)
-        else:
-            #User trying to manage seats not of one of his events
-            return redirect('homepage') #TODO redirect to another page maybe
+        context = {'event': self.event_profile, 'seat_types': seat_types, 'tickets':event_tickets}
+        return render(request, 'book2fest/seat/create.html', context)
 
     def post(self, request, **kwargs):
         form = SeatForm(request.POST, request.FILES)
@@ -465,26 +447,32 @@ class EventCancel(ManageSeat):
     def get(self, request, **kwargs):
 
         if self.profile == self.event_profile.user:
-            self.event_profile.cancelled = True
-            self.event_profile.save()
+            profiles = []
+            tickets_users = Ticket.objects.filter(seat__event=self.event_profile).values_list('user')
+            for id in tickets_users:
+                profiles.append(UserProfile.objects.get(id=id[0]))
+
+            if self.event_profile.cancelled:
+                self.event_profile.cancelled = False
+                self.event_profile.save()
+                verb = 'Event AVAILABLE!'
+                description = f'{self.event_profile.event_name} is now available!'
+
+            else:
+                self.event_profile.cancelled = True
+                self.event_profile.save()
+                verb = 'Event CANCELLED!'
+                description = f'{self.event_profile.event_name} has been cancelled!'
 
             #retrieve all users that bought ticket for this event
-            seats = Seat.objects.all().filter(event=self.event_profile)
-
-            corr = Ticket.objects.filter(seat__in=seats).values_list('user')
-            profiles = []
-
-            for d in corr:
-                profiles.append(UserProfile.objects.get(id=d[0]))
-
             for profile in profiles:
-                 notify.send(profile.user, recipient=profile.user, verb='Event cancelled', description=f"{self.event_profile.event_name} has been cancelled!", target=self.event_profile)
+                notify.send(profile.user, recipient=profile.user, verb=verb, description=description, target=self.event_profile)
 
         else:
             # show error you are not authorized
             messages.error(request, "You are not authorized!")
 
-        return redirect("book2fest:manage-seat", pk=self.event_id)
+        return redirect("book2fest:manage-seat", pk=self.event_profile.pk)
 
 
 class UserTicketList(LoginRequiredMixin, UserRequiredMixin, ListView):
@@ -600,15 +588,14 @@ class HomeView(ListView):
         recommended = {}
         user_tickets = Ticket.objects.filter(user__user_id=self.request.user.id).values()  # ticket di eventi in cui è stato l'utente
         for i in range(len(user_tickets)):
-            eventid = EventProfile.objects.filter(seat_event=user_tickets[i]['seat_id']).values()  # id evento al quale ha partecipato
-            all_event_tickets = Ticket.objects.filter(seat__event_id=eventid[0]['id']).values()  # tutti i ticket relativi allo stesso evento
+            event_id = EventProfile.objects.filter(seat_event=user_tickets[i]['seat_id']).values()  # id evento al quale ha partecipato
+            all_event_tickets = Ticket.objects.filter(seat__event_id=event_id[0]['id']).values()  # tutti i ticket relativi allo stesso evento
             for j in range(len(all_event_tickets)):
                 users_tickets = Ticket.objects.filter(user=all_event_tickets[j]['user_id']).values()    # insieme di ticket per ogni possessore di ticket in all_event_tickets
                 ticket_group = Ticket.objects.filter(user=users_tickets[0]['user_id']) # insieme di eventi per ogni possessore
                 for ticket in ticket_group:
                     ev = EventProfile.objects.filter(seat_event__ticket_seat=ticket)
                     id = ev.values('id')[0]['id']
-                    print(ev)
                     if id not in recommended.keys() and ev.filter(cancelled=False).filter(event_end__gt=date.today()):
                         recommended[id] = ev[0]
 
