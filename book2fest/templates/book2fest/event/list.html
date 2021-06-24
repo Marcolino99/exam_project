@@ -17,45 +17,11 @@
 {% block addbutton %}
 
     {% if organizer %}
-        <div class="content">
             <div class="row">
-
                 <div class="col-sm-4">
                     <a href="{% url 'book2fest:event-create' %}" class="btn btn-primary">Add Event</a>
                 </div>
-                <div class="col-sm-8">
-                    <form class="content" style="position:absolute; margin:auto; left:0; right:0;">
-                        <div class="row">
-                            <div class="col-8 col-md-4">
-                                <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
-                                <select class="form-select" name="search-filter" aria-label="Default select example">
-                                    <option value="event_name" selected>Event Name</option>
-                                    <option value="artist">Artist</option>
-                                    <option value="genre">Genre</option>
-                                    <option value="category">Category</option>
-                                </select>
-                            </div>
-                            <div class="col-8 col-md-4">
-                                <div class="d-flex">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text">Order by:</span>
-                                    </div>
-                                    <select class="form-select" name="order-filter" aria-label="Default select example">
-                                        {% for filter in order_filters %}
-                                            <option value="{{filter}}" selected>{{filter}}</option>
-                                        {% endfor %}
-                                    </select>
-                                    <button class="btn btn-outline-success" type="submit">Search&Order</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
             </div>
-        </div>
-        </div>
-        </div>
     {% endif %}
 
 {% endblock %}
