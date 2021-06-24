@@ -83,7 +83,7 @@ class EventProfileForm(forms.ModelForm):
 
     class Meta:
         model = EventProfile
-        fields = ['event_name', 'event_start', 'brief_description', 'description', 'event_end', 'city', 'country', 'address', 'max_capacity', 'services', 'artist_list']
+        fields = ['event_name', 'event_start', 'brief_description', 'description', 'event_end', 'city', 'country', 'address', 'how_to_reach', 'max_capacity', 'services', 'artist_list']
 
 
 class PictureForm(forms.ModelForm):
