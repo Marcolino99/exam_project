@@ -319,7 +319,7 @@ class EventDetail(FormMixin, DetailView):
 
 
         try:
-            if form.is_valid() and not self.get_object().cancelled:
+            if form.is_valid() and not self.get_object().cancelled and not self.get_object().is_past:
                 #Get user profile and create ticket
 
                 self.profile = UserProfile.objects.get(user=request.user)      # retrieve logged user
@@ -329,13 +329,12 @@ class EventDetail(FormMixin, DetailView):
 
                 # save ticket
                 self.ticket.save()
-
                 self.ticket.seat.available = False
-                print(self.ticket.seat)
                 self.ticket.seat.save()
                 messages.success(request, 'Ticket booked successfully')
             else:
-                messages.error(request, "Something went wrong with your booking procedure.")
+                error = form_validation_error(form) if not form.is_valid() else "Something went wrong with your booking procedure. The event got cancelled or is past."
+                messages.error(request, error)
                 return redirect('book2fest:event-list')
 
         except ObjectDoesNotExist:  # if exception caught user is an organizer
