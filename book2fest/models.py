@@ -24,11 +24,6 @@ class OrganizerProfile(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
 
 
-
-class Image(models.Model):
-    path = models.ImageField(upload_to='images/')
-
-
 class Category(models.Model):
     name = models.CharField(max_length=32)
 
@@ -144,14 +139,6 @@ class Seat(models.Model):
     def __str__(self):
         return f'{self.event}: {self.seat_type.name} #{self.number} on row {self.row}'
 
-    @property
-    def is_available(self): #TODO: ???
-        return Seat.objects.annotate(
-            available_seats = Sum(Case(
-                When(Seat.available==True, then=1),
-                output_field=IntegerField(),
-            ))
-        )
 
 
 class Ticket(models.Model):
