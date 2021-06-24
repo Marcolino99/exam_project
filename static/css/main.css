@@ -123,10 +123,6 @@ body{
   color: #e8dd15;
 }
 
-.event{
-  height: 40%;
-}
-
 .site-title{
   text-align: center;
   font-weight: bolder;
@@ -157,7 +153,6 @@ body{
 
 @media screen and (max-width: 768px) {
   .event {
-    height: 25%;
     overflow: auto;
   }
   .site-title{
@@ -170,4 +165,3 @@ body{
     height: auto;
   }
 }
-

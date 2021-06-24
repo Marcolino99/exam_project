@@ -30,7 +30,7 @@
                     <div class="row justify-content-center">
                         <p class="text-center">
                             {% for artist in event.artist_list.all %}
-                                <span>{% if artist != event.artist_list.all.first %}, {% endif %}{{ artist.full_name }}</span>
+                                <b>{% if artist != event.artist_list.all.first %}, {% endif %}{{ artist.full_name }}</b>
                             {% endfor %}
                         </p>
                     </div>
@@ -61,7 +61,7 @@
                 <div class="row justify-content-center">
                     <p class="text-center">
                         {% for artist in event.artist_list.all %}
-                            <span>{{ artist }}</span>
+                            <b>{% if artist != event.artist_list.all.first %}, {% endif %}{{ artist.full_name }}</b>
                         {% endfor %}
                     </p>
                 </div>
@@ -91,7 +91,7 @@
                 <div class="row justify-content-center">
                     <p class="text-center">
                         {% for artist in event.artist_list.all %}
-                            <span>{{ artist }}</span>
+                            <b>{% if artist != event.artist_list.all.first %}, {% endif %}{{ artist.full_name }}</b>
                         {% endfor %}
                     </p>
                 </div>

@@ -5,8 +5,13 @@
 
 {% block content %}
     <h1>Login</h1>
-    <form method="post">{% csrf_token %}
-        {{ form|crispy }}
-        <input type="submit" value="Login">
-    </form>
+    {% if user.is_authenticated %}
+        <h3>You are already logged in!</h3>
+        <a href="{% url 'logout' %}" class="btn btn-danger mb-5">Logout</a>
+    {% else %}
+        <form method="post">{% csrf_token %}
+            {{ form|crispy }}
+            <input type="submit" value="Login" class="btn btn-primary">
+        </form>
+    {% endif %}
 {% endblock %}

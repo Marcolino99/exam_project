@@ -37,7 +37,9 @@
                 <p>{{ object.brief_description }}</p>
                 <div class="mt-5">
                     <p>{{  object.max_capacity|subtract:occupied_seats.count }} tickets available, book yours now:</p>
-                    {% crispy form %}
+                    <div class="d-flex">
+                        {% crispy form %}
+                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
