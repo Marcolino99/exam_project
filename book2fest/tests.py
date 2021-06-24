@@ -25,6 +25,7 @@ def create_event(user, max_capacity, seats_available, days, cancelled):
     return EventProfile.objects.create(user=user, max_capacity=max_capacity, seats_available=seats_available, event_start=date,
                                        event_end=date, cancelled=cancelled, avg_rating=2.5)
 
+
 def create_seat(event, available):
     return Seat.objects.create(event=event, available=available, name="test-seat", row="A", number="1", price=12.0, seat_type=SeatType.objects.create(name="test-seat-type"))
 
@@ -41,11 +42,13 @@ class EventDetailTestCase(TestCase):
         # login user
         self.client.login(username=test_user.user.username, password="test-pw")
 
-    def book_ticket(self, event, seat, delivery):
+
+    def book_ticket(self, event_id, seat, delivery):
+        """ POST request to book a ticket"""
 
         # POST request to book a ticket
         response = self.client.post(
-            reverse('book2fest:event-detail', kwargs={'pk': event.id}),
+            reverse('book2fest:event-detail', kwargs={'pk': event_id}),
             data={'seat': seat.id,
                     'delivery': delivery.id,
                     'submit': ['Book']}
@@ -54,7 +57,7 @@ class EventDetailTestCase(TestCase):
 
 
     def test_book_ticket_when_event_cancelled(self):
-        """ If user try to book a seat when event is cancelled
+        """ If user tries to book a seat when event is cancelled
         ->  Ticket not created and redirect to event-list page"""
 
         #create organizer to create an event with cancelled = True
@@ -65,7 +68,7 @@ class EventDetailTestCase(TestCase):
         test_seat = create_seat(test_event, True)
         test_delivery = Delivery.objects.create(name="test-delivery", overprice=1.0, delivery_time=timedelta(days=2))
 
-        response = self.book_ticket(event=test_event, seat=test_seat, delivery=test_delivery)
+        response = self.book_ticket(event_id=test_event.id, seat=test_seat, delivery=test_delivery)
 
         self.assertEqual(response.status_code, 302) #should redirect to event-list page with message error
         self.assertEqual(response.url, reverse('book2fest:event-list'))  # check redirect url
@@ -73,7 +76,7 @@ class EventDetailTestCase(TestCase):
 
 
     def test_book_ticket_when_event_past(self):
-        """ If user try to book an event that has already took place
+        """ If user tries to book an event that has already took place
         -> Ticket not created and redirect to event-list page"""
 
         # create organizer to create an event that has already took place (days=-10)
@@ -84,14 +87,34 @@ class EventDetailTestCase(TestCase):
         test_seat = create_seat(test_event, True)
         test_delivery = Delivery.objects.create(name="test-delivery", overprice=1.0, delivery_time=timedelta(days=2))
 
-        response = self.book_ticket(event=test_event, seat=test_seat, delivery=test_delivery)
+        response = self.book_ticket(event_id=test_event.id, seat=test_seat, delivery=test_delivery)
 
         self.assertEqual(response.status_code, 302)  # should redirect to event-list page with message error
         self.assertEqual(response.url, reverse('book2fest:event-list'))  # check redirect url
         self.assertEqual(Ticket.objects.all().filter(seat=test_seat).exists(), False)  # check if ticket has been created
 
+
+    def test_book_ticket_when_seat_is_not_available(self):
+        """ If user tries to book a seat that is not available
+                -> Ticket not created and redirect to event-list with error message"""
+
+        # create organizer to create an event in the future and not cancelled
+        test_organizer = create_organizer(create_user("test-organizer", "test-pw"))
+        test_event = create_event(user=test_organizer, max_capacity=10, seats_available=8, days=10, cancelled=False)
+
+        # create a seat NOT AVAILABLE for the event
+        test_seat = create_seat(test_event,available=False)
+        test_delivery = Delivery.objects.create(name="test-delivery", overprice=1.0, delivery_time=timedelta(days=2))
+
+        response = self.book_ticket(event_id=test_event.id, seat=test_seat, delivery=test_delivery)
+
+        self.assertEqual(response.status_code, 302)  # check redirect
+        self.assertEqual(response.url,reverse('book2fest:event-list')) # check redirect url
+        self.assertEqual(Ticket.objects.all().filter(seat=test_seat).exists(), False)  # check if ticket has been created
+
+
     def test_book_ticket_when_event_future_and_not_cancelled(self):
-        """ If user try to book an event in the future and not cancelled
+        """ If user tries to book an event in the future and not cancelled
                 -> Ticket created and redirect to ticket page"""
 
         # create organizer to create an event in the future and not cancelled
@@ -102,11 +125,9 @@ class EventDetailTestCase(TestCase):
         test_seat = create_seat(test_event, True)
         test_delivery = Delivery.objects.create(name="test-delivery", overprice=1.0, delivery_time=timedelta(days=2))
 
-        response = self.book_ticket(event=test_event, seat=test_seat, delivery=test_delivery)
-
-        print(response)
-        print(response.context)
+        response = self.book_ticket(event_id=test_event.id, seat=test_seat, delivery=test_delivery)
 
         self.assertEqual(response.status_code, 302)  # check redirect
         self.assertEqual(response.url,reverse('book2fest:ticket-manage',kwargs={'pk':1})) # check redirect url
         self.assertEqual(Ticket.objects.all().filter(seat=test_seat).exists(), True)  # check if ticket has been created
+

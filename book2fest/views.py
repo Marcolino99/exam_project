@@ -327,11 +327,16 @@ class EventDetail(FormMixin, DetailView):
                 self.ticket.delivery = form.cleaned_data.get('delivery')
                 self.ticket.seat = form.cleaned_data.get('seat')
 
-                # save ticket
-                self.ticket.save()
-                self.ticket.seat.available = False
-                self.ticket.seat.save()
-                messages.success(request, 'Ticket booked successfully')
+                if self.ticket.seat.available:
+                    # save ticket
+                    self.ticket.save()
+                    self.ticket.seat.available = False
+                    self.ticket.seat.save()
+                    messages.success(request, 'Ticket booked successfully')
+                else:
+                    messages.error(request, "Something went wrong with your booking procedure. The seat is not available")
+                    return redirect('book2fest:event-list')
+
             else:
                 error = form_validation_error(form) if not form.is_valid() else "Something went wrong with your booking procedure. The event got cancelled or is past."
                 messages.error(request, error)
