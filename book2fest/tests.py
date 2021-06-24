@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from datetime import timedelta
 from django.urls import reverse
+from book2fest.views import add_seats
 
 def create_user(username, password):
     user = User.objects.create(username=username)
@@ -131,3 +132,63 @@ class EventDetailTestCase(TestCase):
         self.assertEqual(response.url,reverse('book2fest:ticket-manage',kwargs={'pk':1})) # check redirect url
         self.assertEqual(Ticket.objects.all().filter(seat=test_seat).exists(), True)  # check if ticket has been created
 
+
+class AddSeatsTests(TestCase):
+
+    def test_add_seats_with_negative_total_new(self):
+        """ If try to add a negative number of seats
+        -> Return False and do not add any seat"""
+
+        # create organizer to create an event with cancelled = True
+        test_organizer = create_organizer(create_user("test-organizer", "test-pw"))
+        test_event = create_event(user=test_organizer, max_capacity=10, seats_available=8, days=0, cancelled=True)
+
+        # count number of seat before calling add_seats
+        total_seat_before = Seat.objects.all().filter(event=test_event).count()
+
+        val, __ = add_seats(total_new=-5, price=30.0, row="A", seat_type=SeatType.objects.create(name="test-seat-type"), event=test_event)
+
+        # count number of seat after calling add_seats
+        total_seat_after = Seat.objects.all().filter(event=test_event).count()
+
+        self.assertEqual(val,False) # checks return value
+        self.assertEqual(total_seat_before, total_seat_after) # checks that no seats have been added
+
+    def test_add_seats_max_cap_exceed(self):
+        """ If try to add number of seats that exceed the event max capacity
+         -> Return False and do not add any seat"""
+
+        # create organizer to create an event with cancelled = True
+        test_organizer = create_organizer(create_user("test-organizer", "test-pw"))
+        test_event = create_event(user=test_organizer, max_capacity=10, seats_available=8, days=0, cancelled=True)
+
+        # count number of seat before calling add_seats
+        total_seat_before = Seat.objects.all().filter(event=test_event).count()
+
+        val, __ = add_seats(total_new=12, price=30.0, row="A", seat_type=SeatType.objects.create(name="test-seat-type"), event=test_event)
+
+        # count number of seat after calling add_seats
+        total_seat_after = Seat.objects.all().filter(event=test_event).count()
+
+        self.assertEqual(val,False) # checks return value
+        self.assertEqual(total_seat_before, total_seat_after) # checks that no seats have been added
+
+    def test_add_seats_positive_total_new_and_no_max_cap_exceed(self):
+        """ If try to add positive number of seats that do not exceed the event max capacity
+                 -> Return True and add correct amount of seats"""
+
+        total_new = 8
+        # create organizer to create an event with cancelled = True
+        test_organizer = create_organizer(create_user("test-organizer", "test-pw"))
+        test_event = create_event(user=test_organizer, max_capacity=10, seats_available=8, days=0, cancelled=True)
+
+        # count number of seat before calling add_seats
+        total_seat_before = Seat.objects.all().filter(event=test_event).count()
+
+        val, __ = add_seats(total_new=total_new, price=30.0, row="A", seat_type=SeatType.objects.create(name="test-seat-type"), event=test_event)
+
+        # count number of seat after calling add_seats
+        total_seat_after = Seat.objects.all().filter(event=test_event).count()
+
+        self.assertEqual(val,True) # checks return value
+        self.assertEqual(total_seat_before+total_new, total_seat_after) # checks that the correct amount of seats have been added

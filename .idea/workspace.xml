@@ -6,15 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0012_auto_20210622_2042.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/__init__.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event/list.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/tests.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/base_list.html" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base_list.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +85,7 @@
       <workItem from="1624356302298" duration="21720000" />
       <workItem from="1624394387196" duration="911000" />
       <workItem from="1624435527302" duration="24848000" />
-      <workItem from="1624520140316" duration="7861000" />
+      <workItem from="1624520140316" duration="13393000" />
     </task>
     <servers />
   </component>
@@ -108,5 +103,16 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/book2fest/views.py</url>
+          <line>411</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

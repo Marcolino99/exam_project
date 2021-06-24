@@ -1,8 +1,6 @@
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.contrib.auth.models import User
-
-# Create your models here.
 from django.db.models import IntegerField, When, Count, Case, Sum
 from django.db.models.functions import datetime
 from django.template.defaulttags import register
@@ -140,11 +138,11 @@ class Seat(models.Model):
         return f'{self.event}: {self.seat_type.name} #{self.number} on row {self.row}'
 
 
-
 class Ticket(models.Model):
     seat = models.OneToOneField(Seat, related_name='ticket_seat', on_delete=models.CASCADE)
     user = models.ForeignKey(UserProfile, related_name="ticket_user", on_delete=models.CASCADE)
     delivery = models.ForeignKey(Delivery, related_name='ticket_delivery', on_delete=models.CASCADE)
+
 
 class Review(models.Model):
     rating = models.FloatField(null=True)
@@ -154,18 +152,5 @@ class Review(models.Model):
 
     def __str__(self):
         return f'{self.ticket.seat.event.event_name}-{self.rating}'
-# class InterestedUser(models.Model):
-#     # room = models.ForeignKey(Seat, related_name='interested_room', on_delete=models.CASCADE)
-#     user = models.ForeignKey(UserProfile, related_name='interested_user', on_delete=models.CASCADE)
-
-# class Review(models.Model):
-#     writer = models.ForeignKey(UserProfile, related_name='writer', on_delete=models.CASCADE)
-#     rating = models.IntegerField(max_length=1)
-#     date = models.DateTimeField(default=datetime.Now())
-#     content = models.TextField()
-#     structure = models.OneToOneField(EventProfile, related_name='review_structure', on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f'{self.structure_name}'
 
 

@@ -99,8 +99,6 @@ class ProfileView(LoginRequiredMixin, View): #redirect view
             return redirect('book2fest:organizer-profile')
 
 
-
-
 class OrganizerProfileView(LoginRequiredMixin, OrganizerRequiredMixin, View):
     profile = None
 
@@ -349,6 +347,16 @@ class EventDetail(FormMixin, DetailView):
         return redirect('book2fest:ticket-manage', self.ticket.pk)
 
 
+
+def get_seat_available(event_id):
+    """ Return the amount of seats available and unavailable for an event"""
+    if event_id:
+        return Seat.objects.all().filter(event=event_id, available=True).count()
+    else:
+        return None
+
+
+
 class EventList(ListView):
     model = EventProfile
     template_name = "book2fest/event/list.html"
@@ -391,11 +399,10 @@ class EventList(ListView):
         try:
             # count seats available and average rating for events
             for event in self.object_list:
+
+                event.seats_available = get_seat_available(event.pk)
+
                 event_seats = Seat.objects.all().filter(event=event.pk)
-
-                seat_not_available = Seat.objects.all().filter(event=event.pk, available=False).count()
-                event.seats_available  = event_seats.count() - seat_not_available
-
                 event_tickets = Ticket.objects.all().filter(seat__in=event_seats)
                 qs = Review.objects.filter(ticket__in=event_tickets).aggregate(Avg('rating'))
 
@@ -415,6 +422,24 @@ class EventList(ListView):
             context['organizer'] = None
 
         return context
+
+def add_seats(total_new, price, row, seat_type, event):
+    """ Check the maximum capacity of event, then add seats"""
+    total_event_seats = Seat.objects.all().filter(event=event).count()
+
+    if total_new < 0:
+        return False, "Can't add a negative number of seats"
+
+    if total_event_seats + total_new <= event.max_capacity:
+        # can add seats
+        for number in range(total_new):
+            seat = Seat(price=price, row=row, number=number, seat_type=seat_type, available=True,
+                        event=event)
+            seat.save()
+        return True, f"Added {total_new} seats"
+    else:
+        return False, f"Max capacity exceeded"
+
 
 
 class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, View):
@@ -438,11 +463,12 @@ class ManageSeat(LoginRequiredMixin, OrganizerRequiredMixin, EventOwnerMixin, Vi
             row = form.cleaned_data.get('row')
             seat_type = form.cleaned_data.get('seat_type')
 
-            for number in range(total):
-                seat = Seat(price=price, row=row, number=number, seat_type=seat_type, available=True, event=self.event_profile)
-                seat.save()
-
-            messages.success(request, f"Added {total} seats successfully")
+            flag, msg = add_seats(total, price, row, seat_type, self.event_profile)
+            if flag:
+                messages.success(request, msg)
+            else:
+                messages.error(request, msg)
+                return redirect(request.path_info)
         else:
             messages.error(request, form_validation_error(form))
             return redirect(request.path_info)
