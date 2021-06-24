@@ -2,53 +2,51 @@
 {% block title %}List: {% block list_title %}{% endblock %}{% endblock %}
 {% block content %}
     <div class="card" >
-    <div class="card-header">
-        <div class="container-fluid">
-            <div class="row row-cols-2">
-                <div class="col-sm-4">
-                    <h1>{% block content_title %}{% endblock %}</h1>
-
-                </div>
-            </div>
-        </div>
-        <div class="card-body">
-        {% block addbutton %}{% endblock %}
-            <div class="row">
-                <form class="container" style="margin:auto; left:0; right:0;">
-                    <div class="row justify-content-md-center">
-                        <div class="col">
-                            <div class="d-flex">
-                                <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
-                                <select class="form-select" name="search-filter" aria-label="Default select example">
-                                    <option value="event_name" selected>Event Name</option>
-                                    <option value="artist">Artist</option>
-                                    <option value="genre">Genre</option>
-                                    <option value="category">Category</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-md-auto">
-                            <div class="d-flex">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text">Order by:</span>
+        <div class="card-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <h1>{% block content_title %}{% endblock %}</h1>
+                    </div>
+                    <div class="col-lg-8">
+                        <form class="container justify-content-between">
+                            <div class="row">
+                                <div class="col-lg">
+                                    <div class="d-flex">
+                                        <input class="form-control me-2" type="search" name="search" placeholder="Search event by" aria-label="Search">
+                                        <select class="form-select" name="search-filter" aria-label="Default select example">
+                                            <option value="event_name" selected>Event Name</option>
+                                            <option value="artist">Artist</option>
+                                            <option value="genre">Genre</option>
+                                            <option value="category">Category</option>
+                                        </select>
+                                    </div>
                                 </div>
-                                <select class="form-select" name="order-filter" aria-label="Default select example">
-                                    {% for filter in order_filters %}
-                                        <option value="{{filter}}" selected>{{filter}}</option>
-                                    {% endfor %}
-                                </select>
+                                <div class="col-lg">
+                                    <div class="d-flex">
+
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">Order by:</span>
+                                        </div>
+                                        <select class="form-select" name="order-filter" aria-label="Default select example">
+                                            {% for filter in order_filters %}
+                                                <option value="{{filter}}" selected>{{filter}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg">
+
+                                    <button class="btn btn-outline-success" type="submit">Search&Order</button>
+                                </div>
+
                             </div>
-                        </div>
-                        <div class="col col-lg-2">
-                            <div class="d-flex">
-                                <button class="btn btn-outline-success" type="submit">Search&Order</button>
-                            </div>
-                        </div>
+                        </form>
 
                     </div>
-                </form>
+                </div>
             </div>
-            <div class="row">
+            <div class="card-body">
                 <table class="table">
                     <thead>
                     <tr>
@@ -61,11 +59,11 @@
                     {% endblock %}
                     </tbody>
                 </table>
-            </div>
-            {% block table_after %}
-            {% endblock %}
+                {% block table_after %}
+                {% endblock %}
 
+            </div>
         </div>
-    </div>
+
     </div>
 {% endblock %}

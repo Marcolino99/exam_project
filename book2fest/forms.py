@@ -141,11 +141,15 @@ class TicketForm(forms.ModelForm):
     helper.form_method = 'POST'
     helper.layout = Layout(
         Div(
-            Field('seat', title="Seat", css_class="ml-2 mr-3 seat"),
-            Field('delivery', title="Delivery", css_class="ml-2 mr-3"),
-            Submit('submit', 'Book', css_class='bg-success'),
-            css_class="d-flex justify-content-left "
+            Div(
+                Field('seat', title="Seat", css_class="col-lg seat mr-3"),
+                Field('delivery', title="Delivery", css_class="col-lg mr-3"),
+                Submit('submit', 'Book', css_class='bg-success col-lg'),
+                css_class="row"
+            ),
+            css_class="container"
         )
+
     )
 
     def __init__(self, *args, **kwargs):

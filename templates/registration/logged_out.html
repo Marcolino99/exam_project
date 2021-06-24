@@ -3,5 +3,13 @@
 
 {% block content %}
     <h1>Logged Out Successfully</h1>
-    <p>return to <a href="{% url 'homepage' %}">Homepage</a></p>
+    <h3>You will be redirected to the Homepage in 5 seconds... </h3>
+    <h5><a href="{% url 'homepage' %}">return manually</a></h5>
+{% endblock %}
+{% block javascript %}
+    <script>
+        setTimeout(function(){
+            window.location.href = '{% url 'homepage' %}';
+         }, 5000);
+    </script>
 {% endblock %}
