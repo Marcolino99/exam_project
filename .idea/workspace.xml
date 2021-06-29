@@ -6,55 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="b8aa3bba-b1e3-45f3-95a0-d573f7415faa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/artist/list.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/artist/list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/templates/book2fest/event.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/IMG_2556.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/data_hazard.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/green.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_33jFhHy.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_Bkpvx5E.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_Gqca9HS.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_R5wWga3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_aQ1AfBa.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_ayAuaqF.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_b3pmcof.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_d5Jrkdr.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_kBQNExd.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_mfyXYtd.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_pYji1b7.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_t8jfHgL.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_vTYT4Fn.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_xVylRUw.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/red_xj6TQe5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/images/yellow.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/cache_compare.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/data_hazard.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/direct-map-cache.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/dual-issue-pipeline.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/forward_datahaxard1.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/green.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/green_7eq2g0p.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/green_Fx2fVlQ.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/green_Q1ul5wa.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/import.sty" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/red.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/red_7qQ4AHQ.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/red_bmIIzOL.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/red_teDN2yB.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/scheduling-dinamico.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/stall.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/tabella-dram.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/yellow.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/yellow_bDSX5HE.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/yellow_tcHPKDT.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/pictures/yellow_xFYbiIy.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/services/wifi_QGaMrv8.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/media/services/wifi_yKN4jjG.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/templates/book2fest/user_profile.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book2fest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/book2fest/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,6 +90,8 @@
       <workItem from="1624356302298" duration="21720000" />
       <workItem from="1624394387196" duration="911000" />
       <workItem from="1624435527302" duration="20733000" />
+      <workItem from="1624893751675" duration="621000" />
+      <workItem from="1624951649989" duration="784000" />
     </task>
     <servers />
   </component>

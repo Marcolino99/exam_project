@@ -521,7 +521,7 @@ class UserTicketList(LoginRequiredMixin, UserRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        tickets = Ticket.objects.all().filter(user=self.profile)
+        # tickets = Ticket.objects.all().filter(user=self.profile)
         query = self.request.GET.get('search', None)
         filter = self.request.GET.get('search-filter', None)
         order = self.request.GET.get('order-filter', None)
